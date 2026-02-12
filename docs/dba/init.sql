@@ -92,6 +92,7 @@ CREATE TABLE user_profiles (
 CREATE TABLE platforms (
   id TINYINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '플랫폼 ID',
   code VARCHAR(50) NOT NULL COMMENT '플랫폼 코드 (29cm, musinsa, naver)',
+  logo_url VARCHAR(255) NULL COMMENT '로고 파일 경로',
   name VARCHAR(100) NOT NULL COMMENT '플랫폼 이름',
   url VARCHAR(255) NOT NULL COMMENT '플랫폼 URL',
   is_active BOOLEAN NOT NULL DEFAULT TRUE COMMENT '활성화 여부',
