@@ -1,0 +1,509 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - main [ref=e5]:
+      - button "landing-banner 앱으로 이동" [ref=e6] [cursor=pointer]:
+        - img "landing-banner" [ref=e7]
+        - generic [ref=e8]: 앱으로 이동
+      - navigation "상단 네비게이션 메뉴" [ref=e11]:
+        - link "홈" [ref=e13] [cursor=pointer]:
+          - /url: /
+          - img "지그재그 로고" [ref=e14]
+        - generic [ref=e15]:
+          - img [ref=e16]
+          - link "검색" [ref=e19] [cursor=pointer]:
+            - /url: /search
+            - img [ref=e21]
+          - link "장바구니" [ref=e23] [cursor=pointer]:
+            - /url: /cart
+            - generic [ref=e24]:
+              - generic:
+                - img
+      - generic [ref=e26]:
+        - generic [ref=e27]:
+          - link "지금 주목해야 할 지금 주목해야 할 출근 • 캐주얼룩 특가 나에게 딱 맞는 추천 신상 아이템 보기" [ref=e29] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/6f0e9f8a-3e20-43cb-ba1c-21afa788c03f
+            - img "지금 주목해야 할" [ref=e30]
+            - generic [ref=e32]:
+              - heading "지금 주목해야 할" [level=2] [ref=e33]
+              - heading "출근 • 캐주얼룩 특가" [level=3] [ref=e34]
+              - paragraph [ref=e35]: 나에게 딱 맞는 추천 신상 아이템 보기
+          - link "여름 붓기 고민 끝 여름 붓기 고민 끝 니아르 붓기 캔디 특가 5월 26일 저녁 8시 LIVE" [ref=e37] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/05aa79f6-7b77-42b4-b674-ed728057e08b
+            - img "여름 붓기 고민 끝" [ref=e38]
+            - generic [ref=e40]:
+              - heading "여름 붓기 고민 끝" [level=2] [ref=e41]
+              - heading "니아르 붓기 캔디 특가" [level=3] [ref=e42]
+              - paragraph [ref=e43]: 5월 26일 저녁 8시 LIVE
+          - link "누그레이세모탭 신상 컬러 누그레이세모탭 신상 컬러 출시 기념 특가 최대 73% 할인 + 쿠폰" [ref=e45] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/e67c5a3e-1c59-4420-8665-c2591a00780e
+            - img "누그레이세모탭 신상 컬러" [ref=e46]
+            - generic [ref=e48]:
+              - heading "누그레이세모탭 신상 컬러" [level=2] [ref=e49]
+              - heading "출시 기념 특가" [level=3] [ref=e50]
+              - paragraph [ref=e51]: 최대 73% 할인 + 쿠폰
+          - link "글로우 립 ~82% 글로우 립 ~82% 에크멀 베스트 립 특가 25% 쿠폰에 전 상품 무료배송까지" [ref=e53] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/1dee3d71-17bb-4a37-9319-0ced936088a1
+            - img "글로우 립 ~82%" [ref=e54]
+            - generic [ref=e56]:
+              - heading "글로우 립 ~82%" [level=2] [ref=e57]
+              - heading "에크멀 베스트 립 특가" [level=3] [ref=e58]
+              - paragraph [ref=e59]: 25% 쿠폰에 전 상품 무료배송까지
+          - link "클럽 클리오 클럽 클리오 브랜드위크 OPEN 최대 20% 쿠폰 + 금액대별 사은품 증정" [ref=e61] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/1be1bd5f-df96-41c9-985e-42b49135ee0e
+            - img "클럽 클리오" [ref=e62]
+            - generic [ref=e64]:
+              - heading "클럽 클리오" [level=2] [ref=e65]
+              - heading "브랜드위크 OPEN" [level=3] [ref=e66]
+              - paragraph [ref=e67]: 최대 20% 쿠폰 + 금액대별 사은품 증정
+          - link "오늘 밤 9시 메리어라운드 오늘 밤 9시 메리어라운드 역대급 썸머 LIVE 드래곤 디퓨전백 증정 이벤트" [ref=e69] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/8c71a70c-1a3a-4dcb-8029-0f56e7281e9b
+            - img "오늘 밤 9시 메리어라운드" [ref=e70]
+            - generic [ref=e72]:
+              - heading "오늘 밤 9시 메리어라운드" [level=2] [ref=e73]
+              - heading "역대급 썸머 LIVE" [level=3] [ref=e74]
+              - paragraph [ref=e75]: 드래곤 디퓨전백 증정 이벤트
+          - link "이유빈 디렉터가 소개하는 이유빈 디렉터가 소개하는 마른파이브 여름 속옷 30% 라이브 쿠폰 + 직잭 5만 포인트 증정" [ref=e77] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/6434cd42-6c63-47ea-9bff-6a8d5a09b1fa
+            - img "이유빈 디렉터가 소개하는" [ref=e78]
+            - generic [ref=e80]:
+              - heading "이유빈 디렉터가 소개하는" [level=2] [ref=e81]
+              - heading "마른파이브 여름 속옷" [level=3] [ref=e82]
+              - paragraph [ref=e83]: 30% 라이브 쿠폰 + 직잭 5만 포인트 증정
+          - link "11주년 기념 11주년 기념 라이프 특가 ~97% 인기 스토어 72H 릴레이 쿠폰 증정" [ref=e85] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/8fe4aa42-c4a3-4127-8af6-aa9e1438934d
+            - img "11주년 기념" [ref=e86]
+            - generic [ref=e88]:
+              - heading "11주년 기념" [level=2] [ref=e89]
+              - heading "라이프 특가 ~97%" [level=3] [ref=e90]
+              - paragraph [ref=e91]: 인기 스토어 72H 릴레이 쿠폰 증정
+          - link "여름 맞이 여름 맞이 주얼리 잡화 대전 최대 59% 할인+원데이 20% 쿠폰" [ref=e93] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/0234708b-c82b-4ea6-9dc9-663887ab5fa1
+            - img "여름 맞이" [ref=e94]
+            - generic [ref=e96]:
+              - heading "여름 맞이" [level=2] [ref=e97]
+              - heading "주얼리 잡화 대전" [level=3] [ref=e98]
+              - paragraph [ref=e99]: 최대 59% 할인+원데이 20% 쿠폰
+          - link "트위 여름 신상 트위 여름 신상 직잭 선발매 20% 쿠폰 + 5% 중복 쿠폰" [ref=e101] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/143a75c6-5be8-4c2e-925b-7e8b09f85b43
+            - img "트위 여름 신상" [ref=e102]
+            - generic [ref=e104]:
+              - heading "트위 여름 신상" [level=2] [ref=e105]
+              - heading "직잭 선발매" [level=3] [ref=e106]
+              - paragraph [ref=e107]: 20% 쿠폰 + 5% 중복 쿠폰
+          - link "던스트 썸머 티셔츠 던스트 썸머 티셔츠 직잭 단독 신상 발매 20% 쿠폰 + 10% 중복 쿠폰까지" [ref=e109] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/b16507bf-061e-49f1-97e9-1916ed3afdc1
+            - img "던스트 썸머 티셔츠" [ref=e110]
+            - generic [ref=e112]:
+              - heading "던스트 썸머 티셔츠" [level=2] [ref=e113]
+              - heading "직잭 단독 신상 발매" [level=3] [ref=e114]
+              - paragraph [ref=e115]: 20% 쿠폰 + 10% 중복 쿠폰까지
+          - link "마뗑킴·커먼유니크 등 마뗑킴·커먼유니크 등 화요쇼룸 OPEN 고감도 브랜드 최대 52% 할인" [ref=e117] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/b68cf3fb-c640-4c10-b716-2f0431a897e3
+            - img "마뗑킴·커먼유니크 등" [ref=e118]
+            - generic [ref=e120]:
+              - heading "마뗑킴·커먼유니크 등" [level=2] [ref=e121]
+              - heading "화요쇼룸 OPEN" [level=3] [ref=e122]
+              - paragraph [ref=e123]: 고감도 브랜드 최대 52% 할인
+          - link [ref=e125] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/d6d61419-c294-4927-b6c0-c8baae0d568c
+          - link "최대 30% 쿠폰 최대 30% 쿠폰 씨타 썸머 단독 할인 최대 50%, 역대급 할인 혜택" [ref=e127] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/acaf5402-b7f3-4fef-8eca-b3b220363612
+            - img "최대 30% 쿠폰" [ref=e128]
+            - generic [ref=e130]:
+              - heading "최대 30% 쿠폰" [level=2] [ref=e131]
+              - heading "씨타 썸머 단독 할인" [level=3] [ref=e132]
+              - paragraph [ref=e133]: 최대 50%, 역대급 할인 혜택
+          - link "직잭 11주년 기념 직잭 11주년 기념 혜택 꾸러미 준비했어요 30% 쿠폰까지 풍성한 생일상" [ref=e135] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/5a0780bc-8a44-47bb-b496-f36c66f74973
+            - img "직잭 11주년 기념" [ref=e136]
+            - generic [ref=e138]:
+              - heading "직잭 11주년 기념" [level=2] [ref=e139]
+              - heading "혜택 꾸러미 준비했어요" [level=3] [ref=e140]
+              - paragraph [ref=e141]: 30% 쿠폰까지 풍성한 생일상
+          - link "생일 파티 초대하고 생일 파티 초대하고 50% 할인 받기 11주년 소문내고 반값 쿠폰 받으세요" [ref=e143] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/111b0782-2e34-4ee5-921b-f4929fc372d8
+            - img "생일 파티 초대하고" [ref=e144]
+            - generic [ref=e146]:
+              - heading "생일 파티 초대하고" [level=2] [ref=e147]
+              - heading "50% 할인 받기" [level=3] [ref=e148]
+              - paragraph [ref=e149]: 11주년 소문내고 반값 쿠폰 받으세요
+          - link "디자이너 브랜드부터 디자이너 브랜드부터 글로벌 뷰티까지 지그재그의 고감도 브랜드만 모았어요" [ref=e151] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/333cdce4-2aea-41e9-a934-b6acc0999a2a
+            - img "디자이너 브랜드부터" [ref=e152]
+            - generic [ref=e154]:
+              - heading "디자이너 브랜드부터" [level=2] [ref=e155]
+              - heading "글로벌 뷰티까지" [level=3] [ref=e156]
+              - paragraph [ref=e157]: 지그재그의 고감도 브랜드만 모았어요
+          - link [ref=e159] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/d2bb45bf-348a-496c-b218-37a931834029
+          - link "뜻밖의 발견 뜻밖의 발견 최대 56% 할인 ~17% 무제한 쿠폰까지!" [ref=e161] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/32127bb0-88ea-466d-af25-4bb99af0ffd4
+            - img "뜻밖의 발견" [ref=e162]
+            - generic [ref=e164]:
+              - heading "뜻밖의 발견" [level=2] [ref=e165]
+              - heading "최대 56% 할인" [level=3] [ref=e166]
+              - paragraph [ref=e167]: ~17% 무제한 쿠폰까지!
+          - link "사뿐 신상 ~40% 사뿐 신상 ~40% 지금 가장 핫한 여름 슈즈 최대 25% 쿠폰으로 더 가벼운 쇼핑" [ref=e169] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/e5e926ca-3502-4fa3-bebb-0132e173bf18
+            - img "사뿐 신상 ~40%" [ref=e170]
+            - generic [ref=e172]:
+              - heading "사뿐 신상 ~40%" [level=2] [ref=e173]
+              - heading "지금 가장 핫한 여름 슈즈" [level=3] [ref=e174]
+              - paragraph [ref=e175]: 최대 25% 쿠폰으로 더 가벼운 쇼핑
+          - link "김예진이 선택한 김예진이 선택한 썸머 데일리룩~82% 커먼유니크 20% 쿠폰팩+무료배송" [ref=e177] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/8aefebab-e7d9-422b-baea-d46aab78a8f1
+            - img "김예진이 선택한" [ref=e178]
+            - generic [ref=e180]:
+              - heading "김예진이 선택한" [level=2] [ref=e181]
+              - heading "썸머 데일리룩~82%" [level=3] [ref=e182]
+              - paragraph [ref=e183]: 커먼유니크 20% 쿠폰팩+무료배송
+          - link "릿킴 썸머 NEW 룩북 릿킴 썸머 NEW 룩북 썸머 신상 최대 58% OFF 20% 쿠폰팩으로 더 특별한 쇼핑" [ref=e185] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/d5606ac7-c575-4bef-b486-a2cfe2f61305
+            - img "릿킴 썸머 NEW 룩북" [ref=e186]
+            - generic [ref=e188]:
+              - heading "릿킴 썸머 NEW 룩북" [level=2] [ref=e189]
+              - heading "썸머 신상 최대 58% OFF" [level=3] [ref=e190]
+              - paragraph [ref=e191]: 20% 쿠폰팩으로 더 특별한 쇼핑
+          - link "슬로우리스트 여름 신상 슬로우리스트 여름 신상 오늘부터 48시간 쿠폰 출근룩·하객룩 블라우스 모아보기" [ref=e193] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/40614b77-d517-4453-8df2-7cb659aa168f
+            - img "슬로우리스트 여름 신상" [ref=e194]
+            - generic [ref=e196]:
+              - heading "슬로우리스트 여름 신상" [level=2] [ref=e197]
+              - heading "오늘부터 48시간 쿠폰" [level=3] [ref=e198]
+              - paragraph [ref=e199]: 출근룩·하객룩 블라우스 모아보기
+          - link "코 앞으로 다가온 여름 코 앞으로 다가온 여름 바스락 팬츠 코디 최대 60% 할인 + 20% 쿠폰팩" [ref=e201] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/dc1713fc-9dfb-4318-aec5-de99a0407f96
+            - img "코 앞으로 다가온 여름" [ref=e202]
+            - generic [ref=e204]:
+              - heading "코 앞으로 다가온 여름" [level=2] [ref=e205]
+              - heading "바스락 팬츠 코디" [level=3] [ref=e206]
+              - paragraph [ref=e207]: 최대 60% 할인 + 20% 쿠폰팩
+          - link [ref=e209] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/4f9f2762-5833-4500-8d29-0d3db9a8cbc1
+          - link "썸머 주얼리 빅세일 썸머 주얼리 빅세일 골드앤디어 단독 최저가 중복 25% 쿠폰 + 무료배송" [ref=e211] [cursor=pointer]:
+            - /url: https://zigzag.kr/advertisement/exhibition/2478
+            - img "썸머 주얼리 빅세일" [ref=e212]
+            - generic [ref=e214]:
+              - heading "썸머 주얼리 빅세일" [level=2] [ref=e215]
+              - heading "골드앤디어 단독 최저가" [level=3] [ref=e216]
+              - paragraph [ref=e217]: 중복 25% 쿠폰 + 무료배송
+          - link "지금 필요한 살안타템 지금 필요한 살안타템 28% 쿠폰 오늘 종료 모어라운드 데일리 베스트 ~86%" [ref=e219] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/d1ce0e4b-d875-4a71-8083-34a097016d71
+            - img "지금 필요한 살안타템" [ref=e220]
+            - generic [ref=e222]:
+              - heading "지금 필요한 살안타템" [level=2] [ref=e223]
+              - heading "28% 쿠폰 오늘 종료" [level=3] [ref=e224]
+              - paragraph [ref=e225]: 모어라운드 데일리 베스트 ~86%
+          - link "여름에도 포기 못해요 여름에도 포기 못해요 애니원모어 레이어드룩 최대 55% 할인 + ~25% 쿠폰팩" [ref=e227] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/2058d2ab-c9d0-4e5d-a7fd-acf199289bc6
+            - img "여름에도 포기 못해요" [ref=e228]
+            - generic [ref=e230]:
+              - heading "여름에도 포기 못해요" [level=2] [ref=e231]
+              - heading "애니원모어 레이어드룩" [level=3] [ref=e232]
+              - paragraph [ref=e233]: 최대 55% 할인 + ~25% 쿠폰팩
+          - link "여름 파자마·속옷까지 여름 파자마·속옷까지 쇼핑몰 이너웨어 위크 매일 릴레이 특가 최대 30% 쿠폰" [ref=e235] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/90c27fa8-20c7-4693-bcf4-40d0262ce2bb
+            - img "여름 파자마·속옷까지" [ref=e236]
+            - generic [ref=e238]:
+              - heading "여름 파자마·속옷까지" [level=2] [ref=e239]
+              - heading "쇼핑몰 이너웨어 위크" [level=3] [ref=e240]
+              - paragraph [ref=e241]: 매일 릴레이 특가 최대 30% 쿠폰
+          - link "브랜드 여름 셀렉션 브랜드 여름 셀렉션 최대 92% 할인 스파오 外 인기 브랜드 릴레이 30%쿠폰" [ref=e243] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/906c301f-a897-492f-81dd-c823743ab383
+            - img "브랜드 여름 셀렉션" [ref=e244]
+            - generic [ref=e246]:
+              - heading "브랜드 여름 셀렉션" [level=2] [ref=e247]
+              - heading "최대 92% 할인" [level=3] [ref=e248]
+              - paragraph [ref=e249]: 스파오 外 인기 브랜드 릴레이 30%쿠폰
+          - link "지금부터 쭉 입기 좋은 지금부터 쭉 입기 좋은 니썸 여름 신상 최대 71% 할인 + 무료배송" [ref=e251] [cursor=pointer]:
+            - /url: https://zigzag.kr/needsome/collection/53115
+            - img "지금부터 쭉 입기 좋은" [ref=e252]
+            - generic [ref=e254]:
+              - heading "지금부터 쭉 입기 좋은" [level=2] [ref=e255]
+              - heading "니썸 여름 신상" [level=3] [ref=e256]
+              - paragraph [ref=e257]: 최대 71% 할인 + 무료배송
+          - link "피부관리도 손쉽게 피부관리도 손쉽게 V라인 디바이스 특가 최대 74% 할인 + 20% 쿠폰" [ref=e259] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/6e8a9a91-d0d9-4fc3-ab53-5dafafacdbdb
+            - img "피부관리도 손쉽게" [ref=e260]
+            - generic [ref=e262]:
+              - heading "피부관리도 손쉽게" [level=2] [ref=e263]
+              - heading "V라인 디바이스 특가" [level=3] [ref=e264]
+              - paragraph [ref=e265]: 최대 74% 할인 + 20% 쿠폰
+          - link "여름 맞이 잡화 여름 맞이 잡화 안경·볼캡 등 ~87% 최대 20% 쿠폰 혜택" [ref=e267] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/7c654957-9909-4d47-8139-7bdbee2ac874
+            - img "여름 맞이 잡화" [ref=e268]
+            - generic [ref=e270]:
+              - heading "여름 맞이 잡화" [level=2] [ref=e271]
+              - heading "안경·볼캡 등 ~87%" [level=3] [ref=e272]
+              - paragraph [ref=e273]: 최대 20% 쿠폰 혜택
+          - link "레인부츠 · 샌들 등 레인부츠 · 샌들 등 썸머 슈즈 ~60% 헌터·슈펜 등 20% 쿠폰 할인" [ref=e275] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/f0f25fc6-2f5c-45a7-a840-e7cadee7608e
+            - img "레인부츠 · 샌들 등" [ref=e276]
+            - generic [ref=e278]:
+              - heading "레인부츠 · 샌들 등" [level=2] [ref=e279]
+              - heading "썸머 슈즈 ~60%" [level=3] [ref=e280]
+              - paragraph [ref=e281]: 헌터·슈펜 등 20% 쿠폰 할인
+          - link "지금 가장 필요한 지금 가장 필요한 여름 더위 탈출템 선풍기 · 제습기 · 양산 등 + 추가 25% 쿠폰" [ref=e283] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/d4257b24-ae77-4b1e-88e9-229976ad0560
+            - img "지금 가장 필요한" [ref=e284]
+            - generic [ref=e286]:
+              - heading "지금 가장 필요한" [level=2] [ref=e287]
+              - heading "여름 더위 탈출템" [level=3] [ref=e288]
+              - paragraph [ref=e289]: 선풍기 · 제습기 · 양산 등 + 추가 25% 쿠폰
+          - link "깜짝 30% 쿠폰 깜짝 30% 쿠폰 마감 임박 11주년 기념 혜택 놓치지 마세요" [ref=e291] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/256e840d-3997-4132-b7e3-30316ae14133
+            - img "깜짝 30% 쿠폰" [ref=e292]
+            - generic [ref=e294]:
+              - heading "깜짝 30% 쿠폰" [level=2] [ref=e295]
+              - heading "마감 임박" [level=3] [ref=e296]
+              - paragraph [ref=e297]: 11주년 기념 혜택 놓치지 마세요
+          - link "마리떼 프랑소와 저버 마리떼 프랑소와 저버 언더웨어 단독 할인 최대 30% 할인 + 20% 쿠폰" [ref=e299] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/37057018-04a5-4303-9ad5-868237de8742
+            - img "마리떼 프랑소와 저버" [ref=e300]
+            - generic [ref=e302]:
+              - heading "마리떼 프랑소와 저버" [level=2] [ref=e303]
+              - heading "언더웨어 단독 할인" [level=3] [ref=e304]
+              - paragraph [ref=e305]: 최대 30% 할인 + 20% 쿠폰
+          - link "직잭에서만 만나는 직잭에서만 만나는 단독 입점 ~80% 라룸・에드모어・릿킴외" [ref=e307] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/2ddbf29c-b50f-4b0f-ba97-00080f668ede
+            - img "직잭에서만 만나는" [ref=e308]
+            - generic [ref=e310]:
+              - heading "직잭에서만 만나는" [level=2] [ref=e311]
+              - heading "단독 입점 ~80%" [level=3] [ref=e312]
+              - paragraph [ref=e313]: 라룸・에드모어・릿킴외
+          - link "BEST 티셔츠 총집합 BEST 티셔츠 총집합 매일 저녁 선착순 50% 쿠폰 인기 브랜드 릴레이 30% 쿠폰까지" [ref=e315] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/ba61fc37-9bd8-4426-873a-5d910b5337cd
+            - img "BEST 티셔츠 총집합" [ref=e316]
+            - generic [ref=e318]:
+              - heading "BEST 티셔츠 총집합" [level=2] [ref=e319]
+              - heading "매일 저녁 선착순 50% 쿠폰" [level=3] [ref=e320]
+              - paragraph [ref=e321]: 인기 브랜드 릴레이 30% 쿠폰까지
+          - link "폰케이스·워치스트랩 폰케이스·워치스트랩 4,900원 특가 디지털 ACC 위크 + 25% 쿠폰까지" [ref=e323] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/fc9e6069-9a17-494a-b8a1-6830b0fd8c2a
+            - img "폰케이스·워치스트랩" [ref=e324]
+            - generic [ref=e326]:
+              - heading "폰케이스·워치스트랩" [level=2] [ref=e327]
+              - heading "4,900원 특가" [level=3] [ref=e328]
+              - paragraph [ref=e329]: 디지털 ACC 위크 + 25% 쿠폰까지
+          - link "새롭게 돌아온 밈즈 새롭게 돌아온 밈즈 지그재그 단독 선론칭 오직 지그재그에서 먼저 확인해보세요" [ref=e331] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/9df215b6-f17e-4faf-a527-22c9f917519f
+            - img "새롭게 돌아온 밈즈" [ref=e332]
+            - generic [ref=e334]:
+              - heading "새롭게 돌아온 밈즈" [level=2] [ref=e335]
+              - heading "지그재그 단독 선론칭" [level=3] [ref=e336]
+              - paragraph [ref=e337]: 오직 지그재그에서 먼저 확인해보세요
+          - link "ZIGZAG ZIGZAG 5월 결제 이벤트 간편결제, 카드사 혜택 모음" [ref=e339] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/0281eae3-9585-44fe-ba03-f03059ac1037
+            - img "ZIGZAG" [ref=e340]
+            - generic [ref=e342]:
+              - heading "ZIGZAG" [level=2] [ref=e343]
+              - heading "5월 결제 이벤트" [level=3] [ref=e344]
+              - paragraph [ref=e345]: 간편결제, 카드사 혜택 모음
+          - link "아모레위크 OPEN 아모레위크 OPEN 5월 신상 라인업 헤라∙에스트라∙마몽드 등 최저가 도전까지" [ref=e347] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/0c0c803f-0b0d-43aa-b443-3fdd35f60728
+            - img "아모레위크 OPEN" [ref=e348]
+            - generic [ref=e350]:
+              - heading "아모레위크 OPEN" [level=2] [ref=e351]
+              - heading "5월 신상 라인업" [level=3] [ref=e352]
+              - paragraph [ref=e353]: 헤라∙에스트라∙마몽드 등 최저가 도전까지
+          - link "지그재그 11주년 지그재그 11주년 쇼핑몰 최대 90% 할인 인기스토어 ~30% 쿠폰까지" [ref=e355] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/fa722deb-3ccf-428d-ae41-05d8eefb6e5e
+            - img "지그재그 11주년" [ref=e356]
+            - generic [ref=e358]:
+              - heading "지그재그 11주년" [level=2] [ref=e359]
+              - heading "쇼핑몰 최대 90% 할인" [level=3] [ref=e360]
+              - paragraph [ref=e361]: 인기스토어 ~30% 쿠폰까지
+          - link "힌스 신상 론칭 힌스 신상 론칭 NEW 미러 듀 글로스 2개 구성 구매 시 미러 키링 증정까지" [ref=e363] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/f93c3ad7-9d08-4a3f-b74b-89c82c25208a
+            - img "힌스 신상 론칭" [ref=e364]
+            - generic [ref=e366]:
+              - heading "힌스 신상 론칭" [level=2] [ref=e367]
+              - heading "NEW 미러 듀 글로스" [level=3] [ref=e368]
+              - paragraph [ref=e369]: 2개 구성 구매 시 미러 키링 증정까지
+          - link "대학생 모두 모여라! 대학생 모두 모여라! 최대 50% 랜덤 쿠폰 톡학생증 인증하면 할인 쿠폰을 드려요" [ref=e371] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/30a5131d-c811-4f86-ae22-5a04a68aadd9
+            - img "대학생 모두 모여라!" [ref=e372]
+            - generic [ref=e374]:
+              - heading "대학생 모두 모여라!" [level=2] [ref=e375]
+              - heading "최대 50% 랜덤 쿠폰" [level=3] [ref=e376]
+              - paragraph [ref=e377]: 톡학생증 인증하면 할인 쿠폰을 드려요
+          - link "지금 주목해야 할 지금 주목해야 할 출근 • 캐주얼룩 특가 나에게 딱 맞는 추천 신상 아이템 보기" [ref=e379] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/6f0e9f8a-3e20-43cb-ba1c-21afa788c03f
+            - img "지금 주목해야 할" [ref=e380]
+            - generic [ref=e382]:
+              - heading "지금 주목해야 할" [level=2] [ref=e383]
+              - heading "출근 • 캐주얼룩 특가" [level=3] [ref=e384]
+              - paragraph [ref=e385]: 나에게 딱 맞는 추천 신상 아이템 보기
+          - link "여름 붓기 고민 끝 여름 붓기 고민 끝 니아르 붓기 캔디 특가 5월 26일 저녁 8시 LIVE" [ref=e387] [cursor=pointer]:
+            - /url: https://zigzag.kr/events/05aa79f6-7b77-42b4-b674-ed728057e08b
+            - img "여름 붓기 고민 끝" [ref=e388]
+            - generic [ref=e390]:
+              - heading "여름 붓기 고민 끝" [level=2] [ref=e391]
+              - heading "니아르 붓기 캔디 특가" [level=3] [ref=e392]
+              - paragraph [ref=e393]: 5월 26일 저녁 8시 LIVE
+        - generic [ref=e394]:
+          - generic [ref=e395]: "1"
+          - generic [ref=e397]: "46"
+      - generic [ref=e399]:
+        - generic [ref=e400]:
+          - group [ref=e401]:
+            - link "직진배송 직진배송" [ref=e402] [cursor=pointer]:
+              - /url: https://content.zigzag.kr/zigzin
+              - img "직진배송" [ref=e403]
+              - paragraph [ref=e404]: 직진배송
+          - group [ref=e405]:
+            - link "뷰티 뷰티" [ref=e406] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/1098?middle_category_id=1098&title=%EB%B7%B0%ED%8B%B0+%EC%A0%84%EC%B2%B4
+              - img "뷰티" [ref=e407]
+              - paragraph [ref=e408]: 뷰티
+          - group [ref=e409]:
+            - link "상의 상의" [ref=e410] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/-1?middle_category_id=474&title=%EC%9D%98%EB%A5%98
+              - img "상의" [ref=e411]
+              - paragraph [ref=e412]: 상의
+          - group [ref=e413]:
+            - link "원피스 원피스" [ref=e414] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/-1?middle_category_id=507&title=%EC%9D%98%EB%A5%98
+              - img "원피스" [ref=e415]
+              - paragraph [ref=e416]: 원피스
+          - group [ref=e417]:
+            - link "바지 바지" [ref=e418] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/-1?middle_category_id=547&title=%EC%9D%98%EB%A5%98
+              - img "바지" [ref=e419]
+              - paragraph [ref=e420]: 바지
+          - group [ref=e421]:
+            - link "스커트 스커트" [ref=e422] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/-1?middle_category_id=560&title=%EC%9D%98%EB%A5%98
+              - img "스커트" [ref=e423]
+              - paragraph [ref=e424]: 스커트
+          - group [ref=e425]:
+            - link "아우터 아우터" [ref=e426] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/-1?middle_category_id=436&title=%EC%9D%98%EB%A5%98
+              - img "아우터" [ref=e427]
+              - paragraph [ref=e428]: 아우터
+          - group [ref=e429]:
+            - link "슈즈 슈즈" [ref=e430] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/582?middle_category_id=582&title=%EC%8A%88%EC%A6%88+%EC%A0%84%EC%B2%B4
+              - img "슈즈" [ref=e431]
+              - paragraph [ref=e432]: 슈즈
+          - group [ref=e433]:
+            - link "가방 가방" [ref=e434] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/623?middle_category_id=623&title=%EA%B0%80%EB%B0%A9+%EC%A0%84%EC%B2%B4
+              - img "가방" [ref=e435]
+              - paragraph [ref=e436]: 가방
+          - group [ref=e437]:
+            - link "이너웨어 이너웨어" [ref=e438] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/-1?middle_category_id=795&title=%EC%9D%98%EB%A5%98
+              - img "이너웨어" [ref=e439]
+              - paragraph [ref=e440]: 이너웨어
+          - group [ref=e441]:
+            - link "투피스/세트 투피스/세트" [ref=e442] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/-1?middle_category_id=538&title=%EC%9D%98%EB%A5%98
+              - img "투피스/세트" [ref=e443]
+              - paragraph [ref=e444]: 투피스/세트
+          - group [ref=e445]:
+            - link "주얼리 주얼리" [ref=e446] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/633?middle_category_id=633&title=%EC%A3%BC%EC%96%BC%EB%A6%AC+%EC%A0%84%EC%B2%B4
+              - img "주얼리" [ref=e447]
+              - paragraph [ref=e448]: 주얼리
+          - group [ref=e449]:
+            - link "플러스사이즈 플러스사이즈" [ref=e450] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/-1?middle_category_id=845&title=%EC%9D%98%EB%A5%98
+              - img "플러스사이즈" [ref=e451]
+              - paragraph [ref=e452]: 플러스사이즈
+          - group [ref=e453]:
+            - link "트레이닝 트레이닝" [ref=e454] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/-1?middle_category_id=833&title=%EC%9D%98%EB%A5%98
+              - img "트레이닝" [ref=e455]
+              - paragraph [ref=e456]: 트레이닝
+          - group [ref=e457]:
+            - link "비치웨어 비치웨어" [ref=e458] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/-1?middle_category_id=751&title=%EC%9D%98%EB%A5%98
+              - img "비치웨어" [ref=e459]
+              - paragraph [ref=e460]: 비치웨어
+          - group [ref=e461]:
+            - link "푸드 푸드" [ref=e462] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/2686?middle_category_id=2686&title=%ED%91%B8%EB%93%9C
+              - img "푸드" [ref=e463]
+              - paragraph [ref=e464]: 푸드
+          - group [ref=e465]:
+            - link "라이프 라이프" [ref=e466] [cursor=pointer]:
+              - /url: https://zigzag.kr/categories/1567?middle_category_id=1567&title=%EB%9D%BC%EC%9D%B4%ED%94%84+%EC%A0%84%EC%B2%B4
+              - img "라이프" [ref=e467]
+              - paragraph [ref=e468]: 라이프
+        - generic [ref=e469]:
+          - button "이전" [disabled]:
+            - img
+        - button "다음" [ref=e471] [cursor=pointer]:
+          - img [ref=e472]
+      - img [ref=e477]
+    - generic [ref=e492]:
+      - link "홈" [ref=e493] [cursor=pointer]:
+        - /url: /home
+        - generic [ref=e494]:
+          - img [ref=e495]
+          - paragraph [ref=e497]: 홈
+      - link "카테고리" [ref=e498] [cursor=pointer]:
+        - /url: /categories
+        - generic [ref=e499]:
+          - img [ref=e500]
+          - paragraph [ref=e502]: 카테고리
+      - link "찜" [ref=e503] [cursor=pointer]:
+        - /url: /picks
+        - generic [ref=e504]:
+          - img [ref=e505]
+          - paragraph [ref=e507]: 찜
+      - link "마이페이지" [ref=e508] [cursor=pointer]:
+        - /url: /my-page
+        - generic [ref=e509]:
+          - img [ref=e510]
+          - paragraph [ref=e512]: 마이페이지
+    - contentinfo [ref=e513]:
+      - generic [ref=e514]:
+        - heading "(주)카카오스타일 사업자 정보" [level=2] [ref=e515]
+        - list [ref=e516]:
+          - listitem [ref=e517]:
+            - generic [ref=e518]: 대표이사
+            - generic [ref=e519]: 서정훈
+          - listitem [ref=e520]:
+            - generic [ref=e521]: 주소
+            - generic [ref=e522]: 경기 성남시 분당구 판교역로 235, H스퀘어 N동 6층
+          - listitem [ref=e523]:
+            - generic [ref=e524]: 문의전화
+            - generic [ref=e525]: 02-1670-8050
+          - listitem [ref=e526]:
+            - generic [ref=e527]: 이메일
+            - generic [ref=e528]: info@kakaostyle.com
+          - listitem [ref=e529]:
+            - generic [ref=e530]: 사업자등록번호
+            - generic [ref=e531]: 214-88-91525
+          - listitem [ref=e532]:
+            - generic [ref=e533]: 통신판매업 신고번호
+            - generic [ref=e534]: 2024-성남분당A-0172
+          - listitem [ref=e535]:
+            - generic [ref=e536]: 호스팅 사업자
+            - generic [ref=e537]: (주)카카오스타일
+        - list [ref=e538]:
+          - listitem [ref=e539]:
+            - link "사업자 정보 조회" [ref=e540] [cursor=pointer]:
+              - /url: https://www.ftc.go.kr/bizCommPop.do?wrkr_no=2148891525
+          - listitem [ref=e541]:
+            - link "이용약관" [ref=e542] [cursor=pointer]:
+              - /url: https://cf.res.s.zigzag.kr/terms/user/service.html
+          - listitem [ref=e543]:
+            - link "개인정보처리방침" [ref=e544] [cursor=pointer]:
+              - /url: https://cf.res.s.zigzag.kr/terms/user/privacy.html
+        - generic [ref=e545]:
+          - text: ㈜카카오스타일은 통신판매중개자로서 통신판매의 당사자가 아닙니다.
+          - text: 따라서, 등록된 상품, 거래정보 및 거래에 대하여 ㈜카카오스타일은
+          - text: 어떠한 책임도 지지 않습니다.
+          - text: Copyright © kakaostyle Corp. All rights reserved.
+          - generic [ref=e546]:
+            - generic [ref=e547]: 당사는 고객님의 안전거래를 위해 관련 법률에 의거하여 나이스정보통신(주)의 에스크로 서비스를 적용하고 있습니다.
+            - link "서비스 가입사실 확인" [ref=e548] [cursor=pointer]:
+              - /url: https://www.nicepay.co.kr/apply/progress/escrow.do#none
+          - generic [ref=e549]:
+            - generic [ref=e550]: 당사는 고객님이 현금 결제한 금액에 대해 신한은행과 채무지급보증 계약을 체결하여 안전거래를 보장하고 있습니다.
+            - link "서비스 가입사실 확인" [ref=e551] [cursor=pointer]:
+              - /url: https://cf.res.s.zigzag.kr/%E1%84%89%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%92%E1%85%A2%E1%86%BC_%E1%84%8C%E1%85%B5%E1%84%80%E1%85%B3%E1%86%B8%E1%84%87%E1%85%A9%E1%84%8C%E1%85%B3%E1%86%BC%E1%84%89%E1%85%A5.pdf
+  - alert [ref=e553]

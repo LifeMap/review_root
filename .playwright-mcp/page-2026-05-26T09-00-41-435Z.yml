@@ -1,0 +1,97 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - button "landing-banner 지그재그 앱에서 더 편리하게 앱으로 이동" [ref=e6]:
+      - img "landing-banner" [ref=e7]
+      - paragraph [ref=e8]: 지그재그 앱에서 더 편리하게
+      - generic [ref=e9]: 앱으로 이동
+    - main [ref=e10]:
+      - navigation "상단 네비게이션 메뉴" [ref=e12]:
+        - button [ref=e14] [cursor=pointer]:
+          - img [ref=e16]
+        - generic:
+          - paragraph
+        - generic [ref=e18]:
+          - link "검색" [ref=e19] [cursor=pointer]:
+            - /url: /search
+            - img [ref=e21]
+          - link "장바구니" [ref=e23] [cursor=pointer]:
+            - /url: /cart
+            - generic [ref=e24]:
+              - generic:
+                - img
+      - tablist [ref=e27]
+      - button [ref=e30] [cursor=pointer]:
+        - img [ref=e31]
+      - generic [ref=e34]:
+        - paragraph
+        - paragraph
+    - generic [ref=e36]:
+      - link "홈" [ref=e37] [cursor=pointer]:
+        - /url: /home
+        - generic [ref=e38]:
+          - img [ref=e39]
+          - paragraph [ref=e42]: 홈
+      - link "카테고리" [ref=e43] [cursor=pointer]:
+        - /url: /categories
+        - generic [ref=e44]:
+          - img [ref=e45]
+          - paragraph [ref=e47]: 카테고리
+      - link "찜" [ref=e48] [cursor=pointer]:
+        - /url: /picks
+        - generic [ref=e49]:
+          - img [ref=e50]
+          - paragraph [ref=e52]: 찜
+      - link "마이페이지" [ref=e53] [cursor=pointer]:
+        - /url: /my-page
+        - generic [ref=e54]:
+          - img [ref=e55]
+          - paragraph [ref=e57]: 마이페이지
+    - contentinfo [ref=e58]:
+      - generic [ref=e59]:
+        - heading "(주)카카오스타일 사업자 정보" [level=2] [ref=e60]
+        - list [ref=e61]:
+          - listitem [ref=e62]:
+            - generic [ref=e63]: 대표이사
+            - generic [ref=e64]: 서정훈
+          - listitem [ref=e65]:
+            - generic [ref=e66]: 주소
+            - generic [ref=e67]: 경기 성남시 분당구 판교역로 235, H스퀘어 N동 6층
+          - listitem [ref=e68]:
+            - generic [ref=e69]: 문의전화
+            - generic [ref=e70]: 02-1670-8050
+          - listitem [ref=e71]:
+            - generic [ref=e72]: 이메일
+            - generic [ref=e73]: info@kakaostyle.com
+          - listitem [ref=e74]:
+            - generic [ref=e75]: 사업자등록번호
+            - generic [ref=e76]: 214-88-91525
+          - listitem [ref=e77]:
+            - generic [ref=e78]: 통신판매업 신고번호
+            - generic [ref=e79]: 2024-성남분당A-0172
+          - listitem [ref=e80]:
+            - generic [ref=e81]: 호스팅 사업자
+            - generic [ref=e82]: (주)카카오스타일
+        - list [ref=e83]:
+          - listitem [ref=e84]:
+            - link "사업자 정보 조회" [ref=e85] [cursor=pointer]:
+              - /url: https://www.ftc.go.kr/bizCommPop.do?wrkr_no=2148891525
+          - listitem [ref=e86]:
+            - link "이용약관" [ref=e87] [cursor=pointer]:
+              - /url: https://cf.res.s.zigzag.kr/terms/user/service.html
+          - listitem [ref=e88]:
+            - link "개인정보처리방침" [ref=e89] [cursor=pointer]:
+              - /url: https://cf.res.s.zigzag.kr/terms/user/privacy.html
+        - generic [ref=e90]:
+          - text: ㈜카카오스타일은 통신판매중개자로서 통신판매의 당사자가 아닙니다.
+          - text: 따라서, 등록된 상품, 거래정보 및 거래에 대하여 ㈜카카오스타일은
+          - text: 어떠한 책임도 지지 않습니다.
+          - text: Copyright © kakaostyle Corp. All rights reserved.
+          - generic [ref=e91]:
+            - generic [ref=e92]: 당사는 고객님의 안전거래를 위해 관련 법률에 의거하여 나이스정보통신(주)의 에스크로 서비스를 적용하고 있습니다.
+            - link "서비스 가입사실 확인" [ref=e93] [cursor=pointer]:
+              - /url: https://www.nicepay.co.kr/apply/progress/escrow.do#none
+          - generic [ref=e94]:
+            - generic [ref=e95]: 당사는 고객님이 현금 결제한 금액에 대해 신한은행과 채무지급보증 계약을 체결하여 안전거래를 보장하고 있습니다.
+            - link "서비스 가입사실 확인" [ref=e96] [cursor=pointer]:
+              - /url: https://cf.res.s.zigzag.kr/%E1%84%89%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%92%E1%85%A2%E1%86%BC_%E1%84%8C%E1%85%B5%E1%84%80%E1%85%B3%E1%86%B8%E1%84%87%E1%85%A9%E1%84%8C%E1%85%B3%E1%86%BC%E1%84%89%E1%85%A5.pdf
+  - alert [ref=e98]

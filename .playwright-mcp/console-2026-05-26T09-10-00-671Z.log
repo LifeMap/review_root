@@ -1,0 +1,20 @@
+[     838ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://m.a-bly.com/screens/CLOTHING_CATEGORY_DEPARTMENT:0
+[    1119ms] [WARNING] [TikTok Pixel] - Invalid Event Name Format
+Issue: 1 event name was rejected for not following TikTok format requirements.
+Suggestion: Go to your source code and update these event types according to TikTok format requirements. See https://ads.tiktok.com/help/article/custom-events?lang=en for more information. @ https://static.m.a-bly.com/_next/static/chunks/pages/_app-cd882e1672943386.js:13
+[    1120ms] [WARNING] [TikTok Pixel] - Invalid Event Name Format
+Issue: 1 event name was rejected for not following TikTok format requirements.
+Suggestion: Go to your source code and update these event types according to TikTok format requirements. See https://ads.tiktok.com/help/article/custom-events?lang=en for more information. @ https://static.m.a-bly.com/_next/static/chunks/pages/_app-cd882e1672943386.js:13
+[    1120ms] [WARNING] [TikTok Pixel] - Invalid Event Name Format
+Issue: 1 event name was rejected for not following TikTok format requirements.
+Suggestion: Go to your source code and update these event types according to TikTok format requirements. See https://ads.tiktok.com/help/article/custom-events?lang=en for more information. @ https://static.m.a-bly.com/_next/static/chunks/pages/_app-cd882e1672943386.js:13
+[    1121ms] [WARNING] [TikTok Pixel] - Invalid Event Name Format
+Issue: 1 event name was rejected for not following TikTok format requirements.
+Suggestion: Go to your source code and update these event types according to TikTok format requirements. See https://ads.tiktok.com/help/article/custom-events?lang=en for more information. @ https://static.m.a-bly.com/_next/static/chunks/pages/_app-cd882e1672943386.js:13
+[    1122ms] [WARNING] [TikTok Pixel] - Missing 'content_id' paramter
+Issue: The 'content_id' parameter isn't being received. This is required for Video Shopping Ads (VSA).
+Suggestion: Include the 'content_id' parameter in your source code. This is required for Video Shopping Ads (VSA). See https://ads.tiktok.com/help/article/standard-events-parameters?redirected=2 for more information. @ https://static.m.a-bly.com/_next/static/chunks/pages/_app-cd882e1672943386.js:13
+[   12019ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api.a-bly.com/api/v2/screens/CATEGORY_DEPARTMENT/:0
+[   12063ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://api.a-bly.com/api/v2/screens/RANKING/:0
+[   12119ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://api.a-bly.com/api/v2/screens/BEST/:0
+[   12168ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://api.a-bly.com/api/v2/categories/:0

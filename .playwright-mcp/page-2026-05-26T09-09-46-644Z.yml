@@ -1,0 +1,9 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - img "error" [ref=e5]
+      - paragraph [ref=e6]: 페이지를 찾을 수 없어요
+      - paragraph [ref=e7]: 주소가 잘못 입력되었거나,
+      - paragraph [ref=e8]: 변경 혹은 삭제되어 페이지를 찾을 수 없어요.
+      - button "홈으로 이동" [ref=e9] [cursor=pointer]
+  - alert [ref=e10]

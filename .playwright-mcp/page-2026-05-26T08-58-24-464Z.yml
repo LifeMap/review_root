@@ -1,0 +1,58 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - button "landing-banner 지그재그 앱에서 더 편리하게 앱으로 이동" [ref=e6]:
+      - img "landing-banner" [ref=e7]
+      - paragraph [ref=e8]: 지그재그 앱에서 더 편리하게
+      - generic [ref=e9]: 앱으로 이동
+    - generic [ref=e11]:
+      - img [ref=e12]
+      - heading "찾을 수 없는 페이지입니다." [level=2] [ref=e17]
+    - contentinfo [ref=e19]:
+      - generic [ref=e20]:
+        - heading "(주)카카오스타일 사업자 정보" [level=2] [ref=e21]
+        - list [ref=e22]:
+          - listitem [ref=e23]:
+            - generic [ref=e24]: 대표이사
+            - generic [ref=e25]: 서정훈
+          - listitem [ref=e26]:
+            - generic [ref=e27]: 주소
+            - generic [ref=e28]: 경기 성남시 분당구 판교역로 235, H스퀘어 N동 6층
+          - listitem [ref=e29]:
+            - generic [ref=e30]: 문의전화
+            - generic [ref=e31]: 02-1670-8050
+          - listitem [ref=e32]:
+            - generic [ref=e33]: 이메일
+            - generic [ref=e34]: info@kakaostyle.com
+          - listitem [ref=e35]:
+            - generic [ref=e36]: 사업자등록번호
+            - generic [ref=e37]: 214-88-91525
+          - listitem [ref=e38]:
+            - generic [ref=e39]: 통신판매업 신고번호
+            - generic [ref=e40]: 2024-성남분당A-0172
+          - listitem [ref=e41]:
+            - generic [ref=e42]: 호스팅 사업자
+            - generic [ref=e43]: (주)카카오스타일
+        - list [ref=e44]:
+          - listitem [ref=e45]:
+            - link "사업자 정보 조회" [ref=e46] [cursor=pointer]:
+              - /url: https://www.ftc.go.kr/bizCommPop.do?wrkr_no=2148891525
+          - listitem [ref=e47]:
+            - link "이용약관" [ref=e48] [cursor=pointer]:
+              - /url: https://cf.res.s.zigzag.kr/terms/user/service.html
+          - listitem [ref=e49]:
+            - link "개인정보처리방침" [ref=e50] [cursor=pointer]:
+              - /url: https://cf.res.s.zigzag.kr/terms/user/privacy.html
+        - generic [ref=e51]:
+          - text: ㈜카카오스타일은 통신판매중개자로서 통신판매의 당사자가 아닙니다.
+          - text: 따라서, 등록된 상품, 거래정보 및 거래에 대하여 ㈜카카오스타일은
+          - text: 어떠한 책임도 지지 않습니다.
+          - text: Copyright © kakaostyle Corp. All rights reserved.
+          - generic [ref=e52]:
+            - generic [ref=e53]: 당사는 고객님의 안전거래를 위해 관련 법률에 의거하여 나이스정보통신(주)의 에스크로 서비스를 적용하고 있습니다.
+            - link "서비스 가입사실 확인" [ref=e54] [cursor=pointer]:
+              - /url: https://www.nicepay.co.kr/apply/progress/escrow.do#none
+          - generic [ref=e55]:
+            - generic [ref=e56]: 당사는 고객님이 현금 결제한 금액에 대해 신한은행과 채무지급보증 계약을 체결하여 안전거래를 보장하고 있습니다.
+            - link "서비스 가입사실 확인" [ref=e57] [cursor=pointer]:
+              - /url: https://cf.res.s.zigzag.kr/%E1%84%89%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%92%E1%85%A2%E1%86%BC_%E1%84%8C%E1%85%B5%E1%84%80%E1%85%B3%E1%86%B8%E1%84%87%E1%85%A9%E1%84%8C%E1%85%B3%E1%86%BC%E1%84%89%E1%85%A5.pdf
+  - alert [ref=e59]

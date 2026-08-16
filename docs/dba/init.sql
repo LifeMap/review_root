@@ -313,7 +313,9 @@ CREATE TABLE recent_views (
 INSERT INTO platforms (code, name, url, is_active) VALUES
 ('29cm', '29CM', 'https://www.29cm.co.kr', TRUE),
 ('musinsa', '무신사', 'https://www.musinsa.com', TRUE),
-('naver', '네이버 스마트스토어', 'https://smartstore.naver.com', TRUE);
+('naver', '네이버 스마트스토어', 'https://smartstore.naver.com', TRUE),
+('zigzag', '지그재그', 'https://zigzag.kr', TRUE),
+('ably', '에이블리', 'https://m.a-bly.com', TRUE);
 
 -- ============================================================================
 -- 완료

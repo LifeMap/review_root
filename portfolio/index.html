@@ -1,0 +1,2809 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>리뷰모으기 (Reviews Service) — Portfolio</title>
+  <style>
+    /* ── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #111111;
+      --surface2:  #1a1a1a;
+      --border:    #2a2a2a;
+      --border2:   #333333;
+      --text:      #e5e5e5;
+      --muted:     #888888;
+      --accent:    #3b82f6;
+      --accent2:   #60a5fa;
+      --green:     #22c55e;
+      --yellow:    #eab308;
+      --red:       #ef4444;
+      --purple:    #a855f7;
+      --code-bg:   #141414;
+      --radius:    12px;
+      --radius-sm: 8px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo',
+                   'Noto Sans KR', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    a { color: var(--accent2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Layout ───────────────────────────────────── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 80px 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    /* ── Nav ──────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1080px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+    .nav-logo {
+      font-size: 16px; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex; gap: 28px; list-style: none;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a {
+      color: var(--muted); font-size: 13.5px;
+      transition: color .2s;
+      position: relative; display: inline-block;
+      padding: 6px 2px; white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .nav-links a::after {
+      content: ''; position: absolute;
+      left: 0; right: 0; bottom: -2px;
+      height: 2px; background: var(--accent);
+      border-radius: 2px;
+      transform: scaleX(0); transform-origin: center;
+      transition: transform .25s ease;
+    }
+    .nav-links a.active {
+      color: var(--text); font-weight: 600;
+    }
+    .nav-links a.active::after { transform: scaleX(1); }
+
+    /* ── Hero ─────────────────────────────────────── */
+    .hero {
+      padding: 120px 0 96px;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(59,130,246,0.12), transparent);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3);
+      color: var(--accent2); border-radius: 99px;
+      padding: 5px 14px; font-size: 12.5px; font-weight: 600;
+      margin-bottom: 28px; letter-spacing: .3px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 800; line-height: 1.15;
+      letter-spacing: -1.5px; margin-bottom: 20px;
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero-sub {
+      font-size: 18px; color: var(--muted); max-width: 560px;
+      margin: 0 auto 44px; line-height: 1.8;
+    }
+    .hero-tags {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center; margin-bottom: 48px;
+    }
+    .tag {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--muted); border-radius: 99px;
+      padding: 5px 14px; font-size: 12.5px;
+    }
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; max-width: 700px; margin: 0 auto;
+    }
+    .stat-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px 16px; text-align: center;
+    }
+    .stat-num {
+      font-size: 26px; font-weight: 800; color: var(--text);
+      letter-spacing: -1px;
+    }
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* ── Section Headers ──────────────────────────── */
+    .section-label {
+      font-size: 11.5px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 12px;
+    }
+    h2.section-title {
+      font-size: clamp(26px, 4vw, 40px); font-weight: 800;
+      letter-spacing: -1px; margin-bottom: 12px; line-height: 1.2;
+    }
+    .section-desc {
+      color: var(--muted); font-size: 16px; max-width: 600px; line-height: 1.8;
+      margin-bottom: 52px;
+    }
+
+    /* ── Cards ────────────────────────────────────── */
+    .card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      transition: border-color .2s;
+    }
+    .card:hover { border-color: var(--border2); }
+    .card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ── Grid layouts ─────────────────────────────── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+
+    /* ── Tech stack ───────────────────────────────── */
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 12px; }
+    .tech-item {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 14px 16px;
+    }
+    .tech-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .tech-info .tech-name { font-size: 13.5px; font-weight: 600; }
+    .tech-info .tech-role { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+
+    /* ── Architecture diagram ─────────────────────── */
+    .arch-box {
+      background: var(--code-bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 36px;
+      font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, monospace;
+      font-size: 13px; line-height: 1.9; overflow-x: auto;
+      color: #aaaaaa;
+    }
+    .arch-box .c-blue { color: #60a5fa; }
+    .arch-box .c-green { color: #4ade80; }
+    .arch-box .c-yellow { color: #facc15; }
+    .arch-box .c-purple { color: #c084fc; }
+    .arch-box .c-red { color: #f87171; }
+    .arch-box .c-cyan { color: #22d3ee; }
+    .arch-box .c-dim { color: #555; }
+
+    /* ── Code highlight ───────────────────────────── */
+    .code-block {
+      background: var(--code-bg); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; margin: 16px 0;
+    }
+    .code-header {
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .code-filename { font-size: 12px; color: var(--muted); margin-left: 4px; }
+    .code-body {
+      padding: 20px 24px; overflow-x: auto;
+      font-family: 'SF Mono','Fira Code',Menlo,monospace;
+      font-size: 13px; line-height: 1.8;
+    }
+    .kw { color: #c084fc; }
+    .fn { color: #60a5fa; }
+    .str { color: #4ade80; }
+    .cmt { color: #555; font-style: italic; }
+    .tp { color: #facc15; }
+    .op { color: #f87171; }
+    .nb { color: #fb923c; }
+
+    /* ── Pipeline steps ───────────────────────────── */
+    .pipeline {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .pipe-step {
+      display: flex; gap: 20px; align-items: flex-start;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .pipe-step:last-child { border-bottom: none; }
+    .pipe-num {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--accent); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800; color: #fff;
+      margin-top: 2px;
+    }
+    .pipe-content h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .pipe-content p { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+    .pipe-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .pipe-tag {
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+      color: var(--accent2); border-radius: 99px;
+      padding: 2px 10px; font-size: 11.5px;
+    }
+
+    /* ── Feature cards ────────────────────────────── */
+    .feature-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 16px;
+    }
+
+    /* ── Table ────────────────────────────────────── */
+    .tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .tbl th, .tbl td {
+      padding: 12px 16px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .tbl th { color: var(--muted); font-weight: 600; font-size: 12px;
+              text-transform: uppercase; letter-spacing: .5px; }
+    .tbl td { color: var(--text); }
+    .tbl tr:last-child td { border-bottom: none; }
+    .tbl-wrap {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+
+    /* ── Screenshot placeholder ───────────────────── */
+    .screenshot-placeholder {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .sp-bar {
+      height: 36px; background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; padding: 0 14px; gap: 8px;
+    }
+    .sp-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .sp-body {
+      padding: 0; min-height: 240px;
+      display: flex; flex-direction: column;
+      font-family: 'SF Mono','Fira Code',Menlo,monospace;
+    }
+
+    /* ── UI mock ──────────────────────────────────── */
+    .ui-mock {
+      background: #0a0a0a; min-height: 260px;
+      display: flex; flex-direction: column;
+    }
+    .ui-mock-nav {
+      height: 52px; background: #111;
+      border-bottom: 1px solid #222;
+      display: flex; align-items: center; padding: 0 20px;
+      justify-content: space-between;
+    }
+    .ui-mock-nav-logo { font-size: 14px; font-weight: 700; color: #fff; }
+    .ui-mock-nav-links { display: flex; gap: 16px; }
+    .ui-mock-nav-link { font-size: 12px; color: #666; }
+    .ui-mock-hero {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 32px 20px;
+    }
+    .ui-mock-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+    .ui-mock-sub { font-size: 12px; color: #666; margin-bottom: 20px; text-align: center; }
+    .ui-mock-search {
+      width: 100%; max-width: 420px;
+      display: flex; align-items: center;
+      background: #1a1a1a; border: 1px solid #2a2a2a;
+      border-radius: 12px; padding: 10px 16px; gap: 10px;
+    }
+    .ui-mock-search-icon { color: #555; font-size: 14px; }
+    .ui-mock-search-input { font-size: 13px; color: #555; }
+    .ui-mock-kw { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; justify-content: center; }
+    .ui-mock-kw span { font-size: 11px; color: #3b82f6; background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); border-radius: 99px; padding: 3px 10px; }
+
+    /* Product mock */
+    .product-grid-mock { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 20px; }
+    .product-card-mock {
+      background: #1a1a1a; border: 1px solid #222;
+      border-radius: 8px; overflow: hidden;
+    }
+    .product-img-mock {
+      height: 80px; background: linear-gradient(135deg, #1e293b, #0f172a);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+    .product-info-mock { padding: 10px; }
+    .product-brand-mock { font-size: 10px; color: #555; }
+    .product-name-mock { font-size: 11px; color: #ccc; margin: 2px 0; font-weight: 600; }
+    .product-rating-mock { font-size: 10px; color: #eab308; }
+    .product-price-mock { font-size: 11px; color: #60a5fa; font-weight: 600; }
+
+    /* Review mock */
+    .review-mock { padding: 16px 20px; }
+    .review-item-mock {
+      background: #1a1a1a; border: 1px solid #222;
+      border-radius: 8px; padding: 14px; margin-bottom: 10px;
+    }
+    .review-header-mock { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .review-user-mock { font-size: 11px; color: #777; }
+    .review-badge-mock { font-size: 10px; padding: 2px 8px; border-radius: 99px; }
+    .badge-similar { background: rgba(34,197,94,0.12); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+    .badge-sponsored { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+    .review-content-mock { font-size: 12px; color: #999; line-height: 1.6; }
+    .review-kw-mock { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+    .kw-plus { font-size: 10px; padding: 2px 7px; border-radius: 99px; background: rgba(34,197,94,0.08); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+    .kw-minus { font-size: 10px; padding: 2px 7px; border-radius: 99px; background: rgba(239,68,68,0.08); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+
+    /* Admin mock */
+    .admin-mock { display: grid; grid-template-columns: 120px 1fr; min-height: 200px; }
+    .admin-sidebar { background: #0d0d0d; border-right: 1px solid #222; padding: 16px 12px; }
+    .admin-menu-item { font-size: 11px; color: #555; padding: 6px 8px; border-radius: 6px; margin-bottom: 2px; }
+    .admin-menu-item.active { background: rgba(59,130,246,0.12); color: #60a5fa; }
+    .admin-main { padding: 16px; }
+    .admin-stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .admin-stat-box { background: #1a1a1a; border: 1px solid #222; border-radius: 6px; padding: 12px; }
+    .admin-stat-val { font-size: 18px; font-weight: 800; color: #fff; }
+    .admin-stat-lbl { font-size: 10px; color: #555; margin-top: 2px; }
+    .admin-chart-mock {
+      background: #1a1a1a; border: 1px solid #222;
+      border-radius: 6px; height: 80px;
+      display: flex; align-items: flex-end;
+      padding: 12px 10px; gap: 5px;
+    }
+    .bar-mock {
+      flex: 1; border-radius: 3px 3px 0 0;
+      background: rgba(59,130,246,0.5);
+    }
+
+    /* Admin Extended Mocks */
+    .admin-full-mock {
+      background: #0a0a0a; display: flex; flex-direction: column; min-height: 320px;
+    }
+    .admin-header-mock {
+      height: 48px; background: #111; border-bottom: 1px solid #1a1a1a;
+      display: flex; align-items: center; padding: 0 16px; justify-content: space-between;
+    }
+    .admin-header-left { display: flex; align-items: center; gap: 12px; }
+    .admin-logo-box { width: 28px; height: 28px; background: #2563eb; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .admin-logo-text { font-size: 13px; font-weight: 700; color: #fff; }
+    .admin-logo-sub { font-size: 9px; color: #555; text-transform: uppercase; letter-spacing: 1px; }
+    .admin-header-right { display: flex; align-items: center; gap: 12px; }
+    .admin-status-dot { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+    .admin-avatar { width: 28px; height: 28px; border-radius: 50%; background: #0d9488; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; }
+    .admin-body-mock { display: flex; flex: 1; }
+    .admin-sidebar-mock {
+      width: 110px; background: #0d0d0d; border-right: 1px solid #1a1a1a;
+      padding: 12px 8px;
+    }
+    .admin-nav-item {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 8px; border-radius: 6px; margin-bottom: 1px;
+      font-size: 10.5px; color: #555; cursor: pointer;
+    }
+    .admin-nav-item.active { background: rgba(59,130,246,0.1); color: #60a5fa; }
+    .admin-nav-icon { width: 14px; height: 14px; flex-shrink: 0; }
+    .admin-content-mock { flex: 1; padding: 14px; overflow: hidden; }
+
+    /* Worker status cards */
+    .worker-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+    .worker-card {
+      background: #1a1a1a; border: 1.5px solid #222; border-radius: 8px; padding: 10px 8px;
+    }
+    .worker-card.running { border-color: rgba(34,197,94,0.4); box-shadow: 0 0 0 1px rgba(34,197,94,0.1); }
+    .worker-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .worker-icon-box { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .worker-dot { width: 8px; height: 8px; border-radius: 50%; background: #333; }
+    .worker-dot.on { background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.2); }
+    .worker-name { font-size: 10px; color: #aaa; font-weight: 600; }
+    .worker-status { font-size: 9.5px; color: #555; margin-top: 2px; }
+    .worker-status.on { color: #4ade80; }
+
+    /* Queue table mock */
+    .queue-tbl { width: 100%; font-size: 10.5px; border-collapse: collapse; }
+    .queue-tbl th { padding: 6px 8px; text-align: left; color: #555; font-weight: 600; text-transform: uppercase; font-size: 9px; letter-spacing: .5px; border-bottom: 1px solid #1a1a1a; }
+    .queue-tbl td { padding: 8px; border-bottom: 1px solid #141414; color: #ccc; }
+    .queue-tbl tr:hover td { background: rgba(255,255,255,0.02); }
+    .queue-name { display: flex; align-items: center; gap: 6px; }
+    .queue-badge-num { font-weight: 700; display: inline-block; min-width: 22px; text-align: center; border-radius: 4px; padding: 1px 4px; font-size: 10px; }
+    .qn-green { color: #4ade80; }
+    .qn-yellow { color: #facc15; }
+    .qn-red { color: #f87171; }
+    .qn-gray { color: #555; }
+    .paused-badge { font-size: 8px; background: rgba(234,179,8,0.1); color: #facc15; border: 1px solid rgba(234,179,8,0.2); border-radius: 4px; padding: 1px 4px; }
+
+    /* Review admin table */
+    .rev-tbl { width: 100%; font-size: 10.5px; border-collapse: collapse; }
+    .rev-tbl th { padding: 6px 8px; color: #555; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid #1a1a1a; text-align: left; }
+    .rev-tbl td { padding: 8px; border-bottom: 1px solid #141414; color: #ccc; vertical-align: middle; }
+    .rev-sponsored-badge { display: inline-block; padding: 2px 7px; border-radius: 99px; font-size: 9px; font-weight: 600; }
+    .rev-sponsored-y { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+    .rev-sponsored-n { color: #4ade80; font-size: 10px; }
+    .stars-mock { color: #eab308; font-size: 9.5px; }
+
+    /* Settings mock */
+    .settings-section { background: #141414; border: 1px solid #1e1e1e; border-radius: 8px; padding: 14px; margin-bottom: 10px; }
+    .settings-title { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .settings-active-badge { font-size: 8px; padding: 2px 8px; background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); border-radius: 99px; }
+    .prompt-textarea-mock { background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 6px; padding: 8px 10px; font-size: 9.5px; color: #777; font-family: monospace; line-height: 1.6; height: 50px; overflow: hidden; }
+    .threshold-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .threshold-slider { flex: 1; height: 4px; background: #2a2a2a; border-radius: 2px; position: relative; }
+    .threshold-fill { height: 100%; background: #3b82f6; border-radius: 2px; width: 70%; }
+    .threshold-val { font-size: 12px; font-weight: 700; color: #fff; font-family: monospace; }
+    .kw-slot-list { display: flex; flex-direction: column; gap: 4px; }
+    .kw-slot { display: flex; align-items: center; gap: 6px; padding: 5px 8px; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 6px; font-size: 10px; }
+    .kw-auto-badge { padding: 1px 6px; background: rgba(34,197,94,0.1); color: #4ade80; border-radius: 4px; font-size: 8px; font-weight: 600; }
+    .kw-manual-badge { padding: 1px 6px; background: rgba(59,130,246,0.1); color: #60a5fa; border-radius: 4px; font-size: 8px; font-weight: 600; }
+
+    /* Pipeline history */
+    .history-tbl { width: 100%; font-size: 10px; border-collapse: collapse; }
+    .history-tbl th { padding: 6px 8px; color: #555; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid #1a1a1a; text-align: left; }
+    .history-tbl td { padding: 7px 8px; border-bottom: 1px solid #141414; color: #ccc; }
+    .trigger-badge { display: inline-block; padding: 1px 7px; border-radius: 99px; font-size: 8.5px; font-weight: 600; }
+    .trigger-cron { background: rgba(168,85,247,0.1); color: #c084fc; border: 1px solid rgba(168,85,247,0.2); }
+    .trigger-manual { background: rgba(249,115,22,0.1); color: #fb923c; border: 1px solid rgba(249,115,22,0.2); }
+    .status-running { display: inline-flex; align-items: center; gap: 4px; padding: 1px 7px; border-radius: 99px; font-size: 8.5px; background: rgba(59,130,246,0.1); color: #60a5fa; border: 1px solid rgba(59,130,246,0.2); }
+    .status-completed { display: inline-block; padding: 1px 7px; border-radius: 99px; font-size: 8.5px; background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+    .status-failed { display: inline-block; padding: 1px 7px; border-radius: 99px; font-size: 8.5px; background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+    .ping-dot { width: 6px; height: 6px; border-radius: 50%; background: #60a5fa; }
+
+    /* Pipeline diagram */
+    .flow-diagram {
+      display: flex; gap: 0;
+      overflow-x: auto; padding-bottom: 8px;
+    }
+    .flow-node {
+      display: flex; flex-direction: column; align-items: center;
+      flex: 1; min-width: 110px;
+    }
+    .flow-box {
+      width: 100%; background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 10px; text-align: center;
+    }
+    .flow-box.active { border-color: var(--accent); background: rgba(59,130,246,0.06); }
+    .flow-icon { font-size: 20px; margin-bottom: 6px; }
+    .flow-name { font-size: 12px; font-weight: 700; color: var(--text); }
+    .flow-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    .flow-arrow {
+      display: flex; align-items: center;
+      color: var(--border2); font-size: 18px;
+      padding: 0 4px; padding-top: 24px;
+    }
+
+    /* ── Docker compose diagram ───────────────────── */
+    .docker-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+    .docker-service {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 18px;
+    }
+    .docker-service h4 {
+      font-size: 13px; font-weight: 700; margin-bottom: 6px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .docker-service p { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+    .docker-port {
+      display: inline-block; margin-top: 8px;
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+      color: var(--accent2); border-radius: 4px;
+      padding: 2px 8px; font-size: 11.5px;
+      font-family: monospace;
+    }
+
+    /* ── CI/CD flow ───────────────────────────────── */
+    .cicd-flow {
+      display: flex; align-items: center; gap: 0;
+      flex-wrap: wrap;
+    }
+    .cicd-step {
+      display: flex; flex-direction: column; align-items: center;
+      flex: 1; min-width: 100px;
+    }
+    .cicd-box {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 14px 12px;
+      text-align: center; width: 100%;
+    }
+    .cicd-icon { font-size: 22px; margin-bottom: 6px; }
+    .cicd-name { font-size: 12px; font-weight: 700; }
+    .cicd-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    .cicd-arrow { color: var(--muted); font-size: 20px; padding: 0 8px; margin-top: -20px; }
+
+    /* ── Challenge cards ──────────────────────────── */
+    .challenge-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .challenge-card h3 { font-size: 16px; font-weight: 700; }
+    .challenge-problem {
+      background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.15);
+      border-radius: var(--radius-sm); padding: 12px 16px;
+      font-size: 13.5px; color: #fca5a5;
+    }
+    .challenge-solution {
+      background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.15);
+      border-radius: var(--radius-sm); padding: 12px 16px;
+      font-size: 13.5px; color: #86efac;
+    }
+    .challenge-result {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13.5px; font-weight: 700; color: var(--accent2);
+    }
+
+    /* ── Metrics ──────────────────────────────────── */
+    .metric-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .metric-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px; text-align: center;
+    }
+    .metric-val {
+      font-size: 36px; font-weight: 900; letter-spacing: -2px;
+      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .metric-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
+    .metric-sub { font-size: 12px; color: var(--muted); margin-top: 4px; opacity: .7; }
+
+    /* ── Contact ──────────────────────────────────── */
+    .contact-section {
+      text-align: center; padding: 80px 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(59,130,246,0.1), transparent);
+    }
+    .contact-email {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 28px;
+      font-size: 16px; color: var(--text);
+      transition: border-color .2s, background .2s;
+      margin-top: 24px;
+    }
+    .contact-email:hover {
+      border-color: var(--accent);
+      background: rgba(59,130,246,0.06);
+      text-decoration: none;
+    }
+
+    /* ── Footer ───────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px; text-align: center;
+      font-size: 13px; color: var(--muted);
+    }
+
+    /* ── Badge ────────────────────────────────────── */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px; border-radius: 99px; font-size: 11.5px; font-weight: 600;
+    }
+    .badge-blue { background: rgba(59,130,246,0.12); color: #60a5fa; border: 1px solid rgba(59,130,246,0.25); }
+    .badge-green { background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+    .badge-yellow { background: rgba(234,179,8,0.1); color: #facc15; border: 1px solid rgba(234,179,8,0.2); }
+    .badge-purple { background: rgba(168,85,247,0.1); color: #c084fc; border: 1px solid rgba(168,85,247,0.2); }
+
+    /* ── Responsive ───────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .metric-row { grid-template-columns: 1fr; }
+      .docker-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .product-grid-mock { grid-template-columns: 1fr 1fr; }
+      .admin-stat-row { grid-template-columns: 1fr 1fr; }
+      .worker-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .docker-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Print / PDF ──────────────────────────────── */
+    @page {
+      size: A4;
+      margin: 14mm 10mm;
+    }
+    @media print {
+      *, *::before, *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
+      html, body {
+        background: var(--bg) !important;
+        color: var(--text) !important;
+      }
+      body { font-size: 12.5px; line-height: 1.55; }
+
+      /* Hide sticky nav in print */
+      nav { display: none !important; }
+
+      /* Avoid huge top padding chewing first page */
+      .hero { padding: 40px 0 32px !important; }
+      section { padding: 36px 0 !important; }
+      section + section { border-top: 1px solid var(--border) !important; }
+
+      .container { max-width: 100% !important; padding: 0 4mm !important; }
+
+      /* Page-break control: keep blocks together */
+      section,
+      .card, .feature-card, .stack-card, .code-block,
+      .ui-mock, .admin-mock, .metric-card, .challenge-card,
+      .arch-diagram, .erd-table, .pipeline-step, .docker-service,
+      .worker-card, .api-table, table, pre, figure, blockquote {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      h1, h2, h3, h4 {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+      h2 { break-before: auto; }
+
+      /* Force a fresh page before each top-level section (except first) */
+      section + section {
+        break-before: page;
+        page-break-before: always;
+      }
+
+      /* Avoid orphaned headings on previous page */
+      section > .container > h2:first-child,
+      section > h2:first-child {
+        margin-top: 0 !important;
+      }
+
+      /* Code blocks: wrap long lines so they don't overflow */
+      pre, code {
+        white-space: pre-wrap !important;
+        word-break: break-word !important;
+      }
+
+      /* Hover/animation niceties off */
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      a { color: var(--accent2) !important; text-decoration: none !important; }
+
+      /* Hide the active underline indicator from sticky nav (nav is hidden anyway) */
+      .nav-links a::after { display: none !important; }
+
+      /* Ensure radial / gradient backgrounds render */
+      .hero { background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(59,130,246,0.18), transparent) !important; }
+
+      footer { break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <span>리뷰모으기</span>
+      <span style="color:var(--muted);font-weight:400;">Portfolio</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#overview">개요</a></li>
+      <li><a href="#features">주요 기능</a></li>
+      <li><a href="#stack">기술 스택</a></li>
+      <li><a href="#architecture">아키텍처</a></li>
+      <li><a href="#code">코드 하이라이트</a></li>
+      <li><a href="#admin">어드민 시스템</a></li>
+      <li><a href="#infra">인프라</a></li>
+      <li><a href="#challenges">기술적 도전</a></li>
+      <li><a href="#metrics">성과</a></li>
+      <li><a href="#contact">연락처</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────── -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-badge">
+      <span>⚡</span> Full-Stack AI Service
+    </div>
+    <h1>
+      <span class="accent">진짜 리뷰</span>만<br>한곳에 모아보세요
+    </h1>
+    <p class="hero-sub">
+      여러 패션 플랫폼에 흩어진 리뷰를 통합 수집하고,<br>
+      GPT-4o-mini로 광고성 리뷰를 자동 필터링하여<br>
+      내 체형과 비슷한 진성 리뷰를 먼저 제공합니다.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">Next.js 16</span>
+      <span class="tag">BullMQ</span>
+      <span class="tag">OpenAI GPT-4o-mini</span>
+      <span class="tag">Elasticsearch</span>
+      <span class="tag">Playwright</span>
+      <span class="tag">MySQL 8.0</span>
+      <span class="tag">Redis</span>
+      <span class="tag">Docker</span>
+      <span class="tag">TypeScript</span>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-num">4</div>
+        <div class="stat-label">지원 플랫폼</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">12K+</div>
+        <div class="stat-label">TypeScript LOC</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">93%</div>
+        <div class="stat-label">AI API 비용 절감</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">~2개월</div>
+        <div class="stat-label">개발 기간</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 1. 프로젝트 개요 ────────────────────────────── -->
+<section id="overview">
+  <div class="container">
+    <div class="section-label">01 / Overview</div>
+    <h2 class="section-title">프로젝트 개요</h2>
+    <p class="section-desc">
+      패션 쇼핑 시 소비자가 겪는 핵심 불편 3가지를 기술로 해결합니다.
+    </p>
+
+    <div class="grid-3" style="margin-bottom:40px;">
+      <div class="card">
+        <div class="feature-icon" style="background:rgba(239,68,68,0.1);">🔍</div>
+        <h3>문제 1: 리뷰 분산</h3>
+        <p>동일 상품이 여러 플랫폼에 존재하지만 리뷰를 따로 확인해야 해 시간이 낭비됩니다.</p>
+      </div>
+      <div class="card">
+        <div class="feature-icon" style="background:rgba(234,179,8,0.1);">🤖</div>
+        <h3>문제 2: 광고성 리뷰</h3>
+        <p>협찬·광고 리뷰가 섞여 있어 진짜 후기를 찾기 어렵고 잘못된 구매 결정으로 이어집니다.</p>
+      </div>
+      <div class="card">
+        <div class="feature-icon" style="background:rgba(168,85,247,0.1);">👤</div>
+        <h3>문제 3: 비개인화</h3>
+        <p>수백 개 리뷰 중 내 체형·사이즈에 맞는 리뷰를 찾는 것은 사실상 불가능합니다.</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:16px;color:var(--accent2);">솔루션</h3>
+        <div class="pipeline">
+          <div class="pipe-step">
+            <div class="pipe-num">1</div>
+            <div class="pipe-content">
+              <h4>멀티 플랫폼 리뷰 통합</h4>
+              <p>29cm, 무신사, W컨셉, 커들리버니 등 4개 플랫폼을 Playwright로 자동 수집. 매일 새벽 2시 자동 실행.</p>
+              <div class="pipe-tags">
+                <span class="pipe-tag">Playwright</span>
+                <span class="pipe-tag">BullMQ</span>
+              </div>
+            </div>
+          </div>
+          <div class="pipe-step">
+            <div class="pipe-num">2</div>
+            <div class="pipe-content">
+              <h4>AI 기반 광고 필터링</h4>
+              <p>GPT-4o-mini로 광고성 판별 (isSponsored + confidence 0.7 임계값). Few-Shot 학습으로 오탐률 30% → 5% 감소.</p>
+              <div class="pipe-tags">
+                <span class="pipe-tag">OpenAI</span>
+                <span class="pipe-tag">Batch Processing</span>
+              </div>
+            </div>
+          </div>
+          <div class="pipe-step">
+            <div class="pipe-num">3</div>
+            <div class="pipe-content">
+              <h4>체형 기반 개인화</h4>
+              <p>키·몸무게 유사도 공식으로 비슷한 체형의 리뷰어 후기를 우선 노출. 사이즈 피드백(small/perfect/large) 통계 제공.</p>
+              <div class="pipe-tags">
+                <span class="pipe-tag">Elasticsearch</span>
+                <span class="pipe-tag">MySQL</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:16px;color:var(--accent2);">프로젝트 범위</h3>
+        <div class="tbl-wrap" style="margin-bottom:20px;">
+          <table class="tbl">
+            <thead><tr><th>항목</th><th>내용</th></tr></thead>
+            <tbody>
+              <tr><td>개발 기간</td><td>2026년 1월 ~ 2월 (약 2개월)</td></tr>
+              <tr><td>대상 카테고리</td><td>패션 (의류) — MVP</td></tr>
+              <tr><td>지원 플랫폼</td><td>29cm, 무신사, W컨셉, 커들리버니</td></tr>
+              <tr><td>수집 주기</td><td>매일 02:00 KST 자동 실행</td></tr>
+              <tr><td>코드 규모</td><td>~12,000 LOC (TypeScript/TSX)</td></tr>
+              <tr><td>수익 모델</td><td>제휴 마케팅 (Affiliate)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>목표 KPI</th><th>목표치</th></tr></thead>
+            <tbody>
+              <tr><td>MAU (출시 후 3개월)</td><td>1,000명</td></tr>
+              <tr><td>광고 필터 정확도</td><td>80% 이상</td></tr>
+              <tr><td>구매 링크 클릭률</td><td>15% 이상</td></tr>
+              <tr><td>주간 재방문율</td><td>30% 이상</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. 주요 기능 (스크린 목업) ──────────────────── -->
+<section id="features">
+  <div class="container">
+    <div class="section-label">02 / Features</div>
+    <h2 class="section-title">주요 기능</h2>
+    <p class="section-desc">
+      dev 서버가 오프라인 상태이므로 코드 기반 UI 목업으로 실제 화면을 재현했습니다.
+    </p>
+
+    <!-- Feature 1: 메인 검색 -->
+    <div style="margin-bottom:48px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <span class="badge badge-blue">Feature 01</span>
+        <h3 style="font-size:18px;font-weight:700;">메인 검색 — 진짜 리뷰만 모아보세요</h3>
+      </div>
+      <div class="screenshot-placeholder">
+        <div class="sp-bar">
+          <div class="sp-dot" style="background:#ff5f57;"></div>
+          <div class="sp-dot" style="background:#febc2e;"></div>
+          <div class="sp-dot" style="background:#28c840;"></div>
+          <span style="font-size:11px;color:#555;margin-left:8px;">localhost:3000</span>
+        </div>
+        <div class="ui-mock">
+          <div class="ui-mock-nav">
+            <div class="ui-mock-nav-logo">리뷰모으기</div>
+            <div class="ui-mock-nav-links">
+              <span class="ui-mock-nav-link">검색</span>
+              <span class="ui-mock-nav-link">로그인</span>
+            </div>
+          </div>
+          <div class="ui-mock-hero">
+            <div class="ui-mock-title">진짜 리뷰만 모아보세요</div>
+            <div class="ui-mock-sub">여러 쇼핑몰 리뷰를 한 곳에서. 광고 리뷰는 걸러내고,<br>내 체형과 비슷한 리뷰를 먼저 찾아보세요.</div>
+            <div class="ui-mock-search">
+              <span class="ui-mock-search-icon">🔍</span>
+              <span class="ui-mock-search-input">상품명, 브랜드를 검색해보세요</span>
+            </div>
+            <div class="ui-mock-kw">
+              <span>인기 검색: </span>
+              <span>무신사 후드티</span>
+              <span>29cm 코트</span>
+              <span>나이키 에어맥스</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px;">
+        다크 테마 단일 검색 UI. 인기 검색어가 5초마다 롤링 애니메이션으로 표시됩니다.
+        <code style="font-size:12px;color:var(--accent2);">⌘K</code> 단축키로 즉시 검색 포커스.
+      </p>
+    </div>
+
+    <!-- Feature 2: 검색 결과 -->
+    <div style="margin-bottom:48px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <span class="badge badge-green">Feature 02</span>
+        <h3 style="font-size:18px;font-weight:700;">상품 검색 결과 — Elasticsearch 한글 형태소 검색</h3>
+      </div>
+      <div class="screenshot-placeholder">
+        <div class="sp-bar">
+          <div class="sp-dot" style="background:#ff5f57;"></div>
+          <div class="sp-dot" style="background:#febc2e;"></div>
+          <div class="sp-dot" style="background:#28c840;"></div>
+          <span style="font-size:11px;color:#555;margin-left:8px;">localhost:3000/search?keyword=무신사+후드티</span>
+        </div>
+        <div class="ui-mock">
+          <div class="ui-mock-nav">
+            <div class="ui-mock-nav-logo">리뷰모으기</div>
+          </div>
+          <div style="padding:14px 20px;">
+            <div class="ui-mock-search" style="max-width:100%;margin-bottom:12px;">
+              <span class="ui-mock-search-icon">🔍</span>
+              <span style="font-size:12px;color:#ccc;">무신사 후드티</span>
+            </div>
+            <div style="font-size:11px;color:#555;margin-bottom:10px;">검색결과 128개</div>
+          </div>
+          <div class="product-grid-mock">
+            <div class="product-card-mock">
+              <div class="product-img-mock">👕</div>
+              <div class="product-info-mock">
+                <div class="product-brand-mock">무신사 스탠다드</div>
+                <div class="product-name-mock">오버핏 후드 스웨트셔츠</div>
+                <div class="product-rating-mock">★★★★★ 4.8 (2,341)</div>
+                <div class="product-price-mock">₩39,900</div>
+              </div>
+            </div>
+            <div class="product-card-mock">
+              <div class="product-img-mock">🧥</div>
+              <div class="product-info-mock">
+                <div class="product-brand-mock">커버낫</div>
+                <div class="product-name-mock">스몰 로고 후디</div>
+                <div class="product-rating-mock">★★★★☆ 4.5 (983)</div>
+                <div class="product-price-mock">₩59,000</div>
+              </div>
+            </div>
+            <div class="product-card-mock">
+              <div class="product-img-mock">👘</div>
+              <div class="product-info-mock">
+                <div class="product-brand-mock">디스커버리</div>
+                <div class="product-name-mock">익스페디션 후드티</div>
+                <div class="product-rating-mock">★★★★☆ 4.3 (1,204)</div>
+                <div class="product-price-mock">₩89,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px;">
+        nori 형태소 분석기로 한글 검색 최적화. 상품명(boost 3.0), 브랜드명(2.0), 키워드(1.5) 멀티필드 검색.
+      </p>
+    </div>
+
+    <!-- Feature 3: 리뷰 목록 -->
+    <div style="margin-bottom:48px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <span class="badge badge-purple">Feature 03</span>
+        <h3 style="font-size:18px;font-weight:700;">리뷰 목록 — 체형 유사도 정렬 + 광고 필터링</h3>
+      </div>
+      <div class="screenshot-placeholder">
+        <div class="sp-bar">
+          <div class="sp-dot" style="background:#ff5f57;"></div>
+          <div class="sp-dot" style="background:#febc2e;"></div>
+          <div class="sp-dot" style="background:#28c840;"></div>
+          <span style="font-size:11px;color:#555;margin-left:8px;">localhost:3000/products/123</span>
+        </div>
+        <div class="ui-mock">
+          <div class="ui-mock-nav">
+            <div class="ui-mock-nav-logo">리뷰모으기</div>
+          </div>
+          <div class="review-mock">
+            <!-- Review item 1: similar body -->
+            <div class="review-item-mock">
+              <div class="review-header-mock">
+                <div>
+                  <div class="review-user-mock">user_a8f2k · 170cm/58kg · M</div>
+                  <div style="font-size:11px;color:#eab308;margin-top:2px;">★★★★★ 5.0</div>
+                </div>
+                <span class="review-badge-mock badge-similar">비슷한 체형</span>
+              </div>
+              <div class="review-content-mock">처음엔 좀 작을까 걱정했는데 딱 맞아요. 소재가 너무 좋고 색상도 사진이랑 똑같아요. 사이즈는 평소대로 주문하시면 됩니다.</div>
+              <div class="review-kw-mock">
+                <span class="kw-plus">착용감 좋음</span>
+                <span class="kw-plus">색상 선명</span>
+                <span class="kw-minus">배송 느림</span>
+              </div>
+            </div>
+            <!-- Review item 2: sponsored filtered -->
+            <div class="review-item-mock" style="opacity:0.4;">
+              <div class="review-header-mock">
+                <div>
+                  <div class="review-user-mock">파워블로거K · 협찬</div>
+                  <div style="font-size:11px;color:#eab308;">★★★★★ 5.0</div>
+                </div>
+                <span class="review-badge-mock badge-sponsored">광고 의심 (95%)</span>
+              </div>
+              <div class="review-content-mock">체험단으로 제품 협찬 받아 솔직하게 후기 남겨요. 정말 너무 너무 좋아서 강력 추천드립니다...</div>
+            </div>
+            <!-- Review item 3 -->
+            <div class="review-item-mock">
+              <div class="review-header-mock">
+                <div>
+                  <div class="review-user-mock">ggom_d · 165cm/52kg · S</div>
+                  <div style="font-size:11px;color:#eab308;">★★★★☆ 4.0</div>
+                </div>
+                <span class="review-badge-mock badge-similar">비슷한 체형</span>
+              </div>
+              <div class="review-content-mock">소재는 좋은데 생각보다 두껍지 않아요. 봄가을용으로 좋을 것 같고, 사이즈는 조금 크게 나오는 편입니다.</div>
+              <div class="review-kw-mock">
+                <span class="kw-plus">소재 좋음</span>
+                <span class="kw-minus">사이즈 큼</span>
+                <span class="kw-minus">얇은 소재</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px;">
+        광고 의심 리뷰는 흐릿하게 표시 (opacity 낮춤). 비슷한 체형 배지로 신뢰도 강화.
+        장점(초록)·단점(빨강) 키워드 태그 자동 표시.
+      </p>
+    </div>
+
+    <!-- Feature 4: Admin Dashboard -->
+    <div style="margin-bottom:48px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <span class="badge badge-yellow">Feature 04</span>
+        <h3 style="font-size:18px;font-weight:700;">관리자 시스템 — 파이프라인 제어 &amp; 실시간 모니터링</h3>
+      </div>
+      <div class="screenshot-placeholder">
+        <div class="sp-bar">
+          <div class="sp-dot" style="background:#ff5f57;"></div>
+          <div class="sp-dot" style="background:#febc2e;"></div>
+          <div class="sp-dot" style="background:#28c840;"></div>
+          <span style="font-size:11px;color:#555;margin-left:8px;">localhost:3000/admin — 대시보드</span>
+        </div>
+        <!-- 어드민 대시보드 목업 (실제 layout.tsx + page.tsx 반영) -->
+        <div class="admin-full-mock">
+          <!-- Header -->
+          <div class="admin-header-mock">
+            <div class="admin-header-left">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="admin-logo-box">🔍</div>
+                <div>
+                  <div class="admin-logo-text">리뷰모으기</div>
+                  <div class="admin-logo-sub">Admin Dashboard</div>
+                </div>
+              </div>
+              <span style="font-size:10px;color:#555;margin-left:8px;">← 랜딩페이지 가기</span>
+            </div>
+            <div class="admin-header-right">
+              <div class="admin-status-dot">
+                <span style="width:6px;height:6px;background:#22c55e;border-radius:50%;display:inline-block;"></span>
+                <span style="font-size:10px;color:#4ade80;">Operational</span>
+              </div>
+              <div class="admin-avatar">A</div>
+            </div>
+          </div>
+          <!-- Body -->
+          <div class="admin-body-mock">
+            <!-- Sidebar -->
+            <div class="admin-sidebar-mock">
+              <div class="admin-nav-item active">
+                <svg class="admin-nav-icon" fill="none" viewBox="0 0 24 24" stroke="#60a5fa" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6z"/></svg>
+                대시보드
+              </div>
+              <div class="admin-nav-item">
+                <svg class="admin-nav-icon" fill="none" viewBox="0 0 24 24" stroke="#555" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632A2.25 2.25 0 0117.378 20.25H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5"/></svg>
+                상품 관리
+              </div>
+              <div class="admin-nav-item">
+                <svg class="admin-nav-icon" fill="none" viewBox="0 0 24 24" stroke="#555" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741"/></svg>
+                리뷰 관리
+              </div>
+              <div class="admin-nav-item">
+                <svg class="admin-nav-icon" fill="none" viewBox="0 0 24 24" stroke="#555" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"/></svg>
+                파이프라인
+              </div>
+              <div style="margin-left:16px;">
+                <div class="admin-nav-item" style="font-size:9.5px;color:#444;padding:4px 8px;">큐 상태</div>
+                <div class="admin-nav-item" style="font-size:9.5px;color:#444;padding:4px 8px;">실행 이력</div>
+                <div class="admin-nav-item" style="font-size:9.5px;color:#444;padding:4px 8px;">스케줄</div>
+              </div>
+              <div class="admin-nav-item">
+                <svg class="admin-nav-icon" fill="none" viewBox="0 0 24 24" stroke="#555" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747"/></svg>
+                플랫폼
+              </div>
+              <div class="admin-nav-item">
+                <svg class="admin-nav-icon" fill="none" viewBox="0 0 24 24" stroke="#555" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87"/></svg>
+                설정
+              </div>
+            </div>
+            <!-- Main Content -->
+            <div class="admin-content-mock">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <div>
+                  <div style="font-size:14px;font-weight:700;color:#fff;">대시보드 개요</div>
+                  <div style="font-size:10px;color:#555;margin-top:1px;">실시간 파이프라인 데이터 요약</div>
+                </div>
+                <button style="font-size:10px;padding:5px 10px;background:#1a1a1a;border:1px solid #2a2a2a;color:#999;border-radius:6px;">새로고침</button>
+              </div>
+              <!-- Stats cards -->
+              <div class="admin-stat-row" style="margin-bottom:10px;">
+                <div class="admin-stat-box" style="background:linear-gradient(135deg,rgba(59,130,246,0.12),rgba(59,130,246,0.05));border-color:rgba(59,130,246,0.25);">
+                  <div class="admin-stat-val" style="font-size:20px;">1,284</div>
+                  <div class="admin-stat-lbl" style="color:#60a5fa;">등록 상품</div>
+                </div>
+                <div class="admin-stat-box" style="background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(168,85,247,0.05));border-color:rgba(168,85,247,0.25);">
+                  <div class="admin-stat-val" style="font-size:20px;">47,392</div>
+                  <div class="admin-stat-lbl" style="color:#c084fc;">수집된 리뷰</div>
+                </div>
+                <div class="admin-stat-box" style="background:linear-gradient(135deg,rgba(34,197,94,0.12),rgba(34,197,94,0.05));border-color:rgba(34,197,94,0.25);">
+                  <div class="admin-stat-val" style="font-size:20px;">45,100</div>
+                  <div class="admin-stat-lbl" style="color:#4ade80;">AI 분석 완료</div>
+                </div>
+                <div class="admin-stat-box" style="background:linear-gradient(135deg,rgba(249,115,22,0.12),rgba(249,115,22,0.05));border-color:rgba(249,115,22,0.25);">
+                  <div class="admin-stat-val" style="font-size:20px;color:#fb923c;">2,341</div>
+                  <div class="admin-stat-lbl" style="color:#fb923c;">광고 의심</div>
+                </div>
+              </div>
+              <!-- Worker Status + Queue Summary (2-col grid) -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div style="background:#141414;border:1px solid #1e1e1e;border-radius:8px;padding:10px;">
+                  <div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:8px;">워커 상태</div>
+                  <div class="worker-grid">
+                    <div class="worker-card running">
+                      <div class="worker-top">
+                        <div class="worker-icon-box" style="background:rgba(234,179,8,0.1);">📦</div>
+                        <div class="worker-dot on"></div>
+                      </div>
+                      <div class="worker-name">상품 수집</div>
+                      <div class="worker-status on">실행 중</div>
+                    </div>
+                    <div class="worker-card running">
+                      <div class="worker-top">
+                        <div class="worker-icon-box" style="background:rgba(59,130,246,0.1);">🔍</div>
+                        <div class="worker-dot on"></div>
+                      </div>
+                      <div class="worker-name">리뷰 크롤링</div>
+                      <div class="worker-status on">실행 중</div>
+                    </div>
+                    <div class="worker-card running">
+                      <div class="worker-top">
+                        <div class="worker-icon-box" style="background:rgba(239,68,68,0.1);">🤖</div>
+                        <div class="worker-dot on"></div>
+                      </div>
+                      <div class="worker-name">AI 분석</div>
+                      <div class="worker-status on">실행 중</div>
+                    </div>
+                    <div class="worker-card">
+                      <div class="worker-top">
+                        <div class="worker-icon-box" style="background:rgba(168,85,247,0.1);">📝</div>
+                        <div class="worker-dot"></div>
+                      </div>
+                      <div class="worker-name">요약 생성</div>
+                      <div class="worker-status">정지</div>
+                    </div>
+                  </div>
+                  <div style="background:#1a1a1a;border-radius:6px;padding:8px;display:flex;align-items:center;gap:8px;margin-top:6px;">
+                    <div style="flex:1;">
+                      <div style="font-size:9.5px;color:#555;">전체 워커</div>
+                      <div style="font-size:13px;font-weight:700;color:#fff;">3 / 4</div>
+                    </div>
+                    <div style="flex:1;">
+                      <div style="height:6px;background:#2a2a2a;border-radius:3px;overflow:hidden;">
+                        <div style="height:100%;width:75%;background:linear-gradient(90deg,#22c55e,#4ade80);"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="background:#141414;border:1px solid #1e1e1e;border-radius:8px;padding:10px;">
+                  <div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:8px;">플랫폼별 리뷰</div>
+                  <div style="display:flex;flex-direction:column;gap:5px;">
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <span style="font-size:9.5px;color:#aaa;width:50px;text-align:right;">무신사</span>
+                      <div style="flex:1;height:14px;background:#1a1a1a;border-radius:3px;overflow:hidden;"><div style="width:80%;height:100%;background:#3b82f6;border-radius:3px;"></div></div>
+                      <span style="font-size:9px;color:#777;">23,840</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <span style="font-size:9.5px;color:#aaa;width:50px;text-align:right;">29CM</span>
+                      <div style="flex:1;height:14px;background:#1a1a1a;border-radius:3px;overflow:hidden;"><div style="width:55%;height:100%;background:#a855f7;border-radius:3px;"></div></div>
+                      <span style="font-size:9px;color:#777;">16,210</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <span style="font-size:9.5px;color:#aaa;width:50px;text-align:right;">W컨셉</span>
+                      <div style="flex:1;height:14px;background:#1a1a1a;border-radius:3px;overflow:hidden;"><div style="width:25%;height:100%;background:#f97316;border-radius:3px;"></div></div>
+                      <span style="font-size:9px;color:#777;">7,342</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px;">
+        관리자 전용 레이아웃. 클라이언트 사이드에서 <code style="font-size:12px;color:var(--accent2);">role !== 'admin'</code> 검사 후 리다이렉트.
+        수집 통계 카드, 4개 워커 실시간 상태, 플랫폼별 리뷰 분포 바 차트.
+        3초마다 자동 폴링 토글 기능 내장.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 3. 기술 스택 ──────────────────────────────────── -->
+<section id="stack">
+  <div class="container">
+    <div class="section-label">03 / Tech Stack</div>
+    <h2 class="section-title">기술 스택</h2>
+    <p class="section-desc">실제 코드에서 확인된 의존성 기준으로 정리했습니다.</p>
+
+    <div style="margin-bottom:36px;">
+      <h3 style="font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">Frontend &amp; API</h3>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(0,0,0,0.5);border:1px solid #222;">⬛</div>
+          <div class="tech-info">
+            <div class="tech-name">Next.js 16.1.6</div>
+            <div class="tech-role">App Router + API Routes</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(97,218,251,0.1);">⚛️</div>
+          <div class="tech-info">
+            <div class="tech-name">React 19.2.3</div>
+            <div class="tech-role">Server + Client Components</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(49,120,198,0.1);">🔷</div>
+          <div class="tech-info">
+            <div class="tech-name">TypeScript 5.x</div>
+            <div class="tech-role">Strict mode, no any</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(56,189,248,0.1);">🎨</div>
+          <div class="tech-info">
+            <div class="tech-name">Tailwind CSS 4.x</div>
+            <div class="tech-role">다크 테마 디자인 시스템</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(234,179,8,0.1);">📊</div>
+          <div class="tech-info">
+            <div class="tech-name">Recharts 3.7.0</div>
+            <div class="tech-role">관리자 통계 차트</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(168,85,247,0.1);">🔐</div>
+          <div class="tech-info">
+            <div class="tech-name">jose 6.1.3</div>
+            <div class="tech-role">JWT (Edge Runtime 호환)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:36px;">
+      <h3 style="font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">Database &amp; Search</h3>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(0,115,177,0.1);">🐬</div>
+          <div class="tech-info">
+            <div class="tech-name">MySQL 8.0</div>
+            <div class="tech-role">Primary DB, utf8mb4</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(34,197,94,0.1);">🟢</div>
+          <div class="tech-info">
+            <div class="tech-name">Drizzle ORM 0.45.1</div>
+            <div class="tech-role">타입 안전 쿼리</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(239,68,68,0.1);">🔴</div>
+          <div class="tech-info">
+            <div class="tech-name">Redis 7.x + ioredis</div>
+            <div class="tech-role">캐시 / BullMQ 백엔드</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(234,179,8,0.1);">🔎</div>
+          <div class="tech-info">
+            <div class="tech-name">Elasticsearch 8.12.0</div>
+            <div class="tech-role">nori 한글 형태소 검색</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:36px;">
+      <h3 style="font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">AI &amp; Crawler</h3>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(16,163,127,0.1);">🤖</div>
+          <div class="tech-info">
+            <div class="tech-name">OpenAI 6.17.0</div>
+            <div class="tech-role">GPT-4o-mini 리뷰 분석</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(59,130,246,0.1);">🎭</div>
+          <div class="tech-info">
+            <div class="tech-name">Playwright 1.58.1</div>
+            <div class="tech-role">헤드리스 브라우저 크롤링</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(239,68,68,0.1);">🚀</div>
+          <div class="tech-info">
+            <div class="tech-name">BullMQ 5.67.2</div>
+            <div class="tech-role">분산 작업 큐 처리</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(168,85,247,0.1);">🛡️</div>
+          <div class="tech-info">
+            <div class="tech-name">Zod 4.3.6</div>
+            <div class="tech-role">런타임 유효성 검사</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">Infra &amp; DevOps</h3>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(30,144,255,0.1);">🐳</div>
+          <div class="tech-info">
+            <div class="tech-name">Docker Compose</div>
+            <div class="tech-role">5-service 멀티 컨테이너</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(255,153,0,0.1);">☁️</div>
+          <div class="tech-info">
+            <div class="tech-name">AWS EC2 t3.medium</div>
+            <div class="tech-role">단일 서버 통합 구성</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(34,197,94,0.1);">⚙️</div>
+          <div class="tech-info">
+            <div class="tech-name">GitHub Actions</div>
+            <div class="tech-role">dev/prod CI/CD 자동화</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:rgba(239,68,68,0.1);">🔔</div>
+          <div class="tech-info">
+            <div class="tech-name">Sentry + Slack</div>
+            <div class="tech-role">에러 추적 및 알림</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4. 시스템 아키텍처 ────────────────────────────── -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-label">04 / Architecture</div>
+    <h2 class="section-title">시스템 아키텍처</h2>
+    <p class="section-desc">
+      이벤트 드리븐 비동기 파이프라인 + Next.js 풀스택 구조
+    </p>
+
+    <!-- Overall system diagram -->
+    <div class="arch-box" style="margin-bottom:36px;">
+<pre><span class="c-dim">┌────────────────────────────────────────────────────────────────────────┐</span>
+<span class="c-dim">│</span>                          <span class="c-blue">사용자 (User)</span>                                  <span class="c-dim">│</span>
+<span class="c-dim">└──────────────────────────────┬─────────────────────────────────────────┘</span>
+                               <span class="c-dim">│ HTTPS</span>
+                               <span class="c-dim">▼</span>
+<span class="c-dim">┌────────────────────────────────────────────────────────────────────────┐</span>
+<span class="c-dim">│</span>               <span class="c-yellow">Next.js 16 (App Router)</span>  <span class="c-dim">:3000</span>                          <span class="c-dim">│</span>
+<span class="c-dim">│</span>  <span class="c-dim">┌──────────────┐</span>  <span class="c-dim">┌──────────────┐</span>  <span class="c-dim">┌────────────────────────┐</span>   <span class="c-dim">│</span>
+<span class="c-dim">│</span>  <span class="c-dim">│</span><span class="c-green"> Client       </span><span class="c-dim">│</span>  <span class="c-dim">│</span><span class="c-green"> Server       </span><span class="c-dim">│</span>  <span class="c-dim">│</span><span class="c-green"> API Routes /api/v1/*   </span><span class="c-dim">│</span>   <span class="c-dim">│</span>
+<span class="c-dim">│</span>  <span class="c-dim">│</span>  Components  <span class="c-dim">│</span>  <span class="c-dim">│</span>  Components  <span class="c-dim">│</span>  <span class="c-dim">│</span>  JWT middleware (admin) <span class="c-dim">│</span>   <span class="c-dim">│</span>
+<span class="c-dim">│</span>  <span class="c-dim">└──────────────┘</span>  <span class="c-dim">└──────────────┘</span>  <span class="c-dim">└────────────────────────┘</span>   <span class="c-dim">│</span>
+<span class="c-dim">└──────────────┬────────────────────────────────┬───────────────────────┘</span>
+               <span class="c-dim">│</span>                                <span class="c-dim">│</span>
+       <span class="c-dim">Drizzle ORM</span>                     <span class="c-dim">ioredis / @elastic</span>
+               <span class="c-dim">▼</span>                                <span class="c-dim">▼</span>
+<span class="c-dim">┌──────────────────┐</span>  <span class="c-dim">┌──────────────┐</span>  <span class="c-dim">┌────────────────────────┐</span>
+<span class="c-dim">│</span><span class="c-blue">  MySQL 8.0       </span><span class="c-dim">│</span>  <span class="c-dim">│</span><span class="c-red"> Redis 7.x   </span><span class="c-dim">│</span>  <span class="c-dim">│</span><span class="c-yellow"> Elasticsearch 8.12.0   </span><span class="c-dim">│</span>
+<span class="c-dim">│</span>  products        <span class="c-dim">│</span>  <span class="c-dim">│</span> BullMQ Queues<span class="c-dim">│</span>  <span class="c-dim">│</span>  nori analyzer          <span class="c-dim">│</span>
+<span class="c-dim">│</span>  reviews         <span class="c-dim">│</span>  <span class="c-dim">│</span> Cache/Rate   <span class="c-dim">│</span>  <span class="c-dim">│</span>  product index          <span class="c-dim">│</span>
+<span class="c-dim">│</span>  review_analyses <span class="c-dim">│</span>  <span class="c-dim">└──────┬───────┘</span>  <span class="c-dim">└────────────────────────┘</span>
+<span class="c-dim">│</span>  platforms       <span class="c-dim">│</span>         <span class="c-dim">│ BullMQ Jobs</span>
+<span class="c-dim">└──────────────────┘</span>         <span class="c-dim">▼</span>
+                     <span class="c-dim">┌───────────────────────────────────────────────┐</span>
+                     <span class="c-dim">│</span>         <span class="c-purple">Worker Processes (standalone.ts)</span>          <span class="c-dim">│</span>
+                     <span class="c-dim">│</span>  <span class="c-dim">┌─────────────┐</span>  <span class="c-dim">┌─────────────┐</span>  <span class="c-dim">┌──────────┐</span>  <span class="c-dim">│</span>
+                     <span class="c-dim">│</span>  <span class="c-dim">│</span><span class="c-cyan">  product-   </span><span class="c-dim">│</span>  <span class="c-dim">│</span><span class="c-cyan"> review-    </span><span class="c-dim">│</span>  <span class="c-dim">│</span><span class="c-cyan">ai-proc.</span><span class="c-dim">│</span>  <span class="c-dim">│</span>
+                     <span class="c-dim">│</span>  <span class="c-dim">│</span>  discovery  <span class="c-dim">│</span>  <span class="c-dim">│</span> crawl      <span class="c-dim">│</span>  <span class="c-dim">│</span>Queue   <span class="c-dim">│</span>  <span class="c-dim">│</span>
+                     <span class="c-dim">│</span>  <span class="c-dim">└─────────────┘</span>  <span class="c-dim">└─────────────┘</span>  <span class="c-dim">└──────────┘</span>  <span class="c-dim">│</span>
+                     <span class="c-dim">│</span>        <span class="c-dim">▲  Playwright</span>           <span class="c-dim">▲ OpenAI API</span>        <span class="c-dim">│</span>
+                     <span class="c-dim">└───────────────────────────────────────────────┘</span>
+                                          <span class="c-dim">│ HTTP</span>
+                                          <span class="c-dim">▼</span>
+                     <span class="c-dim">┌──────┐</span>  <span class="c-dim">┌──────┐</span>  <span class="c-dim">┌──────┐</span>  <span class="c-dim">┌──────────┐</span>
+                     <span class="c-dim">│</span><span class="c-green">29cm  </span><span class="c-dim">│</span>  <span class="c-dim">│</span><span class="c-green">무신사</span><span class="c-dim">│</span>  <span class="c-dim">│</span><span class="c-green">W컨셉 </span><span class="c-dim">│</span>  <span class="c-dim">│</span><span class="c-green">커들리버니</span><span class="c-dim">│</span>
+                     <span class="c-dim">└──────┘</span>  <span class="c-dim">└──────┘</span>  <span class="c-dim">└──────┘</span>  <span class="c-dim">└──────────┘</span></pre>
+    </div>
+
+    <!-- Pipeline flow -->
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;">데이터 파이프라인 흐름</h3>
+    <div class="flow-diagram" style="margin-bottom:40px;align-items:flex-start;">
+      <div class="flow-node">
+        <div class="flow-box active">
+          <div class="flow-icon">🕐</div>
+          <div class="flow-name">스케줄러</div>
+          <div class="flow-sub">매일 02:00 KST<br>BullMQ Repeatable</div>
+        </div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="flow-box">
+          <div class="flow-icon">🏪</div>
+          <div class="flow-name">상품 수집</div>
+          <div class="flow-sub">product-discovery<br>4 플랫폼</div>
+        </div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="flow-box">
+          <div class="flow-icon">🕷️</div>
+          <div class="flow-name">리뷰 크롤링</div>
+          <div class="flow-sub">review-crawl<br>병렬 Workers</div>
+        </div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="flow-box">
+          <div class="flow-icon">🤖</div>
+          <div class="flow-name">AI 분석</div>
+          <div class="flow-sub">ai-processing<br>15개 배치</div>
+        </div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="flow-box">
+          <div class="flow-icon">📝</div>
+          <div class="flow-name">요약 생성</div>
+          <div class="flow-sub">summary-generation<br>집계/색인</div>
+        </div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="flow-box active">
+          <div class="flow-icon">🔍</div>
+          <div class="flow-name">검색 서빙</div>
+          <div class="flow-sub">Elasticsearch<br>MySQL JOIN</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DB Schema -->
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;">데이터베이스 스키마 (ERD)</h3>
+    <div class="arch-box">
+<pre><span class="c-blue">users</span> <span class="c-dim">||--o{</span> <span class="c-green">user_profiles</span>            <span class="c-dim">: "has (fashion/beauty)"</span>
+<span class="c-blue">users</span> <span class="c-dim">||--o{</span> <span class="c-green">recent_views</span>             <span class="c-dim">: "viewed"</span>
+<span class="c-yellow">platforms</span> <span class="c-dim">||--o{</span> <span class="c-purple">product_platform_mappings</span> <span class="c-dim">: "lists (price/url/stock)"</span>
+<span class="c-yellow">products</span>  <span class="c-dim">||--o{</span> <span class="c-purple">product_platform_mappings</span> <span class="c-dim">: "available_on"</span>
+<span class="c-yellow">products</span>  <span class="c-dim">||--o{</span> <span class="c-red">reviews</span>                  <span class="c-dim">: "has"</span>
+<span class="c-yellow">products</span>  <span class="c-dim">||--o{</span> <span class="c-green">product_summaries</span>        <span class="c-dim">: "summarized_by"</span>
+<span class="c-yellow">products</span>  <span class="c-dim">||--o{</span> <span class="c-green">size_insights</span>            <span class="c-dim">: "analyzed_for"</span>
+<span class="c-red">reviews</span>   <span class="c-dim">||--||</span> <span class="c-cyan">review_analyses</span>          <span class="c-dim">: "analyzed_as (AI 결과)"</span>
+<span class="c-red">reviews</span>   <span class="c-dim">||--o{</span> <span class="c-cyan">review_keywords</span>          <span class="c-dim">: "has"</span>
+
+<span class="c-dim">주요 테이블 컬럼:</span>
+<span class="c-red">reviews</span><span class="c-dim">:</span> id, product_id, platform_id, content, rating, reviewer_height,
+         reviewer_weight, size_feedback, reviewed_at, has_images
+
+<span class="c-cyan">review_analyses</span><span class="c-dim">:</span> review_id, is_sponsored, sponsored_confidence,
+                 advantage_keywords(JSON), disadvantage_keywords(JSON),
+                 sentiment_score, size_feedback, summary, human_override
+
+<span class="c-purple">product_platform_mappings</span><span class="c-dim">:</span> product_id, platform_id, price, original_price,
+                           discount_rate, stock_status, price_updated_at</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ── 5. 핵심 코드 하이라이트 ─────────────────────── -->
+<section id="code">
+  <div class="container">
+    <div class="section-label">05 / Code Highlights</div>
+    <h2 class="section-title">핵심 코드 하이라이트</h2>
+    <p class="section-desc">빌드 타임 에러 방지를 위한 lazy 초기화 패턴 및 핵심 설계 결정</p>
+
+    <div class="grid-2" style="gap:24px;">
+
+      <!-- Lazy Proxy DB -->
+      <div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">DB Lazy Proxy 패턴</h3>
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px;line-height:1.7;">
+          Next.js 빌드 타임에 DB 연결을 시도하면 에러가 발생합니다.
+          Proxy 객체로 감싸 실제 접근 시점까지 초기화를 지연합니다.
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57;"></div>
+            <div class="code-dot" style="background:#febc2e;"></div>
+            <div class="code-dot" style="background:#28c840;"></div>
+            <span class="code-filename">src/services/db/index.ts</span>
+          </div>
+          <div class="code-body">
+<span class="cmt">// 실제 DB 인스턴스 — 최초 접근 시 lazy 초기화</span>
+<span class="kw">let</span> _pool: <span class="tp">ReturnType</span>&lt;<span class="kw">typeof</span> mysql.createPool&gt; | <span class="kw">null</span> = <span class="kw">null</span>;
+<span class="kw">function</span> <span class="fn">getPool</span>() {
+  <span class="kw">if</span> (!_pool) {
+    _pool = mysql.<span class="fn">createPool</span>({
+      uri: process.env.<span class="nb">DATABASE_URL</span>!,
+      connectionLimit: <span class="nb">10</span>,
+    });
+  }
+  <span class="kw">return</span> _pool;
+}
+
+<span class="cmt">// Proxy 객체로 export — 빌드 타임 안전</span>
+<span class="kw">export const</span> db = <span class="kw">new</span> <span class="fn">Proxy</span>({} <span class="kw">as</span> <span class="tp">ReturnType</span>&lt;<span class="kw">typeof</span> drizzle&gt;, {
+  <span class="fn">get</span>(_, prop) {
+    <span class="kw">return</span> (<span class="fn">getDb</span>() <span class="kw">as</span> <span class="tp">Record</span>&lt;<span class="kw">string | symbol</span>, <span class="tp">unknown</span>&gt;)[prop];
+  },
+});
+          </div>
+        </div>
+      </div>
+
+      <!-- Lazy OpenAI Singleton -->
+      <div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">OpenAI Lazy Singleton 패턴</h3>
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px;line-height:1.7;">
+          <code style="font-size:12px;color:var(--accent2);">serverExternalPackages</code>에 등록된
+          openai 패키지도 동일 원리로 lazy 초기화. 환경변수가 없을 때 빌드 실패를 방지합니다.
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57;"></div>
+            <div class="code-dot" style="background:#febc2e;"></div>
+            <div class="code-dot" style="background:#28c840;"></div>
+            <span class="code-filename">src/features/ai-processing/analyzer.ts</span>
+          </div>
+          <div class="code-body">
+<span class="cmt">// openai 인스턴스 — 최초 API 호출 시점에만 생성</span>
+<span class="kw">let</span> _openai: <span class="tp">OpenAI</span> | <span class="kw">null</span> = <span class="kw">null</span>;
+<span class="kw">function</span> <span class="fn">getOpenAI</span>(): <span class="tp">OpenAI</span> {
+  <span class="kw">if</span> (!_openai) {
+    _openai = <span class="kw">new</span> <span class="fn">OpenAI</span>({
+      apiKey: process.env.<span class="nb">OPENAI_API_KEY</span>
+    });
+  }
+  <span class="kw">return</span> _openai;
+}
+
+<span class="cmt">// next.config.ts — 빌드에서 번들 제외</span>
+<span class="cmt">// serverExternalPackages: ["openai","bullmq","ioredis"]</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Retry Logic -->
+      <div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">AI 분석 — Exponential Backoff 재시도</h3>
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px;line-height:1.7;">
+          OpenAI Rate Limit 및 일시적 장애에 대비한 3회 재시도 로직.
+          실패 시 기본값을 반환하여 서비스 중단을 방지합니다.
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57;"></div>
+            <div class="code-dot" style="background:#febc2e;"></div>
+            <div class="code-dot" style="background:#28c840;"></div>
+            <span class="code-filename">analyzer.ts — retry logic</span>
+          </div>
+          <div class="code-body">
+<span class="kw">const</span> MAX_RETRIES = <span class="nb">3</span>;
+<span class="kw">const</span> RETRY_DELAY_MS = <span class="nb">1000</span>;
+
+<span class="kw">for</span> (<span class="kw">let</span> attempt = <span class="nb">1</span>; attempt &lt;= MAX_RETRIES; attempt++) {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> completion = <span class="kw">await</span> <span class="fn">getOpenAI</span>().chat.completions.<span class="fn">create</span>({
+      model: <span class="str">'gpt-4o-mini'</span>,
+      temperature: <span class="nb">0.1</span>,   <span class="cmt">// 일관성 우선</span>
+      response_format: { type: <span class="str">'json_object'</span> },
+    });
+    <span class="kw">break</span>;  <span class="cmt">// 성공 시 루프 탈출</span>
+  } <span class="kw">catch</span> (error) {
+    <span class="kw">if</span> (attempt &lt; MAX_RETRIES) {
+      <span class="kw">const</span> delay = RETRY_DELAY_MS * Math.<span class="fn">pow</span>(<span class="nb">2</span>, attempt - <span class="nb">1</span>);
+      <span class="kw">await</span> <span class="fn">sleep</span>(delay); <span class="cmt">// 1s → 2s → 4s</span>
+    }
+  }
+}
+<span class="cmt">// 실패 시 DEFAULT_RESULT 반환 — 서비스 중단 없음</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- JWT Middleware -->
+      <div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">JWT 미들웨어 — API 보호</h3>
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px;line-height:1.7;">
+          Edge Runtime 호환 <code style="font-size:12px;color:var(--accent2);">jose</code> 라이브러리로 JWT 검증.
+          <code style="font-size:12px;color:var(--accent2);">/api/v1/admin/*</code>는 role='admin' 필수.
+          토큰은 localStorage에만 저장(쿠키 미사용).
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57;"></div>
+            <div class="code-dot" style="background:#febc2e;"></div>
+            <div class="code-dot" style="background:#28c840;"></div>
+            <span class="code-filename">src/middleware.ts</span>
+          </div>
+          <div class="code-body">
+<span class="kw">export async function</span> <span class="fn">middleware</span>(req: <span class="tp">NextRequest</span>) {
+  <span class="kw">const</span> payload = <span class="kw">await</span> <span class="fn">verifyTokenFromHeader</span>(req);
+
+  <span class="kw">if</span> (!payload) <span class="kw">return</span> <span class="fn">error</span>(<span class="str">'UNAUTHORIZED'</span>, <span class="nb">401</span>);
+  <span class="kw">if</span> (payload.role !== <span class="str">'admin'</span>) <span class="kw">return</span> <span class="fn">error</span>(<span class="str">'FORBIDDEN'</span>, <span class="nb">403</span>);
+
+  <span class="kw">return</span> NextResponse.<span class="fn">next</span>();
+}
+
+<span class="kw">export const</span> config = {
+  matcher: [<span class="str">'/api/v1/admin/:path*'</span>],
+};
+          </div>
+        </div>
+      </div>
+
+      <!-- Batch AI Processing -->
+      <div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">AI 배치 처리 — 15개 단위 병렬</h3>
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px;line-height:1.7;">
+          1,000개 리뷰를 1개씩 처리하면 1,000번의 API 호출이 필요합니다.
+          15개 묶음 처리로 API 호출을 67번으로 줄여 비용을 93% 절감합니다.
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57;"></div>
+            <div class="code-dot" style="background:#febc2e;"></div>
+            <div class="code-dot" style="background:#28c840;"></div>
+            <span class="code-filename">ai-processing / batch</span>
+          </div>
+          <div class="code-body">
+<span class="kw">const</span> AI_PARALLEL_BATCHES = <span class="nb">15</span>; <span class="cmt">// env: AI_PARALLEL_BATCHES</span>
+
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="nb">0</span>; i &lt; reviews.length; i += AI_PARALLEL_BATCHES) {
+  <span class="kw">const</span> batch = reviews.<span class="fn">slice</span>(i, i + AI_PARALLEL_BATCHES);
+  <span class="kw">const</span> results = <span class="kw">await</span> <span class="fn">analyzeReviews</span>(batch);
+  <span class="kw">await</span> <span class="fn">saveAnalysis</span>(results);
+}
+
+<span class="cmt">// 10자 미만 리뷰는 AI 스킵 (추가 비용 절감)</span>
+<span class="kw">const</span> validReviews = reviews.<span class="fn">filter</span>(r =&gt;
+  r.content.<span class="fn">length</span> &gt;= <span class="nb">10</span>
+);
+          </div>
+        </div>
+      </div>
+
+      <!-- Crawler Registry -->
+      <div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">크롤러 레지스트리 패턴</h3>
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px;line-height:1.7;">
+          플랫폼별 크롤러를 레지스트리에 등록해 동적 선택.
+          새 플랫폼 추가 시 registry.ts 한 파일만 수정하면 됩니다.
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57;"></div>
+            <div class="code-dot" style="background:#febc2e;"></div>
+            <div class="code-dot" style="background:#28c840;"></div>
+            <span class="code-filename">src/features/crawlers/registry.ts</span>
+          </div>
+          <div class="code-body">
+<span class="kw">const</span> CRAWLERS: <span class="tp">Record</span>&lt;<span class="tp">string</span>, <span class="tp">PlatformCrawler</span>&gt; = {
+  <span class="str">'29cm'</span>:       twentynineCmCrawler,
+  <span class="str">'musinsa'</span>:    musinsaCrawler,
+  <span class="str">'wconcept'</span>:   wconceptCrawler,
+  <span class="str">'cuddlybunny'</span>: cuddlybunnyCrawler,
+  <span class="cmt">// 새 플랫폼 추가 시 여기에만 추가</span>
+};
+
+<span class="kw">export function</span> <span class="fn">getCrawler</span>(platform: <span class="tp">string</span>) {
+  <span class="kw">return</span> CRAWLERS[platform] ?? <span class="kw">null</span>;
+}
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin: Queue Job Retry -->
+      <div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">BullMQ 실패 잡 재시도 — 큐 API 패턴</h3>
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px;line-height:1.7;">
+          어드민 대시보드에서 실패 잡을 개별 또는 전체 재시도할 수 있습니다.
+          큐 이름을 동적 라우트로 받아 모든 큐에 공통 적용되는 단일 API 패턴입니다.
+          <code style="font-size:12px;color:var(--accent2);">/api/v1/admin/queues/[queueName]/retry</code>
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57;"></div>
+            <div class="code-dot" style="background:#febc2e;"></div>
+            <div class="code-dot" style="background:#28c840;"></div>
+            <span class="code-filename">api/v1/admin/queues/[queueName]/retry/route.ts</span>
+          </div>
+          <div class="code-body">
+<span class="cmt">// 개별 또는 전체 실패 잡 재시도</span>
+<span class="kw">export async function</span> <span class="fn">POST</span>(req, { params }) {
+  <span class="kw">const</span> { queueName } = <span class="kw">await</span> params;
+  <span class="kw">const</span> { jobIds } = <span class="kw">await</span> req.<span class="fn">json</span>(); <span class="cmt">// 없으면 전체 재시도</span>
+
+  <span class="kw">const</span> queue = <span class="kw">new</span> <span class="tp">Queue</span>(queueName, { connection });
+  <span class="kw">const</span> failedJobs = jobIds
+    ? <span class="kw">await</span> <span class="tp">Job</span>.<span class="fn">fromIds</span>(queue, jobIds)
+    : <span class="kw">await</span> queue.<span class="fn">getFailed</span>(<span class="nb">0</span>, <span class="nb">999</span>);
+
+  <span class="kw">await</span> <span class="tp">Promise</span>.<span class="fn">all</span>(
+    failedJobs.<span class="fn">map</span>(j => j.<span class="fn">retry</span>())
+  );
+  <span class="kw">return</span> <span class="fn">ok</span>({ message: <span class="str">`${failedJobs.length}개 재시도 완료`</span> });
+}
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin: Sponsored Override -->
+      <div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">광고 판별 수동 오버라이드</h3>
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px;line-height:1.7;">
+          AI가 판단한 광고 여부를 관리자가 직접 수정할 수 있습니다.
+          리뷰 행 클릭 → 인라인 확장 → "광고로 변경" / "광고 아님으로 변경" 버튼.
+          실시간 UI 업데이트 후 <code style="font-size:12px;color:var(--accent2);">PATCH /sponsored-reviews/:id</code> 호출.
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57;"></div>
+            <div class="code-dot" style="background:#febc2e;"></div>
+            <div class="code-dot" style="background:#28c840;"></div>
+            <span class="code-filename">admin/reviews/page.tsx — toggleSponsored</span>
+          </div>
+          <div class="code-body">
+<span class="kw">const</span> <span class="fn">toggleSponsored</span> = <span class="kw">async</span> (reviewId, markAsSponsored) => {
+  <span class="cmt">// 1. 낙관적 UI 업데이트 (즉시 반영)</span>
+  <span class="fn">setReviews</span>(prev =>
+    prev.<span class="fn">map</span>(r => r.id === reviewId
+      ? { ...r, isSponsored: markAsSponsored }
+      : r
+    )
+  );
+  <span class="cmt">// 2. API 호출</span>
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">authFetch</span>(
+    <span class="str">`/api/v1/admin/sponsored-reviews/${reviewId}`</span>,
+    { method: <span class="str">'PATCH'</span>,
+      body: <span class="tp">JSON</span>.<span class="fn">stringify</span>({ isSponsored: markAsSponsored }) }
+  );
+};
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 6. 관리자 시스템 (Admin Console) ─────────────── -->
+<section id="admin">
+  <div class="container">
+    <div class="section-label">06 / Admin Console</div>
+    <h2 class="section-title">관리자 시스템</h2>
+    <p class="section-desc">
+      role='admin' JWT 인증으로 보호되는 풀스택 운영 도구.
+      파이프라인 제어, 큐 모니터링, 리뷰 검수, AI 프롬프트 관리를 단일 대시보드에서 처리합니다.
+    </p>
+
+    <!-- 인증 / 접근 제어 -->
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;color:var(--accent2);">인증 &amp; 접근 제어</h3>
+    <div class="grid-2" style="margin-bottom:48px;">
+      <div>
+        <p style="font-size:13.5px;color:var(--muted);line-height:1.8;margin-bottom:16px;">
+          JWT 토큰은 <code style="color:var(--accent2);">localStorage</code>에만 저장합니다(쿠키 미사용).
+          어드민 레이아웃(<code style="color:var(--accent2);">admin/layout.tsx</code>)이 클라이언트 마운트 시점에
+          <code style="color:var(--accent2);">getCurrentUser()</code>로 토큰을 파싱해 role을 확인합니다.
+          role이 <code style="color:var(--accent2);">'admin'</code>이 아니면 즉시 <code style="color:var(--accent2);">/</code>로 리다이렉트합니다.
+          API 라우트는 미들웨어(Edge Runtime)에서 Authorization 헤더를 재검증합니다.
+        </p>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>계층</th><th>보호 방식</th></tr></thead>
+            <tbody>
+              <tr><td>페이지 라우트 <code style="color:var(--accent2);">/admin/*</code></td><td>admin/layout.tsx 클라이언트 role 체크</td></tr>
+              <tr><td>API 라우트 <code style="color:var(--accent2);">/api/v1/admin/*</code></td><td>Edge middleware JWT 검증 (role=admin)</td></tr>
+              <tr><td>토큰 갱신</td><td>authFetch 자동 refresh_token 처리</td></tr>
+              <tr><td>로그아웃</td><td>clearTokens() → localStorage 삭제 → 루트 리다이렉트</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dot" style="background:#ff5f57;"></div>
+          <div class="code-dot" style="background:#febc2e;"></div>
+          <div class="code-dot" style="background:#28c840;"></div>
+          <span class="code-filename">admin/layout.tsx — 클라이언트 인증 가드</span>
+        </div>
+        <div class="code-body">
+<span class="kw">useEffect</span>(() => {
+  <span class="kw">const</span> u = <span class="fn">getCurrentUser</span>();  <span class="cmt">// localStorage 파싱</span>
+  <span class="kw">if</span> (!u) {
+    router.<span class="fn">replace</span>(<span class="str">'/login?from=/admin'</span>);
+    <span class="kw">return</span>;
+  }
+  <span class="kw">if</span> (u.role !== <span class="str">'admin'</span>) {
+    router.<span class="fn">replace</span>(<span class="str">'/'</span>);   <span class="cmt">// 일반 유저 → 홈</span>
+    <span class="kw">return</span>;
+  }
+  <span class="fn">setAuthorized</span>(<span class="kw">true</span>);
+}, [router]);
+        </div>
+      </div>
+    </div>
+
+    <!-- 어드민 페이지별 기능 목록 -->
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;color:var(--accent2);">페이지별 기능 상세</h3>
+    <div class="grid-2" style="gap:16px;margin-bottom:48px;">
+
+      <!-- 대시보드 -->
+      <div class="card" style="border-left:3px solid #3b82f6;">
+        <h3 style="color:#60a5fa;margin-bottom:12px;">대시보드 <code style="font-size:11px;color:#555;">/admin</code></h3>
+        <ul style="font-size:13px;color:var(--muted);line-height:2;padding-left:16px;">
+          <li>4개 KPI 카드 (상품·리뷰·AI분석·광고의심)</li>
+          <li>BullMQ 큐 실시간 상태 테이블 (active/waiting/delayed/failed)</li>
+          <li>워커 4종 실시간 상태 (10초 폴링)</li>
+          <li>3초 자동 갱신 토글 (autoRefresh)</li>
+          <li>크롤링 수동 트리거 (플랫폼 선택 + 즉시 실행)</li>
+          <li>Elasticsearch 재인덱싱 트리거</li>
+          <li>상품명 누락 자동 보정 (Placeholder Repair)</li>
+          <li>플랫폼별 리뷰 수 수평 바 차트 (Recharts)</li>
+          <li>잡 상세 드릴다운 모달 (실패 잡 개별/전체 재시도)</li>
+        </ul>
+      </div>
+
+      <!-- 파이프라인 -->
+      <div class="card" style="border-left:3px solid #a855f7;">
+        <h3 style="color:#c084fc;margin-bottom:12px;">파이프라인 <code style="font-size:11px;color:#555;">/admin/pipeline</code></h3>
+        <ul style="font-size:13px;color:var(--muted);line-height:2;padding-left:16px;">
+          <li>큐별 일시정지/재개 토글 (pause/resume API)</li>
+          <li>completed/failed 잡 일괄 정리 (clean)</li>
+          <li>delayed 잡 즉시 실행 승격 (promote)</li>
+          <li>잡 개별 삭제 (remove)</li>
+          <li>잡 실패 개별/전체 재시도 (retry)</li>
+          <li><strong>실행 이력</strong>: 날짜·플랫폼·상태 필터 테이블</li>
+          <li>소요시간 포맷 (ms → 분:초 변환)</li>
+          <li><strong>스케줄 설정</strong>: 크론 표현식 관리</li>
+        </ul>
+      </div>
+
+      <!-- 상품/리뷰 관리 -->
+      <div class="card" style="border-left:3px solid #22c55e;">
+        <h3 style="color:#4ade80;margin-bottom:12px;">상품·리뷰 관리 <code style="font-size:11px;color:#555;">/admin/products, /reviews</code></h3>
+        <ul style="font-size:13px;color:var(--muted);line-height:2;padding-left:16px;">
+          <li>상품 검색·페이지네이션 (이름 검색, 10건/페이지)</li>
+          <li>상품명·브랜드·카테고리·평점·리뷰수 테이블</li>
+          <li>리뷰 다중 필터 (플랫폼·평점·광고여부·검색어)</li>
+          <li>인라인 확장 상세 (클릭 행 → 전체 내용·AI분석 정보)</li>
+          <li>광고 수동 오버라이드 (<code style="color:var(--accent2);">PATCH /sponsored-reviews/:id</code>)</li>
+          <li>감성 점수·광고 확신도·사이즈 피드백 확인</li>
+          <li>평점별 별점 렌더링 (★☆ 아이콘)</li>
+        </ul>
+      </div>
+
+      <!-- 플랫폼 / 설정 -->
+      <div class="card" style="border-left:3px solid #f97316;">
+        <h3 style="color:#fb923c;margin-bottom:12px;">플랫폼·설정 <code style="font-size:11px;color:#555;">/admin/platforms, /settings</code></h3>
+        <ul style="font-size:13px;color:var(--muted);line-height:2;padding-left:16px;">
+          <li>플랫폼 CRUD (코드·이름·URL·활성 상태)</li>
+          <li>플랫폼 활성/비활성 토글 (크롤링 대상 제어)</li>
+          <li>AI 리뷰 분석 프롬프트 버전 관리 (생성·활성화·이력)</li>
+          <li>상품명 파싱 프롬프트 별도 관리</li>
+          <li>광고 판별 Confidence 임계값 슬라이더 (0.0~1.0)</li>
+          <li>임계값 변경 시 실시간 영향 리뷰 수 프리뷰</li>
+          <li>인기 검색어 슬롯 관리 (자동 트렌딩 순위 + 수동 고정)</li>
+          <li>실시간 검색 트렌드 확인 (최근 7일 상위 20개)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Admin API 엔드포인트 -->
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;color:var(--accent2);">Admin API 엔드포인트</h3>
+    <div class="tbl-wrap" style="margin-bottom:48px;">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>엔드포인트</th>
+            <th>메서드</th>
+            <th>기능</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/stats</code></td><td><span class="badge badge-blue">GET</span></td><td>전체 통계 (상품·리뷰·AI분석·광고의심·플랫폼별)</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/queues</code></td><td><span class="badge badge-blue">GET</span></td><td>BullMQ 큐 전체 상태 요약</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/queues/[name]/jobs</code></td><td><span class="badge badge-blue">GET</span></td><td>큐별 잡 목록 (status, limit 파라미터)</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/queues/[name]/pause</code></td><td><span class="badge badge-yellow">POST</span></td><td>큐 일시정지 / 재개</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/queues/[name]/retry</code></td><td><span class="badge badge-yellow">POST</span></td><td>실패 잡 재시도 (개별 / 전체)</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/queues/[name]/promote</code></td><td><span class="badge badge-yellow">POST</span></td><td>지연 잡 즉시 실행 승격</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/queues/[name]/clean</code></td><td><span class="badge badge-yellow">POST</span></td><td>completed/failed 잡 일괄 삭제</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/queues/[name]/remove</code></td><td><span class="badge badge-yellow">POST</span></td><td>특정 잡 제거</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/workers/start</code></td><td><span class="badge badge-blue">GET</span> / <span class="badge badge-yellow">POST</span> / <span class="badge badge-purple">DELETE</span></td><td>워커 상태 조회 / 시작 / 정지</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/crawl/trigger</code></td><td><span class="badge badge-yellow">POST</span></td><td>수동 크롤링 트리거 (플랫폼 코드 선택적)</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/reindex</code></td><td><span class="badge badge-yellow">POST</span></td><td>Elasticsearch 재인덱싱</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/pipeline/runs</code></td><td><span class="badge badge-blue">GET</span></td><td>파이프라인 실행 이력 (필터·페이지네이션)</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/pipeline/schedule</code></td><td><span class="badge badge-blue">GET</span> / <span class="badge badge-yellow">POST</span></td><td>크론 스케줄 조회 / 설정</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/products</code></td><td><span class="badge badge-blue">GET</span></td><td>상품 목록 (검색·페이지네이션)</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/products/repair</code></td><td><span class="badge badge-blue">GET</span> / <span class="badge badge-yellow">POST</span></td><td>누락 상품명 조회 / 자동 보정</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/products/update-ratings</code></td><td><span class="badge badge-yellow">POST</span></td><td>평점 일괄 갱신</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/reviews</code></td><td><span class="badge badge-blue">GET</span></td><td>리뷰 목록 (다중 필터)</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/sponsored-reviews/[id]</code></td><td><span class="badge badge-green">PATCH</span></td><td>광고 판별 수동 오버라이드</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/prompts</code></td><td><span class="badge badge-blue">GET</span> / <span class="badge badge-yellow">POST</span></td><td>AI 프롬프트 버전 목록 / 신규 버전 저장</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/prompts/[id]/activate</code></td><td><span class="badge badge-green">PATCH</span></td><td>특정 프롬프트 버전 활성화</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/settings</code></td><td><span class="badge badge-blue">GET</span> / <span class="badge badge-yellow">PUT</span></td><td>사이트 설정 조회 / 수정 (키-값)</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/settings/sponsored-threshold-preview</code></td><td><span class="badge badge-blue">GET</span></td><td>임계값 변경 시 영향 리뷰 수 프리뷰</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/settings/trending-keywords</code></td><td><span class="badge badge-blue">GET</span></td><td>실시간 검색 트렌드 (7일 상위 20개)</td></tr>
+          <tr><td><code style="color:var(--accent2);">/api/v1/admin/platforms</code></td><td><span class="badge badge-blue">GET</span> / <span class="badge badge-yellow">POST</span> / <span class="badge badge-yellow">PUT</span></td><td>플랫폼 목록 / 생성 / 수정</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 어드민 페이지별 목업 (4개) -->
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:24px;color:var(--accent2);">화면 목업</h3>
+
+    <!-- 목업 1: 파이프라인 큐 상태 -->
+    <div style="margin-bottom:36px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <span class="badge badge-purple">Admin 01</span>
+        <h4 style="font-size:16px;font-weight:700;">파이프라인 — 큐 상태 &amp; 워커 제어</h4>
+      </div>
+      <div class="screenshot-placeholder">
+        <div class="sp-bar">
+          <div class="sp-dot" style="background:#ff5f57;"></div>
+          <div class="sp-dot" style="background:#febc2e;"></div>
+          <div class="sp-dot" style="background:#28c840;"></div>
+          <span style="font-size:11px;color:#555;margin-left:8px;">localhost:3000/admin/pipeline</span>
+        </div>
+        <div class="admin-full-mock">
+          <div class="admin-header-mock">
+            <div class="admin-header-left">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="admin-logo-box">🔍</div>
+                <div><div class="admin-logo-text">리뷰모으기</div><div class="admin-logo-sub">Admin Dashboard</div></div>
+              </div>
+            </div>
+            <div class="admin-header-right">
+              <button style="font-size:10px;padding:4px 10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#4ade80;border-radius:6px;display:flex;align-items:center;gap:5px;">
+                <span style="width:6px;height:6px;background:#22c55e;border-radius:50%;display:inline-block;"></span>
+                실시간 갱신 중
+              </button>
+            </div>
+          </div>
+          <div class="admin-body-mock">
+            <div class="admin-sidebar-mock">
+              <div class="admin-nav-item">대시보드</div>
+              <div class="admin-nav-item">상품 관리</div>
+              <div class="admin-nav-item">리뷰 관리</div>
+              <div class="admin-nav-item active">파이프라인</div>
+              <div style="margin-left:16px;">
+                <div class="admin-nav-item active" style="font-size:9.5px;padding:4px 8px;background:rgba(59,130,246,0.1);color:#60a5fa;">큐 상태</div>
+                <div class="admin-nav-item" style="font-size:9.5px;color:#444;padding:4px 8px;">실행 이력</div>
+                <div class="admin-nav-item" style="font-size:9.5px;color:#444;padding:4px 8px;">스케줄</div>
+              </div>
+              <div class="admin-nav-item">플랫폼</div>
+              <div class="admin-nav-item">설정</div>
+            </div>
+            <div class="admin-content-mock">
+              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:10px;">파이프라인</div>
+              <!-- Worker Status -->
+              <div style="background:#141414;border:1px solid #1e1e1e;border-radius:8px;padding:10px;margin-bottom:8px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                  <div style="font-size:11px;font-weight:700;color:#fff;">워커 상태</div>
+                  <button style="font-size:9.5px;padding:4px 10px;background:#2563eb;border:none;color:#fff;border-radius:5px;cursor:pointer;">워커 재시작</button>
+                </div>
+                <div class="worker-grid">
+                  <div class="worker-card running">
+                    <div class="worker-top"><div class="worker-icon-box" style="background:rgba(234,179,8,0.1);">🔍</div><div class="worker-dot on"></div></div>
+                    <div class="worker-name">상품 수집</div><div class="worker-status on">실행 중</div>
+                  </div>
+                  <div class="worker-card running">
+                    <div class="worker-top"><div class="worker-icon-box" style="background:rgba(59,130,246,0.1);">🕷️</div><div class="worker-dot on"></div></div>
+                    <div class="worker-name">리뷰 크롤링</div><div class="worker-status on">실행 중</div>
+                  </div>
+                  <div class="worker-card running">
+                    <div class="worker-top"><div class="worker-icon-box" style="background:rgba(239,68,68,0.1);">🤖</div><div class="worker-dot on"></div></div>
+                    <div class="worker-name">AI 분석</div><div class="worker-status on">실행 중</div>
+                  </div>
+                  <div class="worker-card">
+                    <div class="worker-top"><div class="worker-icon-box" style="background:rgba(168,85,247,0.1);">📊</div><div class="worker-dot"></div></div>
+                    <div class="worker-name">요약 생성</div><div class="worker-status">정지</div>
+                  </div>
+                </div>
+              </div>
+              <!-- Summary row -->
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px;">
+                <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-left:3px solid #22c55e;border-radius:6px;padding:8px;">
+                  <div style="font-size:10px;color:#4ade80;font-weight:600;">진행 중</div>
+                  <div style="font-size:20px;font-weight:700;color:#fff;">3</div>
+                  <div style="font-size:9px;color:#555;text-transform:uppercase;">Active Jobs</div>
+                </div>
+                <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-left:3px solid #eab308;border-radius:6px;padding:8px;">
+                  <div style="font-size:10px;color:#facc15;font-weight:600;">대기 중</div>
+                  <div style="font-size:20px;font-weight:700;color:#fff;">47</div>
+                  <div style="font-size:9px;color:#555;text-transform:uppercase;">Waiting Jobs</div>
+                </div>
+                <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-left:3px solid #ef4444;border-radius:6px;padding:8px;">
+                  <div style="font-size:10px;color:#f87171;font-weight:600;">실패</div>
+                  <div style="font-size:20px;font-weight:700;color:#fff;">2</div>
+                  <div style="font-size:9px;color:#555;text-transform:uppercase;">Failed Jobs</div>
+                </div>
+              </div>
+              <!-- Queue table -->
+              <div style="background:#141414;border:1px solid #1e1e1e;border-radius:8px;overflow:hidden;">
+                <table class="queue-tbl">
+                  <thead><tr><th>큐 이름</th><th style="text-align:center;">진행</th><th style="text-align:center;">대기</th><th style="text-align:center;">지연</th><th style="text-align:center;">완료</th><th style="text-align:center;">실패</th><th style="text-align:center;">관리</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><div class="queue-name"><span>🔍</span><div><div style="font-size:11px;color:#fff;font-weight:600;">상품 수집</div><div style="font-size:9px;color:#555;">product-discovery</div></div></div></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-green">1</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-yellow">12</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">0</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">284</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">0</span></td>
+                      <td style="text-align:center;"><span style="font-size:12px;color:#facc15;cursor:pointer;">⏸</span></td>
+                    </tr>
+                    <tr>
+                      <td><div class="queue-name"><span>🕷️</span><div><div style="font-size:11px;color:#fff;font-weight:600;">리뷰 크롤링</div><div style="font-size:9px;color:#555;">review-crawl</div></div></div></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-green">2</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-yellow">35</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">0</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">1,847</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-red">2</span></td>
+                      <td style="text-align:center;"><span style="font-size:12px;color:#facc15;cursor:pointer;">⏸</span> <span style="font-size:10px;color:#555;cursor:pointer;">🗑</span></td>
+                    </tr>
+                    <tr>
+                      <td><div class="queue-name"><span>🤖</span><div><div style="font-size:11px;color:#fff;font-weight:600;">AI 분석</div><div style="font-size:9px;color:#555;">ai-processing</div></div></div></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">0</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">0</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">0</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">45,100</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">0</span></td>
+                      <td style="text-align:center;"><span style="font-size:12px;color:#facc15;cursor:pointer;">⏸</span> <span style="font-size:10px;color:#555;cursor:pointer;">🗑</span></td>
+                    </tr>
+                    <tr>
+                      <td><div class="queue-name"><span>📊</span><div><div style="font-size:11px;color:#fff;font-weight:600;">요약 생성</div><div style="font-size:9px;color:#555;">summary-generation</div></div><span class="paused-badge">일시정지</span></div></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">0</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-yellow">0</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">0</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">8,342</span></td>
+                      <td style="text-align:center;"><span class="queue-badge-num qn-gray">0</span></td>
+                      <td style="text-align:center;"><span style="font-size:12px;color:#4ade80;cursor:pointer;">▶</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px;">
+        BullMQ 4개 큐 실시간 모니터링. 큐 일시정지/재개, 잡 승격·재시도·삭제를 UI에서 직접 제어.
+        숫자 클릭 시 해당 상태의 잡 목록 모달 오픈. 3초 자동 폴링 토글 지원.
+      </p>
+    </div>
+
+    <!-- 목업 2: 리뷰 관리 -->
+    <div style="margin-bottom:36px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <span class="badge badge-green">Admin 02</span>
+        <h4 style="font-size:16px;font-weight:700;">리뷰 관리 — 다중 필터 &amp; 광고 수동 오버라이드</h4>
+      </div>
+      <div class="screenshot-placeholder">
+        <div class="sp-bar">
+          <div class="sp-dot" style="background:#ff5f57;"></div>
+          <div class="sp-dot" style="background:#febc2e;"></div>
+          <div class="sp-dot" style="background:#28c840;"></div>
+          <span style="font-size:11px;color:#555;margin-left:8px;">localhost:3000/admin/reviews</span>
+        </div>
+        <div class="admin-full-mock">
+          <div class="admin-header-mock">
+            <div class="admin-header-left">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="admin-logo-box">🔍</div>
+                <div><div class="admin-logo-text">리뷰모으기</div><div class="admin-logo-sub">Admin Dashboard</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="admin-body-mock">
+            <div class="admin-sidebar-mock">
+              <div class="admin-nav-item">대시보드</div>
+              <div class="admin-nav-item">상품 관리</div>
+              <div class="admin-nav-item active">리뷰 관리</div>
+              <div class="admin-nav-item">파이프라인</div>
+              <div class="admin-nav-item">플랫폼</div>
+              <div class="admin-nav-item">설정</div>
+            </div>
+            <div class="admin-content-mock">
+              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:10px;">리뷰 관리 <span style="font-size:10px;color:#555;font-weight:400;">(총 47,392개)</span></div>
+              <!-- Filter row -->
+              <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;">
+                <div style="flex:1;min-width:120px;background:#141414;border:1px solid #2a2a2a;border-radius:6px;padding:6px 10px;font-size:10.5px;color:#555;display:flex;align-items:center;gap:6px;">
+                  <span>🔍</span> <span>리뷰 내용으로 검색...</span>
+                </div>
+                <select style="background:#141414;border:1px solid #2a2a2a;border-radius:6px;padding:6px 8px;font-size:10px;color:#aaa;min-width:80px;">
+                  <option>전체 플랫폼</option>
+                </select>
+                <select style="background:#141414;border:1px solid #2a2a2a;border-radius:6px;padding:6px 8px;font-size:10px;color:#aaa;min-width:70px;">
+                  <option>전체 평점</option>
+                </select>
+                <select style="background:#141414;border:1px solid #2a2a2a;border-radius:6px;padding:6px 8px;font-size:10px;color:#aaa;min-width:80px;">
+                  <option>광고 의심</option>
+                </select>
+                <button style="background:#2563eb;border:none;color:#fff;border-radius:6px;padding:6px 12px;font-size:10px;">검색</button>
+              </div>
+              <!-- Review table -->
+              <div style="background:#141414;border:1px solid #1e1e1e;border-radius:8px;overflow:hidden;">
+                <table class="rev-tbl">
+                  <thead>
+                    <tr><th>리뷰어</th><th>상품</th><th>플랫폼</th><th>평점</th><th>사이즈</th><th>광고</th><th>작성일</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr style="cursor:pointer;">
+                      <td><div style="font-size:11px;color:#fff;font-weight:600;">user_a8f2k</div><div style="font-size:9.5px;color:#555;">170cm / 58kg</div></td>
+                      <td><div style="font-size:10.5px;color:#aaa;max-width:140px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">오버핏 후드 스웨트셔츠</div></td>
+                      <td><span style="padding:2px 6px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:4px;font-size:9.5px;color:#777;">무신사</span></td>
+                      <td><span class="stars-mock">★★★★★</span></td>
+                      <td><span style="padding:2px 7px;border-radius:99px;font-size:9px;background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.2);">적당</span></td>
+                      <td><span class="rev-sponsored-n">정상</span></td>
+                      <td style="font-size:9.5px;color:#555;">2026.04.01</td>
+                    </tr>
+                    <!-- Expanded row -->
+                    <tr style="background:#111;">
+                      <td colspan="7" style="padding:12px 16px;border-bottom:1px solid #2a2a2a;">
+                        <div style="font-size:11px;color:#ccc;margin-bottom:8px;line-height:1.7;">처음엔 좀 작을까 걱정했는데 딱 맞아요. 소재가 너무 좋고 색상도 사진이랑 똑같아요.</div>
+                        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                          <span style="font-size:10px;color:#555;">감성 점수: <span style="color:#aaa;">78점</span></span>
+                          <span style="font-size:10px;color:#555;">광고 확신도: <span style="color:#aaa;">12%</span></span>
+                          <div style="flex:1;"></div>
+                          <button style="padding:4px 10px;border:1px solid rgba(239,68,68,0.3);background:rgba(239,68,68,0.1);color:#f87171;border-radius:6px;font-size:9.5px;">광고로 변경</button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><div style="font-size:11px;color:#fff;font-weight:600;">파워블로거K</div><div style="font-size:9.5px;color:#555;">협찬</div></td>
+                      <td><div style="font-size:10.5px;color:#aaa;max-width:140px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">스몰 로고 후디</div></td>
+                      <td><span style="padding:2px 6px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:4px;font-size:9.5px;color:#777;">29CM</span></td>
+                      <td><span class="stars-mock">★★★★★</span></td>
+                      <td><span style="font-size:10px;color:#555;">-</span></td>
+                      <td><span class="rev-sponsored-badge rev-sponsored-y">의심 95%</span></td>
+                      <td style="font-size:9.5px;color:#555;">2026.04.02</td>
+                    </tr>
+                    <tr>
+                      <td><div style="font-size:11px;color:#fff;font-weight:600;">ggom_d</div><div style="font-size:9.5px;color:#555;">165cm / 52kg</div></td>
+                      <td><div style="font-size:10.5px;color:#aaa;max-width:140px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">익스페디션 후드티</div></td>
+                      <td><span style="padding:2px 6px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:4px;font-size:9.5px;color:#777;">W컨셉</span></td>
+                      <td><span class="stars-mock">★★★★☆</span></td>
+                      <td><span style="padding:2px 7px;border-radius:99px;font-size:9px;background:rgba(249,115,22,0.1);color:#fb923c;border:1px solid rgba(249,115,22,0.2);">큼</span></td>
+                      <td><span class="rev-sponsored-n">정상</span></td>
+                      <td style="font-size:9.5px;color:#555;">2026.04.03</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px;">
+        플랫폼·평점·광고여부 다중 필터. 행 클릭 시 인라인 확장으로 전체 리뷰 내용 및 AI 분석 결과(감성 점수·광고 확신도·사유) 표시.
+        광고 오버라이드 버튼으로 AI 판단 수동 수정 가능.
+      </p>
+    </div>
+
+    <!-- 목업 3: 설정 페이지 -->
+    <div style="margin-bottom:36px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <span class="badge badge-blue">Admin 03</span>
+        <h4 style="font-size:16px;font-weight:700;">설정 — AI 프롬프트 버전 관리 &amp; 광고 임계값</h4>
+      </div>
+      <div class="screenshot-placeholder">
+        <div class="sp-bar">
+          <div class="sp-dot" style="background:#ff5f57;"></div>
+          <div class="sp-dot" style="background:#febc2e;"></div>
+          <div class="sp-dot" style="background:#28c840;"></div>
+          <span style="font-size:11px;color:#555;margin-left:8px;">localhost:3000/admin/settings</span>
+        </div>
+        <div class="admin-full-mock" style="min-height:380px;">
+          <div class="admin-header-mock">
+            <div class="admin-header-left">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="admin-logo-box">🔍</div>
+                <div><div class="admin-logo-text">리뷰모으기</div><div class="admin-logo-sub">Admin Dashboard</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="admin-body-mock">
+            <div class="admin-sidebar-mock">
+              <div class="admin-nav-item">대시보드</div>
+              <div class="admin-nav-item">상품 관리</div>
+              <div class="admin-nav-item">리뷰 관리</div>
+              <div class="admin-nav-item">파이프라인</div>
+              <div class="admin-nav-item">플랫폼</div>
+              <div class="admin-nav-item active">설정</div>
+            </div>
+            <div class="admin-content-mock" style="overflow-y:auto;max-height:340px;">
+              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:10px;">사이트 설정</div>
+
+              <!-- AI 프롬프트 -->
+              <div class="settings-section">
+                <div class="settings-title">
+                  AI 분석 프롬프트
+                  <span class="settings-active-badge">v3 활성</span>
+                </div>
+                <!-- Stats -->
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;">
+                  <div style="background:#0f0f0f;border:1px solid #1e1e1e;border-radius:6px;padding:8px;text-align:center;">
+                    <div style="font-size:9.5px;color:#555;">분석된 리뷰</div>
+                    <div style="font-size:14px;font-weight:700;color:#fff;">45,100<span style="font-size:9.5px;color:#555;">건</span></div>
+                  </div>
+                  <div style="background:#0f0f0f;border:1px solid #1e1e1e;border-radius:6px;padding:8px;text-align:center;">
+                    <div style="font-size:9.5px;color:#555;">광고 의심</div>
+                    <div style="font-size:14px;font-weight:700;color:#f87171;">5.2<span style="font-size:9.5px;">%</span></div>
+                  </div>
+                  <div style="background:#0f0f0f;border:1px solid #1e1e1e;border-radius:6px;padding:8px;text-align:center;">
+                    <div style="font-size:9.5px;color:#555;">정상 리뷰</div>
+                    <div style="font-size:14px;font-weight:700;color:#4ade80;">42,756<span style="font-size:9.5px;">건</span></div>
+                  </div>
+                </div>
+                <div class="prompt-textarea-mock">
+                  당신은 패션 리뷰 분석 전문가입니다. 리뷰를 분석하여 아래 JSON 형식으로...<br>
+                  분석 기준:<br>
+                  1. 광고성 판별 ("협찬", "제공", "체험단" 등 명시적 키워드...)<br>
+                  ...
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
+                  <span style="font-size:10px;color:#555;">변경사항 없음</span>
+                  <div style="display:flex;gap:6px;">
+                    <button style="padding:5px 10px;background:#1a1a1a;border:1px solid #2a2a2a;color:#aaa;border-radius:6px;font-size:10px;">이력 보기 (3)</button>
+                    <button style="padding:5px 10px;background:#555;border:none;color:#888;border-radius:6px;font-size:10px;cursor:not-allowed;">새 버전으로 저장</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Threshold -->
+              <div class="settings-section">
+                <div class="settings-title">광고 판별 기준 (Confidence Threshold)</div>
+                <div class="threshold-row">
+                  <span style="font-size:10px;color:#aaa;">Threshold</span>
+                  <div class="threshold-slider"><div class="threshold-fill"></div></div>
+                  <div class="threshold-val">0.70</div>
+                </div>
+                <div style="font-size:9.5px;color:#555;display:flex;justify-content:space-between;margin-bottom:8px;">
+                  <span>0.0 (엄격)</span><span>0.5</span><span>1.0 (관대)</span>
+                </div>
+                <div style="background:#0f0f0f;border:1px solid #1e1e1e;border-radius:6px;padding:8px;">
+                  <span style="font-size:10.5px;color:#ccc;">현재 기준: <span style="color:#f87171;font-weight:700;">2,341건</span> 광고 필터링 / 전체 <span style="color:#fff;font-weight:700;">47,392건</span></span>
+                </div>
+              </div>
+
+              <!-- Popular Keywords -->
+              <div class="settings-section">
+                <div class="settings-title">인기 검색어 슬롯</div>
+                <div style="font-size:10px;color:#555;margin-bottom:8px;">슬롯이 없으면 트렌딩 상위 8개가 자동 표시됩니다.</div>
+                <div class="kw-slot-list">
+                  <div class="kw-slot"><span class="kw-auto-badge">자동 #1</span><span style="color:#aaa;">무신사 후드티</span></div>
+                  <div class="kw-slot"><span class="kw-auto-badge">자동 #2</span><span style="color:#aaa;">29CM 코트</span></div>
+                  <div class="kw-slot"><span class="kw-manual-badge">수동</span><span style="color:#fff;font-weight:600;">나이키 에어맥스</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px;">
+        AI 프롬프트 버전 관리: 편집 후 저장하면 새 버전(v4 등)이 자동 활성화. 이전 버전으로 롤백 가능.
+        Confidence 슬라이더 조정 시 300ms 디바운스로 실시간 영향 건수 미리보기.
+        인기 검색어 슬롯은 자동(트렌딩 순위 연동)과 수동 텍스트를 혼합 구성 가능.
+      </p>
+    </div>
+
+    <!-- 목업 4: 파이프라인 실행 이력 -->
+    <div style="margin-bottom:36px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <span class="badge badge-yellow">Admin 04</span>
+        <h4 style="font-size:16px;font-weight:700;">파이프라인 실행 이력 — 크론/수동 트리거 로그</h4>
+      </div>
+      <div class="screenshot-placeholder">
+        <div class="sp-bar">
+          <div class="sp-dot" style="background:#ff5f57;"></div>
+          <div class="sp-dot" style="background:#febc2e;"></div>
+          <div class="sp-dot" style="background:#28c840;"></div>
+          <span style="font-size:11px;color:#555;margin-left:8px;">localhost:3000/admin/pipeline/history</span>
+        </div>
+        <div class="admin-full-mock">
+          <div class="admin-header-mock">
+            <div class="admin-header-left">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="admin-logo-box">🔍</div>
+                <div><div class="admin-logo-text">리뷰모으기</div><div class="admin-logo-sub">Admin Dashboard</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="admin-body-mock">
+            <div class="admin-sidebar-mock">
+              <div class="admin-nav-item">대시보드</div>
+              <div class="admin-nav-item">상품 관리</div>
+              <div class="admin-nav-item">리뷰 관리</div>
+              <div class="admin-nav-item active">파이프라인</div>
+              <div style="margin-left:16px;">
+                <div class="admin-nav-item" style="font-size:9.5px;color:#444;padding:4px 8px;">큐 상태</div>
+                <div class="admin-nav-item active" style="font-size:9.5px;padding:4px 8px;background:rgba(59,130,246,0.1);color:#60a5fa;">실행 이력</div>
+                <div class="admin-nav-item" style="font-size:9.5px;color:#444;padding:4px 8px;">스케줄</div>
+              </div>
+              <div class="admin-nav-item">플랫폼</div>
+              <div class="admin-nav-item">설정</div>
+            </div>
+            <div class="admin-content-mock">
+              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:10px;">실행 이력</div>
+              <!-- Filter -->
+              <div style="background:#141414;border:1px solid #1e1e1e;border-radius:8px;padding:10px;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                <div>
+                  <div style="font-size:9px;color:#555;margin-bottom:4px;">플랫폼</div>
+                  <select style="background:#1a1a1a;border:1px solid #2a2a2a;color:#aaa;border-radius:5px;padding:4px 8px;font-size:10px;">
+                    <option>전체</option>
+                  </select>
+                </div>
+                <div>
+                  <div style="font-size:9px;color:#555;margin-bottom:4px;">상태</div>
+                  <select style="background:#1a1a1a;border:1px solid #2a2a2a;color:#aaa;border-radius:5px;padding:4px 8px;font-size:10px;">
+                    <option>전체</option>
+                  </select>
+                </div>
+                <div>
+                  <div style="font-size:9px;color:#555;margin-bottom:4px;">시작일</div>
+                  <input type="text" placeholder="2026-04-01" style="background:#1a1a1a;border:1px solid #2a2a2a;color:#777;border-radius:5px;padding:4px 8px;font-size:10px;width:90px;">
+                </div>
+                <div>
+                  <div style="font-size:9px;color:#555;margin-bottom:4px;">종료일</div>
+                  <input type="text" placeholder="2026-04-24" style="background:#1a1a1a;border:1px solid #2a2a2a;color:#777;border-radius:5px;padding:4px 8px;font-size:10px;width:90px;">
+                </div>
+              </div>
+              <!-- History table -->
+              <div style="background:#141414;border:1px solid #1e1e1e;border-radius:8px;overflow:hidden;">
+                <table class="history-tbl">
+                  <thead><tr><th>실행일시</th><th>트리거</th><th>플랫폼</th><th>상태</th><th style="text-align:right;">상품</th><th style="text-align:right;">리뷰</th><th style="text-align:right;">AI분석</th><th style="text-align:right;">소요시간</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td style="color:#aaa;white-space:nowrap;">2026.04.24 02:00</td>
+                      <td><span class="trigger-badge trigger-cron">크론</span></td>
+                      <td style="font-weight:600;color:#fff;">무신사</td>
+                      <td><span class="status-running"><span class="ping-dot"></span>실행 중</span></td>
+                      <td style="text-align:right;">142</td><td style="text-align:right;">3,847</td><td style="text-align:right;">—</td><td style="text-align:right;color:#555;">진행 중</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#aaa;white-space:nowrap;">2026.04.23 02:00</td>
+                      <td><span class="trigger-badge trigger-cron">크론</span></td>
+                      <td style="font-weight:600;color:#fff;">무신사</td>
+                      <td><span class="status-completed">완료</span></td>
+                      <td style="text-align:right;">138</td><td style="text-align:right;">4,201</td><td style="text-align:right;">4,187</td><td style="text-align:right;color:#aaa;">14분 32초</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#aaa;white-space:nowrap;">2026.04.23 14:22</td>
+                      <td><span class="trigger-badge trigger-manual">수동</span></td>
+                      <td style="font-weight:600;color:#fff;">29CM</td>
+                      <td><span class="status-completed">완료</span></td>
+                      <td style="text-align:right;">95</td><td style="text-align:right;">1,823</td><td style="text-align:right;">1,819</td><td style="text-align:right;color:#aaa;">8분 14초</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#aaa;white-space:nowrap;">2026.04.22 02:00</td>
+                      <td><span class="trigger-badge trigger-cron">크론</span></td>
+                      <td style="font-weight:600;color:#fff;">W컨셉</td>
+                      <td><span class="status-failed">실패</span></td>
+                      <td style="text-align:right;">0</td><td style="text-align:right;">0</td><td style="text-align:right;">0</td><td style="text-align:right;color:#f87171;">2분 3초</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px;">
+        파이프라인 실행 이력을 날짜·플랫폼·상태(running/completed/failed)로 필터링.
+        실행 중 상태는 ping 애니메이션으로 표시. 크론/수동 트리거 구분. 소요시간 단위 자동 포맷.
+        상품 수집 → 리뷰 크롤링 → AI 분석 → 요약 생성 단계별 처리 건수 확인 가능.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── 7. 인프라 / 배포 ──────────────────────────────── -->
+<section id="infra">
+  <div class="container">
+    <div class="section-label">07 / Infrastructure</div>
+    <h2 class="section-title">인프라 &amp; 배포</h2>
+    <p class="section-desc">Docker Compose 5-service 구성 + GitHub Actions CI/CD</p>
+
+    <!-- Docker services -->
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;">Docker Compose 서비스 구성</h3>
+    <div class="docker-grid" style="margin-bottom:40px;">
+      <div class="docker-service">
+        <h4>🐬 mysql</h4>
+        <p>MySQL 8.0<br>review_service DB<br>utf8mb4_unicode_ci<br>healthcheck: mysqladmin ping</p>
+        <div class="docker-port">:3306</div>
+      </div>
+      <div class="docker-service">
+        <h4>🔴 redis</h4>
+        <p>Redis 7 Alpine<br>BullMQ 백엔드<br>캐시 / Rate Limit<br>healthcheck: redis-cli ping</p>
+        <div class="docker-port">:6379</div>
+      </div>
+      <div class="docker-service">
+        <h4>🔎 elasticsearch</h4>
+        <p>ES 8.12.0 single-node<br>xpack.security 비활성<br>JVM: -Xms512m -Xmx512m<br>nori 한글 분석기</p>
+        <div class="docker-port">:9200</div>
+      </div>
+      <div class="docker-service">
+        <h4>⬛ web</h4>
+        <p>Next.js 16<br>MySQL/Redis/ES 의존<br>healthcheck: /api/v1/health<br>시작 대기: 30s</p>
+        <div class="docker-port">:3000</div>
+      </div>
+      <div class="docker-service">
+        <h4>⚙️ workers</h4>
+        <p>BullMQ Worker<br>Playwright 포함<br>standalone.ts 실행<br>healthcheck: pgrep</p>
+        <div class="docker-port">internal</div>
+      </div>
+      <div class="docker-service" style="border-style:dashed;">
+        <h4>🌐 네트워크</h4>
+        <p>app-network (bridge)<br>서비스 간 통신<br>볼륨: mysql_data<br>redis_data / es_data</p>
+      </div>
+    </div>
+
+    <!-- GitHub Actions -->
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;">GitHub Actions CI/CD 흐름</h3>
+    <div class="cicd-flow" style="margin-bottom:32px;gap:0;">
+      <div class="cicd-step">
+        <div class="cicd-box">
+          <div class="cicd-icon">📝</div>
+          <div class="cicd-name">git push dev</div>
+          <div class="cicd-sub">배포 트리거</div>
+        </div>
+      </div>
+      <div class="cicd-arrow">→</div>
+      <div class="cicd-step">
+        <div class="cicd-box">
+          <div class="cicd-icon">🔑</div>
+          <div class="cicd-name">SSH 설정</div>
+          <div class="cicd-sub">PEM key + known_hosts</div>
+        </div>
+      </div>
+      <div class="cicd-arrow">→</div>
+      <div class="cicd-step">
+        <div class="cicd-box">
+          <div class="cicd-icon">🧹</div>
+          <div class="cicd-name">디스크 정리</div>
+          <div class="cicd-sub">docker system prune</div>
+        </div>
+      </div>
+      <div class="cicd-arrow">→</div>
+      <div class="cicd-step">
+        <div class="cicd-box">
+          <div class="cicd-icon">📦</div>
+          <div class="cicd-name">rsync 동기화</div>
+          <div class="cicd-sub">node_modules/.next 제외</div>
+        </div>
+      </div>
+      <div class="cicd-arrow">→</div>
+      <div class="cicd-step">
+        <div class="cicd-box">
+          <div class="cicd-icon">🐳</div>
+          <div class="cicd-name">Docker 빌드</div>
+          <div class="cicd-sub">docker-compose.dev.yml</div>
+        </div>
+      </div>
+      <div class="cicd-arrow">→</div>
+      <div class="cicd-step">
+        <div class="cicd-box">
+          <div class="cicd-icon">❤️</div>
+          <div class="cicd-name">Health Check</div>
+          <div class="cicd-sub">/api/v1/health → 200</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Infra specs -->
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>구성 요소</th>
+            <th>스펙</th>
+            <th>메모리</th>
+            <th>비고</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>AWS EC2</td><td>t3.medium</td><td>4GB RAM</td><td>월 ~$30, 단일 서버 통합</td></tr>
+          <tr><td>스케줄러</td><td>BullMQ Repeatable</td><td>~50MB</td><td>매일 02:00 KST</td></tr>
+          <tr><td>Worker (Playwright)</td><td>concurrency 설정 가능</td><td>~800MB</td><td>크롤링 + AI 분석</td></tr>
+          <tr><td>Redis</td><td>Docker 7-alpine</td><td>~100MB</td><td>큐 + 캐시</td></tr>
+          <tr><td>Elasticsearch</td><td>JVM 512m-512m</td><td>~1GB</td><td>nori 한글 검색</td></tr>
+          <tr><td>MySQL</td><td>8.0 utf8mb4</td><td>~256MB</td><td>Primary DB</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── 8. 기술적 도전과 해결 ────────────────────────── -->
+<section id="challenges">
+  <div class="container">
+    <div class="section-label">08 / Challenges</div>
+    <h2 class="section-title">기술적 도전과 해결</h2>
+    <p class="section-desc">개발 과정에서 맞닥뜨린 주요 문제와 해결 방법</p>
+
+    <div class="grid-2" style="gap:20px;">
+
+      <div class="challenge-card">
+        <h3>동적 콘텐츠 크롤링</h3>
+        <div class="challenge-problem">
+          문제: SPA 구조의 패션 플랫폼은 JavaScript 렌더링 후에만 리뷰 데이터가 나타남.
+          무한 스크롤, AJAX 페이지네이션, 플랫폼별 상이한 HTML 구조.
+        </div>
+        <div class="challenge-solution">
+          해결: Playwright 헤드리스 브라우저로 실제 브라우저 동작 시뮬레이션.
+          Docker 환경 메모리 이슈는 --disable-dev-shm-usage 플래그로 해결.
+          waitForSelector + networkidle 대기로 안정적 데이터 수집.
+        </div>
+        <div class="challenge-result">
+          결과: 4개 플랫폼 안정적 크롤링, 재시도(3회 Exponential Backoff)로 99%+ 성공률
+        </div>
+      </div>
+
+      <div class="challenge-card">
+        <h3>AI 분석 정확도 &amp; 비용</h3>
+        <div class="challenge-problem">
+          문제: 광고성 리뷰 오탐률 30% (긍정적 리뷰를 광고로 분류).
+          일일 10,000+ 리뷰를 1개씩 처리하면 API 비용이 기하급수적으로 증가.
+        </div>
+        <div class="challenge-solution">
+          해결: Few-Shot Learning — 관리자가 검증한 오탐 사례를 프롬프트에 동적 포함.
+          배치 처리 (15개 묶음) + 짧은 리뷰(10자 미만) 스킵으로 API 호출 대폭 감소.
+        </div>
+        <div class="challenge-result">
+          결과: 오탐률 30% → 5% 감소 / API 비용 93% 절감 (1,000 → 67 호출)
+        </div>
+      </div>
+
+      <div class="challenge-card">
+        <h3>체형 정보 파싱</h3>
+        <div class="challenge-problem">
+          문제: 플랫폼마다 체형 정보 형식이 다름.
+          29cm: ["163cm", "62kg"] 구조화 배열.
+          무신사: "174cm · 72kg" 텍스트.
+          커들리버니: "170cm/55kg/44사이즈" 자연어 혼재.
+        </div>
+        <div class="challenge-solution">
+          해결: 플랫폼별 정규식 패턴 매칭 우선 적용.
+          다양한 표현 지원 ("170cm", "170센치", "170" 등).
+          추출 실패 시 null 저장 후 검색에서 제외하지 않는 Fallback 전략.
+        </div>
+        <div class="challenge-result">
+          결과: 주요 플랫폼 체형 정보 추출률 85%+ 달성
+        </div>
+      </div>
+
+      <div class="challenge-card">
+        <h3>Next.js 빌드 타임 안전성</h3>
+        <div class="challenge-problem">
+          문제: openai, bullmq, ioredis 등 런타임 전용 패키지가 빌드 시
+          환경변수 없이 로드되면 빌드 실패 또는 번들 비대화 발생.
+        </div>
+        <div class="challenge-solution">
+          해결: next.config.ts의 serverExternalPackages로 번들에서 제외.
+          DB는 Proxy 패턴, OpenAI/JWT는 lazy singleton으로 런타임 접근 시점에만 초기화.
+          API Routes에 export const dynamic = 'force-dynamic' 적용.
+        </div>
+        <div class="challenge-result">
+          결과: 빌드 타임 에러 0건, 런타임 초기화 안정화
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 8. 성과 및 지표 ───────────────────────────────── -->
+<section id="metrics">
+  <div class="container">
+    <div class="section-label">09 / Results</div>
+    <h2 class="section-title">성과 및 지표</h2>
+    <p class="section-desc">기술적 구현을 통해 달성한 수치 목표</p>
+
+    <div class="metric-row" style="margin-bottom:40px;">
+      <div class="metric-card">
+        <div class="metric-val">93%</div>
+        <div class="metric-label">AI API 비용 절감</div>
+        <div class="metric-sub">배치 처리로 1,000회 → 67회</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">5%</div>
+        <div class="metric-label">광고 오탐률 달성</div>
+        <div class="metric-sub">30% → 5% (Few-Shot 적용)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">4개</div>
+        <div class="metric-label">지원 커머스 플랫폼</div>
+        <div class="metric-sub">29cm / 무신사 / W컨셉 / 커들리버니</div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>목표 KPI</th>
+            <th>목표치</th>
+            <th>달성 전략</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>광고 필터 정확도</td>
+            <td><span class="badge badge-green">80%+</span></td>
+            <td>Few-Shot Learning + 관리자 Human Override</td>
+          </tr>
+          <tr>
+            <td>검색 응답 속도</td>
+            <td><span class="badge badge-blue">&lt; 200ms</span></td>
+            <td>Elasticsearch nori 형태소 분석 + 인덱스 최적화</td>
+          </tr>
+          <tr>
+            <td>크롤링 성공률</td>
+            <td><span class="badge badge-green">99%+</span></td>
+            <td>Playwright + 3회 Exponential Backoff 재시도</td>
+          </tr>
+          <tr>
+            <td>AI 분석 비용</td>
+            <td><span class="badge badge-yellow">$10~50/월</span></td>
+            <td>gpt-4o-mini + 15개 배치 + 10자 미만 스킵</td>
+          </tr>
+          <tr>
+            <td>배포 자동화</td>
+            <td><span class="badge badge-purple">15분 이내</span></td>
+            <td>GitHub Actions rsync + Docker Compose 무중단</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Roadmap -->
+    <h3 style="font-size:18px;font-weight:700;margin-top:48px;margin-bottom:20px;">향후 발전 방향</h3>
+    <div class="grid-3">
+      <div class="card">
+        <div style="font-size:11px;font-weight:700;color:var(--accent);letter-spacing:1px;margin-bottom:8px;">v2.0</div>
+        <h3>뷰티/가전 카테고리 확장</h3>
+        <p>피부타입 기반 뷰티 리뷰 개인화. 올리브영, 화해 플랫폼 추가. 가전은 사용환경·가구원수 기반 필터링.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:11px;font-weight:700;color:var(--yellow);letter-spacing:1px;margin-bottom:8px;">v2.1</div>
+        <h3>ML 사이즈 예측 모델</h3>
+        <p>규칙 기반 → LLM → ML 순차 발전. SageMaker로 체형·브랜드·카테고리 Feature 학습. 예측 정확도 대폭 향상.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:11px;font-weight:700;color:var(--purple);letter-spacing:1px;margin-bottom:8px;">v3.0</div>
+        <h3>소셜 기능 및 AI 대화</h3>
+        <p>유사 체형 사용자 클러스터링. "이 옷 나한테 맞을까요?" 자연어 질문 응답 (RAG 기반). 브랜드별 사이즈 편차 분석.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 9. 연락처 ─────────────────────────────────────── -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="section-label" style="justify-content:center;display:flex;">10 / Contact</div>
+    <h2 class="section-title" style="text-align:center;">연락처</h2>
+    <p style="text-align:center;color:var(--muted);font-size:16px;margin-bottom:8px;">
+      프로젝트에 대한 문의, 협업 제안, 피드백을 환영합니다.
+    </p>
+    <div style="display:flex;justify-content:center;">
+      <a href="mailto:dopejk@gmail.com" class="contact-email">
+        <span>✉️</span>
+        <span>dopejk@gmail.com</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <p>리뷰모으기 (Reviews Service) — 멀티 플랫폼 리뷰 통합 AI 서비스</p>
+    <p style="margin-top:6px;opacity:.5;">Built with Next.js · BullMQ · OpenAI · Elasticsearch · Playwright</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const links = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) map.set(id, { link: a, section: el });
+  });
+
+  const navLinksEl = document.querySelector('.nav-links');
+  const visible = new Set();
+
+  function setActive(id) {
+    links.forEach(a => a.classList.remove('active'));
+    const entry = map.get(id);
+    if (!entry) return;
+    entry.link.classList.add('active');
+    // Scroll active link into view horizontally when nav overflows
+    if (navLinksEl && navLinksEl.scrollWidth > navLinksEl.clientWidth) {
+      const linkRect = entry.link.getBoundingClientRect();
+      const navRect = navLinksEl.getBoundingClientRect();
+      if (linkRect.left < navRect.left || linkRect.right > navRect.right) {
+        entry.link.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+  }
+
+  function updateFromVisible() {
+    if (visible.size === 0) return;
+    // Pick the visible section closest to the top of viewport
+    let best = null; let bestTop = Infinity;
+    visible.forEach(id => {
+      const sec = map.get(id)?.section;
+      if (!sec) return;
+      const top = sec.getBoundingClientRect().top;
+      if (top < bestTop) { bestTop = top; best = id; }
+    });
+    if (best) setActive(best);
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      const id = e.target.id;
+      if (e.isIntersecting) visible.add(id);
+      else visible.delete(id);
+    });
+    updateFromVisible();
+  }, {
+    rootMargin: '-80px 0px -55% 0px',
+    threshold: 0
+  });
+
+  map.forEach(({ section }) => io.observe(section));
+
+  // Fallback: scroll handler to pick nearest when no observer match
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      if (visible.size === 0) {
+        // find section whose top is closest to (but above) 80px mark
+        let best = null; let bestDist = Infinity;
+        map.forEach(({ section }, id) => {
+          const top = section.getBoundingClientRect().top;
+          const dist = Math.abs(top - 80);
+          if (top <= 120 && dist < bestDist) { bestDist = dist; best = id; }
+        });
+        if (best) setActive(best);
+      } else {
+        updateFromVisible();
+      }
+      ticking = false;
+    });
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>

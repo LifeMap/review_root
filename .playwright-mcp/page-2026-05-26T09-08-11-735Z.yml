@@ -1,0 +1,583 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e8]:
+          - generic [ref=e9]:
+            - img [ref=e10]
+            - paragraph [ref=e13]: 앱에서 더 많은 상품을 볼 수 있어요!
+          - button "앱에서 보기" [ref=e14] [cursor=pointer]:
+            - paragraph [ref=e15]: 앱에서 보기
+        - generic [ref=e16]:
+          - img [ref=e18] [cursor=pointer]
+          - paragraph [ref=e22]: 상품정보
+          - generic [ref=e23]:
+            - img [ref=e25]
+            - img [ref=e29]
+      - generic [ref=e31] [cursor=pointer]:
+        - generic [ref=e33]:
+          - img "상품 썸네일" [ref=e39]
+          - img "상품 썸네일" [ref=e45]
+          - img "상품 썸네일" [ref=e51]
+          - img "상품 썸네일" [ref=e57]
+          - generic [ref=e185]:
+            - img [ref=e190]
+            - generic [ref=e191]:
+              - paragraph [ref=e192]: 이 마켓의 다른 상품들이에요
+              - generic [ref=e193]:
+                - generic [ref=e195]:
+                  - img [ref=e200]
+                  - generic [ref=e201]:
+                    - generic [ref=e202]:
+                      - paragraph [ref=e203]: 36%
+                      - paragraph [ref=e204]: 30,900
+                    - paragraph [ref=e205]: "[폴딩❣/유니크!] 로이븐 생지 사이드핀턱 버뮤다 청 반바지 스티치 여름 데일리 와이드 5부 데님 팬츠"
+                - generic [ref=e207]:
+                  - img [ref=e212]
+                  - generic [ref=e213]:
+                    - generic [ref=e214]:
+                      - paragraph [ref=e215]: 42%
+                      - paragraph [ref=e216]: 13,900
+                    - paragraph [ref=e217]: "[만능레이어드/여름필수템🧊] 센틱 아일렛 리벳 라운드 워터밤 물놀이 휴양지 썸머 여름 휴가 쿨링 골지 나시"
+                - generic [ref=e219]:
+                  - img [ref=e224]
+                  - generic [ref=e225]:
+                    - generic [ref=e226]:
+                      - paragraph [ref=e227]: 34%
+                      - paragraph [ref=e228]: 20,900
+                    - paragraph [ref=e229]: "[여리핏💞/하객룩] 토릭 드레이프 여리핏 여름 봄 슬림핏 레이어드 상의 결혼식 코디 꼬임 반팔티셔츠"
+        - img [ref=e65]
+        - img [ref=e68]
+        - img [ref=e71]
+      - generic [ref=e74]:
+        - img "마켓 이미지" [ref=e80]
+        - generic [ref=e81]:
+          - paragraph [ref=e82]: 조이조이
+          - paragraph [ref=e83]: "#심플베이직 #캐주얼 · 마켓 만족도 94%"
+        - generic [ref=e84]:
+          - img [ref=e85]
+          - paragraph [ref=e87]: 155.2만
+      - generic [ref=e88]:
+        - paragraph [ref=e89]: "[여름팬츠❄/에어매쉬!] 에어쿨 썸머 사이드핀턱 하체커버 와이드 밴딩 바지 데일리 투웨이 숏 롱 트레이닝 팬츠"
+        - generic [ref=e91]:
+          - generic [ref=e93]:
+            - paragraph [ref=e95]: 29,000원
+            - generic [ref=e96]:
+              - paragraph [ref=e97]: 50%
+              - paragraph [ref=e98]: 14,320원
+          - img [ref=e100]
+      - generic [ref=e231]:
+        - paragraph [ref=e233]: 나의 예상 구매가
+        - generic [ref=e234] [cursor=pointer]:
+          - generic [ref=e236]:
+            - paragraph [ref=e237]: 50%
+            - paragraph [ref=e238]: 14,320원
+          - img [ref=e240]
+      - button "할인 쿠폰 받기" [ref=e243] [cursor=pointer]:
+        - generic [ref=e244]:
+          - generic [ref=e245]: 할인 쿠폰 받기
+          - img [ref=e246]
+      - generic [ref=e249]:
+        - generic [ref=e250]:
+          - paragraph [ref=e251]: 리뷰 474개
+          - paragraph [ref=e252]:
+            - text: 리뷰를 작성한 사람 중
+            - generic [ref=e253]: 92%
+            - text: 가 만족한 상품이에요
+        - generic [ref=e254]:
+          - generic [ref=e255] [cursor=pointer]:
+            - img [ref=e260]
+            - generic [ref=e261]:
+              - paragraph [ref=e262]: 만족해요
+              - paragraph [ref=e263]: 포인트 되는 와이드 팬츠 찾고 있었는데 옆핀턱이라 부담 없이 입기 좋을거 같아서 구매했는데 밑단으로 퍼지는 핏이 넘 예뻐요! 밴딩 착용감도 편하고 얇고 가벼워서 시원하니 교복템으로 휘뚤마뚤 입을거 같아서 만족쓰! 요런 신상 나오면 더 쟁이려구요ㅋㅋㅋ
+          - generic [ref=e264] [cursor=pointer]:
+            - img [ref=e269]
+            - generic [ref=e270]:
+              - paragraph [ref=e271]: 만족해요
+              - paragraph [ref=e272]: 와인색 후기가 없네요 색 참고하세요 핏도 이쁘고 컬러도 너무 딥하지 않아서 여름에 입어도 안 답답햐보일듯
+          - generic [ref=e273] [cursor=pointer]:
+            - img [ref=e278]
+            - generic [ref=e279]:
+              - paragraph [ref=e280]: 만족해요
+              - paragraph [ref=e281]: 옆에 핀턱 있는거 봄, 가을, 겨울 다 있는데 여름용이 없어서 바로 겟!!! >,< 역시나 진짜 가볍고 완전 찰랑찰랑 조아요ㅎㅎㅎ👍🏻👍🏻👍🏻 여름엔 무조건 가벼운게 최고인데... 이거 진짜 최고임!!💯
+          - generic [ref=e282] [cursor=pointer]:
+            - img [ref=e283]
+            - paragraph [ref=e285]: 전체 보기
+      - generic [ref=e107]:
+        - generic [ref=e286]:
+          - paragraph [ref=e287]: 배송정보
+          - generic [ref=e288]:
+            - img [ref=e293]
+            - img [ref=e294] [cursor=pointer]
+        - paragraph [ref=e300]: 마켓 자체배송
+        - generic [ref=e301]:
+          - generic [ref=e302]:
+            - paragraph [ref=e303]: 출발예정
+            - img [ref=e304] [cursor=pointer]
+          - generic [ref=e308]:
+            - paragraph [ref=e310]: 지금 주문하면 내일 (05/27) 출발 예정
+            - generic [ref=e311]:
+              - paragraph [ref=e312]: 5/28(목) 도착 예정이에요
+              - img [ref=e313] [cursor=pointer]
+        - generic [ref=e316]:
+          - paragraph [ref=e317]: 일반 배송 옵션은 배송 출발일이 다를 수 있습니다.
+          - paragraph [ref=e318]:
+            - generic [ref=e319]: 출발 예정 정보는 판매자 지정 날짜이며, 변경될 수 있습니다.
+        - generic [ref=e130]:
+          - img [ref=e131]
+          - paragraph [ref=e139]: 에이블리는 365일
+          - paragraph [ref=e140]: 전-상품 무료 배송 !
+      - generic [ref=e142]:
+        - img "마켓 이미지" [ref=e148]
+        - generic [ref=e149]:
+          - paragraph [ref=e150]: 조이조이
+          - paragraph [ref=e151]: "#심플베이직 #캐주얼 · 마켓 만족도 94%"
+        - generic [ref=e152]:
+          - img [ref=e153]
+          - paragraph [ref=e155]: 155.2만
+      - generic [ref=e158]:
+        - tablist [ref=e159]:
+          - tab "상품정보" [selected] [ref=e160] [cursor=pointer]:
+            - paragraph [ref=e163]: 상품정보
+          - tab "리뷰 474" [ref=e320] [cursor=pointer]:
+            - paragraph [ref=e168]: 리뷰 474
+          - tab "문의" [ref=e169] [cursor=pointer]:
+            - paragraph [ref=e172]: 문의
+        - tabpanel "상품정보" [ref=e173]:
+          - generic [ref=e322]:
+            - generic [ref=e323]:
+              - generic [ref=e325]:
+                - paragraph [ref=e326]:
+                  - link [ref=e327] [cursor=pointer]:
+                    - /url: https://m.a-bly.com/events/da2bb4d4
+                    - img [ref=e328]
+                - paragraph [ref=e329]
+              - generic [ref=e331]:
+                - paragraph [ref=e332]:
+                  - link [ref=e333] [cursor=pointer]:
+                    - /url: https://m.a-bly.com/events/765d3652
+                    - img [ref=e334]
+                - paragraph [ref=e335]
+              - paragraph [ref=e338]:
+                - img [ref=e339]
+              - generic [ref=e342]:
+                - paragraph [ref=e343]
+                - paragraph [ref=e344]
+                - paragraph [ref=e345]
+                - paragraph [ref=e346]
+                - paragraph [ref=e347]
+                - paragraph [ref=e348]
+                - paragraph [ref=e349]
+                - paragraph [ref=e350]
+                - paragraph [ref=e351]
+              - generic [ref=e354]:
+                - generic [ref=e356]:
+                  - generic [ref=e405]:
+                    - paragraph [ref=e406]:
+                      - generic:
+                        - emphasis:
+                          - strong
+                    - paragraph [ref=e407]:
+                      - generic:
+                        - emphasis:
+                          - strong
+                    - paragraph [ref=e408]:
+                      - emphasis [ref=e410]:
+                        - strong [ref=e411]: COLOR_
+                      - emphasis [ref=e413]:
+                        - strong [ref=e414]: :)
+                    - paragraph [ref=e415]: 백멜란지●
+                    - paragraph [ref=e416]: 그레이●
+                    - paragraph [ref=e417]: 퍼플●
+                    - paragraph [ref=e418]: 블랙●
+                    - paragraph [ref=e419]
+                    - paragraph [ref=e420]
+                    - paragraph [ref=e421]:
+                      - emphasis [ref=e423]:
+                        - strong [ref=e424]: FABRIC_
+                      - emphasis [ref=e426]:
+                        - strong [ref=e427]: :)
+                    - paragraph [ref=e428]: 면 65 / 폴리 35
+                    - paragraph [ref=e429]
+                    - paragraph [ref=e430]
+                    - paragraph [ref=e431]:
+                      - emphasis [ref=e433]:
+                        - strong [ref=e434]: SIZE_
+                      - emphasis [ref=e436]:
+                        - strong [ref=e437]: :)
+                    - paragraph [ref=e438]: 허리29/힙73/허벅지42/밑단28/밑위39/총기장96 101
+                    - paragraph [ref=e439]:
+                      - generic:
+                        - strong
+                    - paragraph [ref=e440]:
+                      - strong [ref=e442]: "*총기장의 경우 숏-롱 순서 입니다!*"
+                    - paragraph [ref=e443]
+                    - paragraph [ref=e444]: "** 사이즈의 경우, 재는 사람이나 위치에 따라서"
+                    - paragraph [ref=e445]: 1~3cm의 오차가 있을 수 있습니다**
+                    - paragraph [ref=e446]
+                    - paragraph [ref=e447]
+                    - paragraph [ref=e448]:
+                      - emphasis [ref=e450]:
+                        - strong [ref=e451]: MODEL_
+                      - emphasis [ref=e453]:
+                        - strong [ref=e454]: :)
+                    - paragraph [ref=e455]:
+                      - strong [ref=e457]: HEIGHT
+                      - text: 160cm
+                    - paragraph [ref=e458]:
+                      - strong [ref=e460]: TOP
+                      - text: 44(S)
+                    - paragraph [ref=e461]:
+                      - strong [ref=e463]: BOTTOM
+                      - text: 26(S)
+                    - paragraph [ref=e464]:
+                      - strong [ref=e466]: SHOES
+                      - text: 245mm
+                    - paragraph [ref=e467]:
+                      - strong [ref=e469]: B/ W/ H
+                      - text: 31/ 24/ 35
+                    - paragraph [ref=e470]
+                    - paragraph [ref=e471]
+                    - paragraph [ref=e472]
+                    - paragraph [ref=e473]: "제조국 : 한국 중국 병행"
+                    - paragraph [ref=e474]: "제조사 : 조이조이 협력업체"
+                    - paragraph [ref=e475]
+                    - paragraph [ref=e476]
+                    - paragraph [ref=e477]
+                    - paragraph [ref=e478]: ▼그레이(롱_기장) 착용▼
+                  - paragraph [ref=e488]
+                  - paragraph [ref=e498]
+                  - paragraph [ref=e508]
+                  - paragraph [ref=e518]
+                  - paragraph [ref=e528]
+                  - paragraph [ref=e538]
+                  - generic [ref=e547]:
+                    - paragraph [ref=e548]
+                    - paragraph [ref=e549]
+                    - paragraph [ref=e550]: ▼백멜란지(롱_기장) 착용▼
+                  - paragraph [ref=e560]
+                  - paragraph [ref=e570]
+                  - paragraph [ref=e580]
+                  - paragraph [ref=e590]
+                  - paragraph [ref=e600]
+                  - paragraph [ref=e610]
+                  - generic [ref=e619]:
+                    - paragraph [ref=e620]
+                    - paragraph [ref=e621]
+                    - paragraph [ref=e622]: ▼퍼플(롱_기장) 착용▼
+                  - paragraph [ref=e632]
+                  - paragraph [ref=e642]
+                  - paragraph [ref=e652]
+                  - paragraph [ref=e662]
+                  - paragraph [ref=e672]
+                  - paragraph [ref=e682]
+                  - paragraph [ref=e692]
+                  - paragraph [ref=e702]
+                  - paragraph [ref=e712]
+                  - paragraph [ref=e722]
+                  - paragraph [ref=e732]
+                  - paragraph [ref=e742]
+                  - paragraph [ref=e752]
+                  - paragraph [ref=e762]
+                  - generic [ref=e771]:
+                    - paragraph [ref=e772]
+                    - paragraph [ref=e773]
+                    - paragraph [ref=e774]: ▼블랙(롱_기장) 착용▼
+                  - paragraph [ref=e784]
+                  - paragraph [ref=e794]
+                  - paragraph [ref=e804]
+                  - paragraph [ref=e814]
+                  - paragraph [ref=e824]
+                  - generic [ref=e833]:
+                    - paragraph [ref=e834]:
+                      - generic:
+                        - strong
+                    - paragraph [ref=e835]:
+                      - generic:
+                        - strong
+                    - paragraph [ref=e836]:
+                      - generic:
+                        - strong
+                  - paragraph [ref=e846]: ▲숏 기장 착용▲
+                  - generic [ref=e855]:
+                    - paragraph [ref=e856]: ▲롱 기장 착용▲
+                    - paragraph [ref=e857]:
+                      - generic:
+                        - strong
+                  - paragraph [ref=e867]:
+                    - generic:
+                      - strong
+                  - paragraph [ref=e877]:
+                    - generic:
+                      - strong
+                  - paragraph [ref=e887]:
+                    - generic:
+                      - strong
+                  - paragraph [ref=e897]:
+                    - generic:
+                      - strong
+                  - paragraph [ref=e907]:
+                    - generic:
+                      - strong
+                  - paragraph [ref=e917]:
+                    - generic:
+                      - strong
+                  - paragraph [ref=e927]:
+                    - generic:
+                      - strong
+                  - paragraph [ref=e937]:
+                    - generic:
+                      - strong
+                  - paragraph [ref=e947]:
+                    - generic:
+                      - strong
+                  - paragraph [ref=e957]:
+                    - generic:
+                      - strong
+                  - paragraph [ref=e967]
+                  - paragraph [ref=e977]: 퍼플
+                  - paragraph [ref=e987]: 블랙
+                  - paragraph [ref=e997]: 백멜란지
+                  - paragraph [ref=e1007]: 그레이
+                  - paragraph [ref=e1017]
+                  - paragraph [ref=e1027]
+                  - paragraph [ref=e1037]
+                  - paragraph [ref=e1047]
+                  - paragraph [ref=e1057]: 숏 / 롱 기장
+                  - paragraph [ref=e1067]: 백멜란지 / 그레이 / 퍼플 / 블랙
+                  - generic [ref=e1076]:
+                    - paragraph [ref=e1077]:
+                      - generic:
+                        - strong
+                    - paragraph [ref=e1078]:
+                      - generic:
+                        - strong
+                    - paragraph [ref=e1079]:
+                      - generic:
+                        - strong
+                    - paragraph [ref=e1080]:
+                      - strong [ref=e1082]: ※ 데님 제품의 특성상 마찰, 습기, 땀 등에 의해
+                    - paragraph [ref=e1083]:
+                      - strong [ref=e1085]: 이염이 발생할 수 있습니다.
+                    - paragraph [ref=e1086]:
+                      - strong [ref=e1088]: 하단 내용 확인 후 고객님의 신중한 구매 부탁드립니다!
+                    - paragraph [ref=e1089]:
+                      - generic:
+                        - strong
+                    - paragraph [ref=e1090]: 1. 밝은 색상의 소품(의류, 신발, 가방, 속옷, 카시트)과
+                    - paragraph [ref=e1091]: 접촉 시 주의가 필요합니다.
+                    - paragraph [ref=e1092]: 2. 세탁 가이드에 따른 첫 세탁 이후 발행하는 이염현상은
+                    - paragraph [ref=e1093]: 원단 고유의 특성으로 간주되어 보상 및 책임이 불가합니다.
+                    - paragraph [ref=e1094]: 3. 제품의 최상 컨디션 유지를 위해
+                    - paragraph [ref=e1095]: 반드시 단독 세탁 후 착용을 권장드립니다.
+                    - paragraph [ref=e1096]
+                    - paragraph [ref=e1097]
+                    - paragraph [ref=e1098]:
+                      - generic:
+                        - strong
+                    - paragraph [ref=e1099]:
+                      - strong [ref=e1101]: NOTICE_
+                      - strong [ref=e1103]: :)
+                    - paragraph [ref=e1104]:
+                      - generic:
+                        - strong
+                    - paragraph [ref=e1105]:
+                      - strong [ref=e1107]: 조이조이는 모든 배송과정을
+                    - paragraph [ref=e1108]:
+                      - strong [ref=e1110]: CCTV로 녹화하고 있으며
+                    - paragraph [ref=e1111]:
+                      - strong [ref=e1113]: 그에 따라 배송누락, 상품불량 등의 문제 발생 시
+                    - paragraph [ref=e1114]:
+                      - strong [ref=e1116]: CCTV 확인을 진행하고 있습니다.
+                    - paragraph [ref=e1117]:
+                      - strong [ref=e1119]: 조이조이 배송팀은 꼼꼼한 검수를 통해
+                    - paragraph [ref=e1120]:
+                      - strong [ref=e1122]: 정확한 배송이 가능하도록 더욱 노력하겠습니다:)
+                    - paragraph [ref=e1123]:
+                      - generic:
+                        - strong
+                    - paragraph [ref=e1124]:
+                      - generic:
+                        - strong
+                  - img [ref=e1129]
+                  - paragraph [ref=e1134]:
+                    - generic:
+                      - strong
+                - paragraph
+              - iframe [ref=e1137]:
+                - generic [active] [ref=f36e1]:
+                  - main [ref=f36e3]:
+                    - generic [ref=f36e7]:
+                      - generic [ref=f36e10]:
+                        - generic [ref=f36e13]:
+                          - generic [ref=f36e14]:
+                            - paragraph [ref=f36e15]: AI 실측 사이즈
+                            - paragraph [ref=f36e16]: 상세 페이지를 스캔해 실측정보를 찾아왔어요!
+                          - generic [ref=f36e18]:
+                            - paragraph [ref=f36e20]: 사이즈
+                            - paragraph [ref=f36e22]: FREE-숏
+                            - paragraph [ref=f36e24]: FREE-롱
+                            - paragraph [ref=f36e26]: 총장
+                            - paragraph [ref=f36e28]: "96"
+                            - paragraph [ref=f36e30]: "101"
+                            - paragraph [ref=f36e32]: 허리
+                            - paragraph [ref=f36e34]: "29"
+                            - paragraph [ref=f36e36]: "29"
+                            - paragraph [ref=f36e38]: 힙단면
+                            - paragraph [ref=f36e40]: "73"
+                            - paragraph [ref=f36e42]: "73"
+                            - paragraph [ref=f36e44]: 밑위길이
+                            - paragraph [ref=f36e46]: "39"
+                            - paragraph [ref=f36e48]: "39"
+                            - paragraph [ref=f36e50]: 허벅지단면
+                            - paragraph [ref=f36e52]: "42"
+                            - paragraph [ref=f36e54]: "42"
+                            - paragraph [ref=f36e56]: 밑단단면
+                            - paragraph [ref=f36e58]: "28"
+                            - paragraph [ref=f36e60]: "28"
+                          - generic [ref=f36e61]:
+                            - img [ref=f36e62]
+                            - paragraph [ref=f36e66]: 스캔 과정에서 오류가 발생하거나, 상품 판매자가 정보를 수정하는 경우 부정확한 정보가 있을 수 있으므로 참고용으로만 봐 주세요.
+                        - generic [ref=f36e69]:
+                          - paragraph [ref=f36e70]: 상세 사이즈는 측정 방법과 위치, 소재에 따라 1~3cm오차가 발생될 수 있습니다.
+                          - paragraph [ref=f36e71]: 제품 컬러는 모니터 해상도와 각도에 따라 다르게 보일 수 있습니다.
+                          - paragraph [ref=f36e72]: 아이보리, 화이트 계열의 색상의 경우 비침이 있을수도 있습니다.
+                          - paragraph [ref=f36e73]: 모델컷보다 디테일컷이 실제 상품 색상에 가깝습니다.
+                          - paragraph [ref=f36e74]: 사이즈는 단면(cm) 측정입니다.
+                      - generic [ref=f36e77]:
+                        - paragraph [ref=f36e78]: 상품정보제공고시
+                        - generic [ref=f36e79]:
+                          - paragraph [ref=f36e80]: 제조국
+                          - paragraph [ref=f36e81]: 중국
+                        - generic [ref=f36e82]:
+                          - paragraph [ref=f36e83]: 소재 or 재질
+                          - paragraph [ref=f36e84]: 상품 상세 참조
+                        - generic [ref=f36e85]:
+                          - paragraph [ref=f36e86]: 색상
+                          - paragraph [ref=f36e87]: 상품 상세 참조
+                        - generic [ref=f36e88]:
+                          - paragraph [ref=f36e89]: 치수
+                          - paragraph [ref=f36e90]: 상품 상세 참조
+                        - generic [ref=f36e91]:
+                          - paragraph [ref=f36e92]: 제조자
+                          - paragraph [ref=f36e93]: 상품 상세 참조
+                        - generic [ref=f36e94]:
+                          - paragraph [ref=f36e95]: 주의 및 유의사항
+                          - paragraph [ref=f36e96]: 상품 상세 참조
+                        - generic [ref=f36e97]:
+                          - paragraph [ref=f36e98]: 소비자 상담 관련 전화번호
+                          - paragraph [ref=f36e99]: 상품 상세 참조
+                        - generic [ref=f36e100]:
+                          - paragraph [ref=f36e101]: 품질 보증 기준
+                          - paragraph [ref=f36e102]: 소비자분쟁해결기준(공정거래위원회 고시)을 준수합니다.
+                        - generic [ref=f36e103]:
+                          - paragraph [ref=f36e104]: 제조연월 또는 동일모델 출시년월
+                          - paragraph [ref=f36e105]: 2026-04
+                      - generic [ref=f36e108]:
+                        - paragraph [ref=f36e109]: 판매자 정보
+                        - generic [ref=f36e110]:
+                          - paragraph [ref=f36e111]: 상호
+                          - paragraph [ref=f36e112]: 주식회사 그레잇제이
+                        - generic [ref=f36e113]:
+                          - paragraph [ref=f36e114]: 대표자
+                          - paragraph [ref=f36e115]: 박윤지
+                        - generic [ref=f36e116]:
+                          - paragraph [ref=f36e117]: 주소
+                          - paragraph [ref=f36e118]: 서울특별시 동대문구 난계로30길 23, 3층
+                        - generic [ref=f36e119]:
+                          - paragraph [ref=f36e120]: 사업자등록번호
+                          - paragraph [ref=f36e121]: 834-81-02579
+                        - generic [ref=f36e122]:
+                          - paragraph [ref=f36e123]: 통신판매업신고번호
+                          - paragraph [ref=f36e124]: 2022-서울동대문-1098
+                        - generic [ref=f36e125]:
+                          - paragraph [ref=f36e126]: 이메일
+                          - paragraph [ref=f36e127]: mkt_no_1@naver.com
+                        - generic [ref=f36e128]:
+                          - paragraph [ref=f36e129]: 전화번호
+                          - paragraph [ref=f36e130]: 010-2551-0252
+                      - generic [ref=f36e134]:
+                        - paragraph [ref=f36e135]: WASHING GUIDE
+                        - img [ref=f36e137]
+                  - alert [ref=f36e140]
+                  - generic [ref=f36e141]:
+                    - paragraph
+                    - paragraph [ref=f36e142]: 보러가기
+            - button "상품 정보 펼쳐보기" [ref=e1139] [cursor=pointer]:
+              - text: 상품 정보 펼쳐보기
+              - img [ref=e1140]
+            - generic [ref=e1144]:
+              - paragraph [ref=e1145]: 이 마켓의 다른 상품들이에요
+              - generic [ref=e1146]:
+                - generic [ref=e1152]:
+                  - paragraph [ref=e1153]: 조이조이
+                  - paragraph [ref=e1154]: "[폴딩❣/유니크!] 로이븐 생지 사이드핀턱 버뮤다 청 반바지 스티치 여름 데일리 와이드 5부 데님 팬츠"
+                  - generic [ref=e1156]:
+                    - paragraph [ref=e1157]: 36%
+                    - paragraph [ref=e1158]: 30,900
+                - generic [ref=e1165]:
+                  - paragraph [ref=e1166]: 조이조이
+                  - paragraph [ref=e1167]: "[만능레이어드/여름필수템🧊] 센틱 아일렛 리벳 라운드 워터밤 물놀이 휴양지 썸머 여름 휴가 쿨링 골지 나시"
+                  - generic [ref=e1169]:
+                    - paragraph [ref=e1170]: 42%
+                    - paragraph [ref=e1171]: 13,900
+                - generic [ref=e1174]:
+                  - img [ref=e1184] [cursor=pointer]
+                  - generic [ref=e1185]:
+                    - paragraph [ref=e1186]: 조이조이
+                    - paragraph [ref=e1187]: "[여리핏💞/하객룩] 토릭 드레이프 여리핏 여름 봄 슬림핏 레이어드 상의 결혼식 코디 꼬임 반팔티셔츠"
+                    - generic [ref=e1189]:
+                      - paragraph [ref=e1190]: 34%
+                      - paragraph [ref=e1191]: 20,900
+                - generic [ref=e1198]:
+                  - paragraph [ref=e1199]: 조이조이
+                  - paragraph [ref=e1200]: "[쿨링린넨🧊/살탐방지] 로나 장마템 살안타템 썸머 루즈핏 오버핏 여름아우터 간절기 자외선차단 워터밤 물놀이 가디건"
+                  - generic [ref=e1202]:
+                    - paragraph [ref=e1203]: 39%
+                    - paragraph [ref=e1204]: 27,900
+                - generic [ref=e1211]:
+                  - paragraph [ref=e1212]: 조이조이
+                  - paragraph [ref=e1213]: "[❄리오셀5%/여름팬츠] 펜리스 카고 포켓 밴딩 핀턱 나일론 바지 바스락 썸머 스트링 투웨이 롱 와이드 팬츠"
+                  - generic [ref=e1215]:
+                    - paragraph [ref=e1216]: 40%
+                    - paragraph [ref=e1217]: 27,900
+                - generic [ref=e1224]:
+                  - paragraph [ref=e1225]: 조이조이
+                  - paragraph [ref=e1226]: "[허벅지반쪽💯/A라인] 카이브 골반커버 빈티지 3부 청 반바지 데일리 핏보정 캐주얼 데님 숏 팬츠"
+                  - generic [ref=e1228]:
+                    - paragraph [ref=e1229]: 41%
+                    - paragraph [ref=e1230]: 25,900
+                - generic [ref=e1233]:
+                  - img [ref=e1243] [cursor=pointer]
+                  - generic [ref=e1244]:
+                    - paragraph [ref=e1245]: 조이조이
+                    - paragraph [ref=e1246]: "[카프리/에어실크❣] 세이린 탄탄 슬림핏 백포켓 히든밴딩 슬릿 바지 말라핏 여름 간절기 핏보장 리오셀 스판 5부 7부 팬츠"
+                    - generic [ref=e1248]:
+                      - paragraph [ref=e1249]: 45%
+                      - paragraph [ref=e1250]: 25,110
+                - generic [ref=e1253]:
+                  - img [ref=e1263] [cursor=pointer]
+                  - generic [ref=e1264]:
+                    - paragraph [ref=e1265]: 조이조이
+                    - paragraph [ref=e1266]: "[여름팬츠🌊/에어매쉬!] 프루 썸머 쿨 백포켓 데일리 3부 밴딩 반바지 사이드핀턱 장마룩 골반커버 트레이닝 숏 팬츠"
+                    - generic [ref=e1268]:
+                      - paragraph [ref=e1269]: 48%
+                      - paragraph [ref=e1270]: 13,410
+                - generic [ref=e1277]:
+                  - paragraph [ref=e1278]: 조이조이
+                  - paragraph [ref=e1279]: "[힙무드!/데미지🖤] 바네사 빈티지 컷팅 여리핏 A라인 3부 청반바지 꾸안꾸 y2k 유니크 찢청 숏 데님 팬츠"
+                  - generic [ref=e1281]:
+                    - paragraph [ref=e1282]: 38%
+                    - paragraph [ref=e1283]: 28,900
+            - paragraph [ref=e1286]: 에이블리에서 판매되는 상품 중에는 개별 입점 판매자(셀러스)의 상품이 포함되어 있습니다. 해당 상품에 대해 (주)에이블리코퍼레이션은 통신판매중개자의 지위에 있고 통신판매의 당사자가 아닙니다. 해당 상품의 거래 전반에 관한 의무와 책임은 각 입점 판매자에게 있습니다.
+      - generic [ref=e174]:
+        - paragraph [ref=e177]: 16,101명이 이 상품을 구매하는 중이에요
+        - generic [ref=e178]:
+          - generic [ref=e179]:
+            - img [ref=e180]
+            - paragraph [ref=e182]: 1.4만
+          - button "구매하기" [ref=e183] [cursor=pointer]
+  - alert [ref=e1287]
+  - generic [ref=e1288]:
+    - paragraph
+    - paragraph [ref=e1289]: 보러가기

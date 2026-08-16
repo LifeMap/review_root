@@ -1,0 +1,32 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e8]:
+          - generic [ref=e9]:
+            - img [ref=e10]
+            - paragraph [ref=e13]: 앱에서 더 많은 상품을 볼 수 있어요!
+          - button "앱에서 보기" [ref=e14] [cursor=pointer]:
+            - paragraph [ref=e15]: 앱에서 보기
+        - generic [ref=e16]:
+          - generic [ref=e17] [cursor=pointer]:
+            - img [ref=e18]
+            - paragraph [ref=e20]: 하나만 사도 무료배송
+          - img [ref=e24]
+      - generic [ref=e175]:
+        - generic [ref=e176]:
+          - img [ref=e177]
+          - paragraph [ref=e179]: 홈
+        - generic [ref=e180]:
+          - img [ref=e181]
+          - paragraph [ref=e183]: 전체보기
+        - generic [ref=e184]:
+          - img [ref=e185]
+          - paragraph [ref=e187]: 검색
+        - generic [ref=e188]:
+          - img [ref=e189]
+          - paragraph [ref=e191]: 마이페이지
+  - alert [ref=e192]
+  - generic [ref=e193]:
+    - paragraph
+    - paragraph [ref=e194]: 보러가기

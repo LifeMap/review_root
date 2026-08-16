@@ -1,0 +1,53 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - img [ref=e10] [cursor=pointer]
+        - paragraph [ref=e14]: 리뷰
+        - generic [ref=e15]:
+          - img [ref=e17]
+          - img [ref=e21]
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - button "키" [ref=e38]:
+            - generic [ref=e39]: 키
+            - img [ref=e41]
+          - button "하의 사이즈" [ref=e43]:
+            - generic [ref=e44]: 하의 사이즈
+            - img [ref=e46]
+          - button "체중" [ref=e48]:
+            - generic [ref=e49]: 체중
+            - img [ref=e51]
+          - button "옵션" [ref=e53]:
+            - generic [ref=e54]: 옵션
+            - img [ref=e56]
+          - button "만족도" [ref=e58]:
+            - generic [ref=e59]: 만족도
+            - img [ref=e61]
+        - generic [ref=e63]:
+          - generic [ref=e64]:
+            - paragraph [ref=e65]: 추천순
+            - img [ref=e66]
+            - button "추천순 좋아요순 최신순":
+              - generic:
+                - paragraph: 추천순
+              - generic:
+                - paragraph: 좋아요순
+              - generic:
+                - paragraph: 최신순
+          - generic [ref=e68]:
+            - generic [ref=e70] [cursor=pointer]:
+              - generic [ref=e71]:
+                - checkbox "내 체형만"
+                - img [ref=e72]
+              - paragraph [ref=e77]: 내 체형만
+            - generic [ref=e79] [cursor=pointer]:
+              - generic [ref=e80]:
+                - checkbox "포토 리뷰만"
+                - img [ref=e81]
+              - paragraph [ref=e86]: 포토 리뷰만
+      - img [ref=e89]
+  - alert [ref=e91]
+  - generic [ref=e92]:
+    - paragraph
+    - paragraph [ref=e93]: 보러가기
